@@ -17,7 +17,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 IMG = ROOT / "assets" / "img"
-VERSION = "16"  # bump to bust CSS/JS caches
+VERSION = "17"  # bump to bust CSS/JS caches
 
 # =====================================================================
 # DATA
@@ -29,6 +29,7 @@ CONTACT = {
     "tel": "+923084762273",
     "wa": "923084762273",
     "ig": "beintox",
+    "fb": "https://www.facebook.com/profile.php?id=61593967393059",
 }
 
 NAV = [("index", "Home"), ("services", "Services"), ("portfolio", "Portfolio"), ("case-studies", "Case Studies"), ("about", "About"), ("contact", "Contact")]
@@ -420,8 +421,10 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
       <li><a href="tel:{CONTACT["tel"]}">{CONTACT["phone"]}</a></li>
       <li><a href="https://wa.me/{CONTACT["wa"]}" target="_blank" rel="noopener">WhatsApp</a></li>
       <li><a href="https://instagram.com/{CONTACT["ig"]}" target="_blank" rel="noopener">@{CONTACT["ig"]}</a></li>
+      <li><a href="{CONTACT["fb"]}" target="_blank" rel="noopener">Facebook</a></li>
     </ul></div>
   </div>
+  <div class="footer__contact-cta"><p>Got something to say?</p><a href="mailto:{CONTACT["email"]}">Get in touch {ARROW}</a></div>
   <div class="footer__bar"><span>© <span data-year>2026</span> BEINTOX Marketing Solutions</span><span>Being memorable is what makes brands grow.</span></div>
 </div></footer>
 <a class="wa" href="https://wa.me/{CONTACT["wa"]}" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">{ICON["wa"]}</a>
@@ -530,7 +533,7 @@ TESTIMONIALS = [
     ("Ahmed R.", "Founder, restaurant brand", "They didn't just design a logo, they gave us a brand our customers recognise from across the street. The launch campaign had people queuing before we opened."),
     ("Sana K.", "Owner, bakery & café", "Every piece, from the gift boxes to the Instagram feed, finally looks like it belongs to one brand. Our regulars noticed the difference straight away."),
     ("Bilal M.", "Director, fast-food chain", "Clear process, quick replies and a team that actually understood our customers. The packaging range alone paid for the project."),
-    ("Hira A.", "Co-founder, D2C snack brand", "BEINTOX handled strategy, design and our monthly content. One team, one voice. It's made growing the brand so much easier."),
+    ("Hira Ali", "Co-founder, D2C snack brand", "BEINTOX handled strategy, design and our monthly content. One team, one voice. It's made growing the brand so much easier."),
     ("Usman T.", "Founder, leather goods", "Sharp, modern identity and a website that converts. They pushed us to define who we're for before touching a single colour."),
     ("Maryam S.", "Marketing lead, retail", "Our ads finally look premium and perform better. Monthly reports are clear, and we always know what's coming next."),
 ]
