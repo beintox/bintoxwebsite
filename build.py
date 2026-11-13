@@ -401,14 +401,6 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
 <body>
 {GRAD_DEFS}
 <a class="skip" href="#main">Skip to content</a>
-<div class="topbar"><div class="wrap">
-  <span class="topbar__note">Brand &amp; marketing studio: strategy, branding, design, marketing.</span>
-  <ul>
-    <li><a href="mailto:{CONTACT["email"]}">{CONTACT["email"]}</a></li>
-    <li><a href="tel:{CONTACT["tel"]}">{CONTACT["phone"]}</a></li>
-    <li><a href="https://instagram.com/{CONTACT["ig"]}" target="_blank" rel="noopener">Instagram</a></li>
-  </ul>
-</div></div>
 <header class="nav"><div class="wrap">
   <a href="index.html" aria-label="BEINTOX home">{logo()}</a>
   <ul class="nav__links" id="nav-links">{links}</ul>
