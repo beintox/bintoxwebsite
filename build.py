@@ -17,7 +17,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 IMG = ROOT / "assets" / "img"
-VERSION = "18"  # bump to bust CSS/JS caches
+VERSION = "19"  # bump to bust CSS/JS caches
 
 # =====================================================================
 # DATA
@@ -27,6 +27,8 @@ CONTACT = {
     "email": "info@beintox.com",
     "phone": "+92 308 4762273",
     "tel": "+923084762273",
+    "location": "Lahore, Pakistan",
+    "map": "https://maps.google.com/?q=Lahore%2C+Pakistan",
     "wa": "923084762273",
     "ig": "beintox",
     "fb": "https://www.facebook.com/profile.php?id=61593967393059",
@@ -36,49 +38,37 @@ NAV = [("index", "Home"), ("services", "Services"), ("portfolio", "Portfolio"), 
 
 SERVICES = [
     # (id, title, short, long, deliverables, case-slug or None)
-    ("identity", "Brand Identity & Logo Design", "Logos, colour systems, typography and brand guidelines.",
-     "A complete identity system that works everywhere your brand appears, from a social avatar to a storefront sign. Every decision is documented, so your team and suppliers apply it the same way every time.",
-     ["Logo suite & variations", "Colour palette", "Typography system", "Brand guidelines book", "Mascot & illustration", "Stationery"], "khyber-sajji"),
-    ("strategy", "Brand Strategy & Consulting", "Positioning, audience research and growth plans.",
-     "Before design comes clarity: who you serve, what you stand for and why customers should choose you. We turn that into positioning and a message every channel can repeat.",
-     ["Market & competitor review", "Audience definition", "Positioning & messaging", "Personality & tone of voice", "Growth roadmap"], "twenty-two"),
-    ("packaging", "Packaging Design", "Shelf-ready packaging that sells the product.",
-     "Packaging that protects, presents and sells. Designed with dielines and print production in mind, not just a render.",
-     ["Structure & dielines", "Surface graphics", "Bags, boxes & wraps", "Print-ready artwork"], "shehar-e-lazzat"),
-    ("registration", "Brand Registration (IPO)", "Trademark registration and legal guidance for your brand.",
-     "Protect the name and mark you've invested in. We guide you through trademark search and filing, so your brand is legally yours.",
-     ["Trademark availability search", "Class selection guidance", "Filing support", "Documentation & follow-up"], None),
-    ("social", "Social Media Marketing", "Content planning, creatives and community growth.",
-     "A consistent, recognisable feed planned month by month: campaign ideas, post design, captions and community management that keep your audience coming back.",
-     ["Monthly content calendar", "Post & story design", "Captions & copywriting", "Launch & teaser campaigns", "Community management"], "khyber-sajji"),
-    ("design", "Creative & Graphic Design", "Posts, campaigns, brochures and print material.",
-     "Campaign visuals and print material that look like they belong to one brand: menus, brochures, billboards and everything in between.",
-     ["Campaign key visuals", "Menus & brochures", "Billboards & signage", "Print production files"], "tomgai"),
-    ("photo", "Photography & Videography", "Product, brand and corporate shoots.",
-     "Imagery that makes the product the hero. Food, product and brand shoots planned around how the content will actually be used.",
-     ["Product & food photography", "Brand lifestyle shoots", "Corporate shoots", "Retouching & grading"], "khyber-sajji"),
-    ("video", "Reels & Video Editing", "Short-form videos, motion graphics and promos.",
-     "Short-form video built for the feed: hooks in the first second, on-brand motion graphics and edits sized for every platform.",
-     ["Reels & short-form", "Motion graphics", "Promo videos", "Editing & colour"], None),
-    ("ads", "Digital Advertising", "Paid campaigns on Meta, Google and more.",
-     "Paid media planned around one clear goal, whether that's footfall, orders or leads. We build the creative, set up targeting and report on what's working.",
-     ["Campaign strategy", "Ad creatives", "Audience targeting", "Tracking setup", "Performance reports"], None),
-    ("web", "Website Design & Development", "Modern, fast, conversion-focused websites.",
-     "Websites that load fast, read clearly and turn visitors into customers, designed in your brand system and built to be easy to update.",
-     ["UX & interface design", "Responsive development", "Menus & online ordering", "SEO foundations", "Launch & handover"], "khyber-sajji"),
-    ("audit", "Marketing Audit", "A clear review of what's working and what isn't.",
-     "An honest look at your brand, content and ads, with a prioritised list of what to fix first and what to stop doing.",
-     ["Brand consistency review", "Social & ads review", "Competitor benchmark", "Prioritised action plan"], None),
+    ("identity", "Logo Design & Branding", "Distinctive logos and cohesive brand identities.",
+     "Build a clear, recognisable brand with a custom logo, color system, typography and practical brand guidelines.",
+     ["Logo design", "Brand identity system", "Color & typography", "Brand guidelines"], "khyber-sajji"),
+    ("social", "Social Media Management", "Consistent social content and day-to-day channel management.",
+     "Keep your channels active and on-brand with planned content, publishing, community care and clear monthly reporting.",
+     ["Content calendar", "Post & story design", "Publishing", "Community management", "Monthly reporting"], "khyber-sajji"),
+    ("ads", "Performance Marketing", "Measurable campaigns built to grow leads and sales.",
+     "Plan, launch and optimize paid campaigns across relevant channels, with clear tracking and reporting against business goals.",
+     ["Campaign planning", "Paid social & search ads", "Audience targeting", "Conversion tracking", "Performance reports"], None),
+    ("seo", "SEO", "Improve search visibility and attract qualified organic traffic.",
+     "Make it easier for customers to find your business with technical improvements, useful content and ongoing search optimization.",
+     ["Technical SEO review", "On-page optimization", "Keyword research", "Content recommendations", "Progress reporting"], None),
+    ("photo", "Photography & Videography", "Professional imagery for products, people and campaigns.",
+     "Create polished photo and video assets that show your products and brand at their best across your marketing channels.",
+     ["Product photography", "Brand & lifestyle shoots", "Video production", "Editing & color grading"], "khyber-sajji"),
+    ("web", "Website Design & Development", "Fast, responsive websites shaped around your brand.",
+     "Design and develop a user-friendly website that explains your offer, works across devices and helps turn visitors into customers.",
+     ["UX & interface design", "Responsive development", "Content structure", "SEO-ready foundations", "Launch support"], "khyber-sajji"),
+    ("registration", "Brand Registration (IPO)", "Trademark registration guidance and filing support.",
+     "Protect your brand name and identity with trademark availability checks, class guidance and support through the filing process.",
+     ["Trademark availability search", "Class selection guidance", "Filing support", "Documentation follow-up"], None),
 ]
-GROUPS = [("Brand", "Foundations", ["identity", "strategy", "packaging", "registration"]),
-          ("Content", "Creative & content", ["social", "design", "photo", "video"]),
-          ("Growth", "Growth & digital", ["ads", "web", "audit"])]
+GROUPS = [("Brand", "Brand", ["identity", "registration"]),
+          ("Digital", "Digital", ["social", "ads", "seo", "web"]),
+          ("Content", "Content", ["photo"])]
 
 # Case studies. Image paths are relative to assets/img.
 CASES = [
     {
-        "slug": "tomgai", "brief": "Create a warm, memorable identity for a new Chinese & Thai kitchen, and carry it consistently from launch billboards to takeaway bags and table service.", "services": ["identity", "design", "social", "packaging", "photo"], "name": "Tomgai Chinese", "sector": "Restaurant · Chinese & Thai", "brand": "#8f1a1e",
-        "tags": ["Brand identity", "Mascot", "Social media", "Packaging", "Launch campaign"],
+        "slug": "tomgai", "brief": "Create a warm, memorable identity for a new Chinese & Thai kitchen, and carry it consistently from launch billboards to takeaway bags and table service.", "services": ["identity", "social", "photo"], "name": "Tomgai Chinese", "sector": "Restaurant · Chinese & Thai", "brand": "#8f1a1e",
+        "tags": ["Logo Design & Branding", "Social Media Management", "Photography & Videography"],
         "summary": "A warm, modern identity for a Chinese & Thai kitchen. A bamboo-stroke wordmark, a cheerful chef mascot and a red-and-cream system that runs from chopstick sleeves to billboards.",
         "cover": "tomgai/app-chefs", "hero": "tomgai/app-chefs", "logo": "logos/tomgai.png",
         "story": [
@@ -98,8 +88,8 @@ CASES = [
         ],
     },
     {
-        "slug": "twenty-two", "brief": "Build one brand that serves two cravings, burgers and pizza, and make it instantly recognisable on every box, cup and post.", "services": ["strategy", "identity", "packaging", "social"], "name": "Twenty Two", "sector": "Fast food · Burgers & pizza", "brand": "#4b111f",
-        "tags": ["Brand strategy", "Brand identity", "Guidelines", "Packaging", "Social media"],
+        "slug": "twenty-two", "brief": "Build one brand that serves two cravings, burgers and pizza, and make it instantly recognisable on every box, cup and post.", "services": ["identity", "social"], "name": "Twenty Two", "sector": "Fast food · Burgers & pizza", "brand": "#4b111f",
+        "tags": ["Logo Design & Branding", "Social Media Management"],
         "summary": "Two shapes. One identity. A bold “22” monogram in orange and maroon for a burger-and-pizza brand, built into a full guideline book, a packaging range and a launch feed.",
         "cover": "twentytwo/pk-range", "hero": "twentytwo/pk-range", "logo": "logos/twentytwo.png",
         "story": [
@@ -119,8 +109,8 @@ CASES = [
         ],
     },
     {
-        "slug": "khyber-sajji", "brief": "Introduce a traditional Khyber sajji brand to Lahore with a character people remember, and build anticipation before the doors opened.", "services": ["identity", "social", "design", "web", "photo"], "name": "Khyber Sajji", "sector": "Restaurant · Traditional sajji", "brand": "#a82c17",
-        "tags": ["Brand identity", "Mascot & illustration", "Launch campaign", "Website & app", "Photography"],
+        "slug": "khyber-sajji", "brief": "Introduce a traditional Khyber sajji brand to Lahore with a character people remember, and build anticipation before the doors opened.", "services": ["identity", "social", "web", "photo"], "name": "Khyber Sajji", "sector": "Restaurant · Traditional sajji", "brand": "#a82c17",
+        "tags": ["Logo Design & Branding", "Social Media Management", "Website Design & Development", "Photography & Videography"],
         "summary": "A bold, friendly identity for Khyber-style roasted chicken: a mascot in a Peshawari cap, Urdu-first lettering and a teaser campaign that built anticipation in Lahore before the doors opened.",
         "cover": "khyber/app-storefront", "hero": "khyber/app-storefront", "logo": "logos/khyber.png",
         "story": [
@@ -144,8 +134,8 @@ CASES = [
         ],
     },
     {
-        "slug": "shehar-e-lazzat", "brief": "Give a modern bakery a premium identity rooted in tradition, one that works from the café counter to a gift box.", "services": ["identity", "packaging", "social", "design"], "name": "Shehar-e-Lazzat", "sector": "Bakery & café", "brand": "#13203a",
-        "tags": ["Brand identity", "Packaging", "Stationery", "Social media"],
+        "slug": "shehar-e-lazzat", "brief": "Give a modern bakery a premium identity rooted in tradition, one that works from the café counter to a gift box.", "services": ["identity", "social"], "name": "Shehar-e-Lazzat", "sector": "Bakery & café", "brand": "#13203a",
+        "tags": ["Logo Design & Branding", "Social Media Management"],
         "summary": "The City of Taste. A navy-and-gold identity for a modern bakery rooted in tradition: a croissant-crown logo, jar desserts, gift boxes and a feed that sells every bake.",
         "cover": "shehar/app-mockups", "hero": "shehar/app-mockups", "logo": "logos/shehar.png",
         "story": [
@@ -169,9 +159,9 @@ CASE = {c["slug"]: c for c in CASES}
 
 FAQ = [
     ("How long does a brand identity project take?", "Most identity projects take 3–6 weeks, depending on scope and how quickly feedback comes back. You'll get a timeline with clear milestones before any work starts."),
-    ("Do you work with new and small businesses?", "Yes. Several of the brands in our portfolio were built from scratch before opening, including their name story, identity, packaging and launch campaign."),
-    ("Can I hire you for a single service?", "Yes. Every service is available on its own: a logo, a packaging range, a month of social content or a website. Combine them when it makes sense."),
-    ("What do I receive at the end of an identity project?", "Final logo files in every format you need, a brand guidelines document, colour and typography specifications, and the applications agreed in scope, such as stationery, packaging or signage."),
+    ("Do you work with new and small businesses?", "Yes. Several brands in our portfolio were built from scratch, from the first logo and identity to their website and social presence."),
+    ("Can I hire you for a single service?", "Yes. Hire us for logo design and branding, social media management, performance marketing, SEO, photo and video, website work or brand registration."),
+    ("What do I receive at the end of an identity project?", "Final logo files in the formats you need, a brand guidelines document, color and typography specifications, and the agreed identity applications."),
     ("Can you help register our trademark?", "Yes. Our Brand Registration (IPO) service covers availability search, class guidance and filing support so your name and mark are protected."),
     ("How do we get started?", "Send us a short brief through the contact form or WhatsApp. We'll ask a few questions, then come back with a scoped proposal. Proposals are free."),
 ]
@@ -220,16 +210,12 @@ IG = {
 # Image shown beside each service on the Services page: one image, or three posts as a strip.
 SVC_IMG = {
     "identity": "khyber/bb-cover",
-    "strategy": "twentytwo/bb-story",
-    "packaging": "shehar/pk-jar-box",
     "registration": "tomgai/bb-logo-variations",
     "social": "khyber/post-curtain",
-    "design": "tomgai/app-billboard-1",
     "photo": "khyber/photo-roast",
-    "video": "tomgai/app-hotpot",
     "ads": "twentytwo/post-double",
+    "seo": "shehar/app-mockups",
     "web": "khyber/app-website",
-    "audit": "twentytwo/bb-contents",
 }
 
 STEPS = [("Discover", "We study your business, audience and competitors to find what makes you worth choosing."),
@@ -244,9 +230,9 @@ WHY = [("One team, every discipline", "Strategy, identity, content, ads and web 
        ("Production-ready", "Dielines, print files, signage and uniforms. We design for the real world, not just the screen."),
        ("Clear process", "Defined scope, milestones and one point of contact. You always know what's next.")]
 
-PLANS = [("Project", "Single project", "One defined deliverable with a fixed scope and timeline.", ["Logo or identity refresh", "Packaging range", "Website", "Campaign creatives"], False),
-         ("For new brands", "Brand launch", "Everything a new business needs to open strong, from name story to first posts.", ["Strategy & positioning", "Full identity + guidelines", "Packaging & stationery", "Launch campaign & social setup"], True),
-         ("Ongoing", "Monthly retainer", "A dedicated team running your content and ads month after month.", ["Monthly content calendar", "Post, story & reel design", "Paid ads management", "Monthly performance report"], False)]
+PLANS = [("Project", "Single project", "One defined deliverable with a fixed scope and timeline.", ["Logo and brand identity", "SEO", "Website", "Campaign optimization"], False),
+         ("For new brands", "Brand launch", "Everything a new business needs to open strong, from brand identity to its first online campaigns.", ["Logo design & branding", "Brand registration guidance", "Social media launch", "Website & performance marketing"], True),
+         ("Ongoing", "Monthly retainer", "A dedicated team managing your social channels and performance campaigns month after month.", ["Monthly content calendar", "Social channel management", "Paid campaign optimization", "Monthly performance report"], False)]
 
 # Team (from the client's previous website). photo=None renders initials until a real photo is supplied.
 FOUNDER = ("Ali Imtiaz", "CEO & Founder", "team/ali", "Leading BEINTOX with a vision to redefine branding and marketing standards.")
@@ -305,6 +291,7 @@ ICON = {
     "next": '<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
     "mail": '<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect x="2.5" y="4.5" width="15" height="11" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M3 5.5l7 5 7-5" stroke="currentColor" stroke-width="1.5"/></svg>',
     "phone": '<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 2.8h2.6l1.3 3.4-1.7 1.1a9.5 9.5 0 0 0 5.5 5.5l1.1-1.7 3.4 1.3V15a2.2 2.2 0 0 1-2.2 2.2A13.2 13.2 0 0 1 2.8 5 2.2 2.2 0 0 1 5 2.8Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>',
+    "pin": '<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M16 8.2c0 4.3-6 9.2-6 9.2S4 12.5 4 8.2a6 6 0 1 1 12 0Z" stroke="currentColor" stroke-width="1.5"/><circle cx="10" cy="8" r="2" stroke="currentColor" stroke-width="1.5"/></svg>',
     "ig": '<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect x="2.75" y="2.75" width="14.5" height="14.5" rx="4" stroke="currentColor" stroke-width="1.5"/><circle cx="10" cy="10" r="3.4" stroke="currentColor" stroke-width="1.5"/><circle cx="14.4" cy="5.6" r=".9" fill="currentColor"/></svg>',
     "fb": '<svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M11.2 18v-7h2.35l.35-2.73H11.2V6.53c0-.79.22-1.33 1.36-1.33H14V2.76c-.25-.03-1.11-.11-2.11-.11-2.1 0-3.54 1.28-3.54 3.63v1.99H6v2.73h2.35v7z"/></svg>',
     "wa": '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3Z"/></svg>',
@@ -418,7 +405,7 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
     <div class="footer__contact-cards" aria-label="Contact BEINTOX">
       <a class="footer__contact-card" href="mailto:{CONTACT["email"]}"><span class="footer__contact-icon">{ICON["mail"]}</span><span>{CONTACT["email"]}</span></a>
       <a class="footer__contact-card" href="tel:{CONTACT["tel"]}"><span class="footer__contact-icon">{ICON["phone"]}</span><span>{CONTACT["phone"]}</span></a>
-      <a class="footer__contact-card" href="https://wa.me/{CONTACT["wa"]}" target="_blank" rel="noopener"><span class="footer__contact-icon">{ICON["wa"]}</span><span>WhatsApp</span></a>
+      <a class="footer__contact-card" href="{CONTACT["map"]}" target="_blank" rel="noopener"><span class="footer__contact-icon">{ICON["pin"]}</span><span>{CONTACT["location"]}</span></a>
     </div>
     <div class="footer__columns">
       <nav class="footer__column" aria-label="Footer menu"><h4>Menu</h4><ul>{footer_nav}</ul></nav>
@@ -561,19 +548,19 @@ def logo_marquee() -> str:
 def stats_band() -> str:
     """Dark band under the logo strip: copy left, four counting numbers right."""
     made = sum(case_counts(c)["posts"] + case_counts(c)["applications"] for c in CASES)
-    kpis = [("11", "", "", "Services, one team"),
+    kpis = [(str(len(SERVICES)), "", "", "Services, one team"),
             (str(len(CASES)), "", "", "Complete brand systems"),
             (str(made), "+", "", "Creatives &amp; touchpoints"),
             ("6", "wk", "3–", "Typical identity project")]
     cells = "".join(
         f'<div class="kpi rv" style="--i:{i}"><b>{pre}<span data-count="{n}">{n}</span><sup>{suf}</sup></b><span>{label}</span></div>'
         for i, (n, suf, pre, label) in enumerate(kpis))
-    pills = "".join(f'<span>{E(x[1].split(" &")[0].replace(" (IPO)", ""))}</span>' for x in SERVICES[:8])
+    pills = "".join(f'<span>{E(x[1])}</span>' for x in SERVICES)
     return f'''<section class="kband"><div class="wrap">
   <div>
-    <span class="eyebrow"><b>—</b> Strategy · Branding · Design · Marketing</span>
+    <span class="eyebrow"><b>—</b> Branding · Social · Growth · Web</span>
     <h2 class="h2">The name is step one. <em>Now build the brand.</em></h2>
-    <p class="lead">One team takes your brand from the first idea to the shelf and the feed: strategy, identity, packaging, content, ads and websites.</p>
+    <p class="lead">One team builds your brand and grows it through social media, performance marketing, search, photography and web.</p>
     <div class="kband__pills">{pills}</div>
     <a class="btn btn--gold" href="services.html">Explore our services {ARROW}</a>
   </div>
@@ -585,11 +572,11 @@ def stats_band() -> str:
 SVC_LOOK = {
     "identity": ("#c0602f", "#4d1d0c", "rings"),
     "social": ("#33479a", "#0d1440", "tiles"),
-    "packaging": ("#2f7a6e", "#123630", "box"),
     "ads": ("#7a3466", "#260b21", "bars"),
     "web": ("#55504a", "#151311", "browser"),
     "photo": ("#9a2533", "#33080f", "lens"),
-    "strategy": ("#a57a34", "#33230b", "arcs"),
+    "seo": ("#2f7a6e", "#123630", "arcs"),
+    "registration": ("#a57a34", "#33230b", "rings"),
 }
 SHAPES = {
     "rings": '<circle class="o" cx="110" cy="100" r="86"/><circle class="o" cx="110" cy="100" r="56"/><circle class="a" cx="110" cy="100" r="26"/>',
@@ -691,10 +678,10 @@ def creative_wall() -> str:
 
 def page_home() -> str:
     mosaic_html = creative_wall()
-    featured = ["identity", "social", "packaging", "ads", "web", "photo", "strategy"]
+    featured = [s[0] for s in SERVICES]
     schema = {
         "@context": "https://schema.org", "@type": "ProfessionalService", "name": "BEINTOX Marketing Solutions",
-        "description": "Brand strategy, identity, design and marketing studio.", "email": CONTACT["email"], "telephone": CONTACT["tel"],
+        "description": "Logo design, social media management and digital marketing services.", "email": CONTACT["email"], "telephone": CONTACT["tel"],
         "address": {"@type": "PostalAddress", "addressCountry": "PK"}, "sameAs": [f"https://instagram.com/{CONTACT['ig']}"],
         "makesOffer": [{"@type": "Offer", "itemOffered": {"@type": "Service", "name": s[1]}} for s in SERVICES],
     }
@@ -703,7 +690,7 @@ def page_home() -> str:
   <div>
     <span class="eyebrow"><b>BEINTOX</b> Marketing Solutions</span>
     <h1 class="h1">Your brand story <em>starts here.</em></h1>
-    <p class="lead">Strategy, branding, design and marketing under one roof, for businesses that want to be noticed, trusted and chosen.</p>
+    <p class="lead">Branding, social media, performance marketing and digital growth for businesses ready to be noticed, trusted and chosen.</p>
     <div class="btns"><a class="btn btn--gold" href="contact.html">Request a proposal {ARROW}</a><a class="btn btn--ghost" href="portfolio.html">View portfolio</a></div>
   </div>
   {mosaic_html}
@@ -714,14 +701,8 @@ def page_home() -> str:
 {stats_band()}
 
 <section class="sec"><div class="wrap">
-  {head_block("<b>01</b> What we do", "Eleven services. <em>One clear voice.</em>", "Strategy, creativity and marketing under one roof, so your brand looks, sounds and feels the same everywhere.")}
+  {head_block("<b>01</b> What we do", "Seven services. <em>One clear voice.</em>", "Logo design, social media, paid growth, search, photography, websites and brand registration.")}
   <div class="svcx-grid">{"".join(svc_feature(s, i) for i, s in enumerate(featured))}
-    <a class="svcx svcx--more rv" href="services.html" style="--i:7">
-      <div class="svcx__top"><span>+4 more</span><span>All services</span></div>
-      <svg class="svcx__art" viewBox="0 0 200 200" aria-hidden="true">{SHAPES["x"]}</svg>
-      <div class="svcx__body"><h3>Registration, design, video &amp; audits.</h3><p>See all eleven services, with examples from our work.</p></div>
-      <span class="svcx__go" aria-hidden="true">{ARROW}</span>
-    </a>
   </div>
 </div></section>
 
@@ -735,8 +716,8 @@ def page_home() -> str:
 
 {cta_band()}
 '''
-    return layout("index", "BEINTOX: Branding & Digital Marketing Agency | Strategy, Identity, Social Media",
-                  "BEINTOX is a brand and marketing studio offering brand strategy, identity design, packaging, social media, advertising and websites, all under one roof.",
+    return layout("index", "BEINTOX: Branding & Digital Marketing Agency | Social Media, SEO, Web",
+                  "BEINTOX offers logo design and branding, social media management, performance marketing, SEO, photography and videography, website design and development, and brand registration.",
                   body, schema)
 
 
@@ -772,7 +753,7 @@ def page_services() -> str:
 <section class="phero"><div class="wrap">
   <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span>/</span><span>Services</span></nav>
   <h1 class="h1">Strategy, creativity and marketing <em>under one roof.</em></h1>
-  <p class="lead">Eleven services. Hire one, or let us run the whole brand.</p>
+  <p class="lead">Seven focused services to build, protect and grow your brand.</p>
 </div></section>
 <section class="sec"><div class="wrap"><div class="svc-grid">{tiles}{cta}</div></div></section>
 <section class="sec sec--white bt" id="process"><div class="wrap">
@@ -790,10 +771,10 @@ def page_services() -> str:
     {faq_html()}
   </div>
 </div></section>
-{cta_band("Not sure which service you need?", "Start with a marketing audit or a short call. We'll recommend the smallest set of services that gets you the result.")}
+{cta_band("Not sure which service you need?", "Tell us what you want to achieve and we'll recommend the right starting point.")}
 '''
-    return layout("services", "Services: Branding, Social Media, Advertising, Packaging & Web | BEINTOX",
-                  "Brand identity, strategy, packaging, trademark registration, social media, creative design, photography, video, advertising, websites and marketing audits.", body)
+    return layout("services", "Services: Branding, Social Media, Performance Marketing, SEO & Web | BEINTOX",
+                  "Logo design and branding, social media management, performance marketing, SEO, photography and videography, website design and development, and brand registration.", body)
 
 
 VERIFIED = '<svg class="ig__tick" viewBox="0 0 40 40" aria-label="Verified"><path fill="#0095f6" d="M19.998 3.094 14.638 0l-2.972 5.15H5.432v6.354L0 14.64 3.094 20 0 25.359l5.432 3.137v5.905h5.975L14.638 40l5.36-3.094L25.358 40l3.232-5.6h6.162v-6.01L40 25.359 36.905 20 40 14.641l-5.248-3.03v-6.46h-6.419L25.358 0l-5.36 3.094Zm7.415 11.225 2.254 2.287-11.43 11.5-6.835-6.93 2.244-2.258 4.587 4.581 9.18-9.18Z"/></svg>'
@@ -842,7 +823,7 @@ def page_portfolio() -> str:
     for i, c in enumerate(CASES):
         n = case_counts(c)
         sw = "".join(f'<i title="{E(nm)}" style="background:{h}"></i>' for h, nm in c["palette"])
-        svc_links = "".join(f'<a class="tag" href="services.html#{sid}">{E(svc_by_id(sid)[1].split(" &")[0].replace(" (IPO)", ""))}</a>' for sid in c["services"])
+        svc_links = "".join(f'<a class="tag" href="services.html#{sid}">{E(svc_by_id(sid)[1])}</a>' for sid in c["services"])
         fonts = f'{c["fonts"][0]} / {c["fonts"][1]}' if c["fonts"] else "Custom wordmark"
         g = IG[c["slug"]]
         blocks.append(f'''<section class="pf{" bt" if i else ""}" id="{c["slug"]}">
@@ -1001,7 +982,7 @@ def page_about() -> str:
 <section class="phero"><div class="wrap">
   <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span>/</span><span>About</span></nav>
   <h1 class="h1">Beyond ordinary. <em>Built to be noticed.</em></h1>
-  <p class="lead">BEINTOX is a brand and marketing studio. We combine smart strategy, bold design and performance-driven marketing, so your audience stops, connects and chooses you.</p>
+  <p class="lead">BEINTOX offers logo design and branding, social media management, performance marketing, SEO, photography and videography, website design and development, and brand registration.</p>
 </div></section>
 
 <section class="sec sec--white"><div class="wrap">
@@ -1011,7 +992,7 @@ def page_about() -> str:
       <h2 class="h2 mt-s">A brand isn't made by a logo or a post. It's made by a <em>clear idea.</em></h2>
       <div class="prose mt-m">
         <p>A brand is a clear idea, a consistent look and a message people can trust. Being online isn't enough anymore: brands need to be seen, understood and remembered.</p>
-        <p>That's why we bring strategy, creativity and marketing together under one roof, so your brand speaks with one clear voice everywhere. Everything we create has one job: to make your audience stop, connect and choose you.</p>
+        <p>We combine brand identity, social media, paid marketing, SEO, photography, web and brand registration so your brand can grow with one connected team.</p>
       </div>
     </div>
     <div class="split__media" style="aspect-ratio:4/3">{img("brand/chess-hand", "A hand moving a gold king on a chessboard", eager=True)}</div>
@@ -1030,14 +1011,14 @@ def page_about() -> str:
       <span class="eyebrow"><b>03</b> What we're building</span>
       <h2 class="h2 mt-s">From “just another name” to a brand with <em>real presence.</em></h2>
       <div class="prose mt-m"><p>We help businesses turn ideas into identities, and identities into lasting customer relationships. We don't create content just for today. We build brands made to last.</p></div>
-      {checks(["Strategy, design and marketing in one team", "Complete brand systems with guidelines", "Bilingual Urdu & English creative", "Production-ready files for print, packaging and signage"])}
+      {checks(["Logo design and branding", "Social media management", "Performance marketing and SEO", "Web, photography and brand registration"])}
       <div class="btns mt-m"><a class="btn btn--dark" href="portfolio.html">See the work {ARROW}</a><a class="btn btn--line" href="services.html">Our services</a></div>
     </div>
   </div>
 </div></section>
 
 <section class="sec" id="team"><div class="wrap">
-  {head_block("<b>04</b> The team", "The people behind <em>the work.</em>", "Strategy, design, video and development: one close team, under one roof.")}
+  {head_block("<b>04</b> The team", "The people behind <em>the work.</em>", "Brand identity, social media, performance marketing, photo and video, and websites from one close team.")}
   {team_html()}
 </div></section>
 
@@ -1050,17 +1031,17 @@ def page_about() -> str:
   {head_block("<b>06</b> How we work", "One team, one process, <em>no handoffs.</em>")}
   {steps_html([("Discover", "Business, audience and competitor research to find what makes you worth choosing."),
                 ("Define", "Positioning, personality and messaging: the brief every design decision answers to."),
-                ("Design", "Identity, guidelines, packaging and content built as one connected system."),
+                ("Design", "Brand identity, social content and websites built as one connected system."),
                 ("Grow", "Launch, measure and refine across social, ads and web.")])}
 </div></section>
 {cta_band()}
 '''
     return layout("about", "About BEINTOX: Brand & Marketing Studio",
-                  "BEINTOX combines smart strategy, bold design and performance-driven marketing to build brands that are seen, understood and remembered.", body)
+                  "BEINTOX offers logo design and branding, social media management, performance marketing, SEO, photography and videography, website design and development, and brand registration.", body)
 
 
 def page_contact() -> str:
-    chips = "".join(f'<label><input type="checkbox" name="services" value="{E(s[1])}"><span>{E(s[1].split(" &")[0].replace(" (IPO)", ""))}</span></label>' for s in SERVICES)
+    chips = "".join(f'<label><input type="checkbox" name="services" value="{E(s[1])}"><span>{E(s[1])}</span></label>' for s in SERVICES)
     body = f'''
 <section class="phero"><div class="wrap">
   <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span>/</span><span>Contact</span></nav>
