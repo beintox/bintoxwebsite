@@ -17,7 +17,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 IMG = ROOT / "assets" / "img"
-VERSION = "17"  # bump to bust CSS/JS caches
+VERSION = "18"  # bump to bust CSS/JS caches
 
 # =====================================================================
 # DATA
@@ -306,6 +306,7 @@ ICON = {
     "mail": '<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect x="2.5" y="4.5" width="15" height="11" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M3 5.5l7 5 7-5" stroke="currentColor" stroke-width="1.5"/></svg>',
     "phone": '<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 2.8h2.6l1.3 3.4-1.7 1.1a9.5 9.5 0 0 0 5.5 5.5l1.1-1.7 3.4 1.3V15a2.2 2.2 0 0 1-2.2 2.2A13.2 13.2 0 0 1 2.8 5 2.2 2.2 0 0 1 5 2.8Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>',
     "ig": '<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect x="2.75" y="2.75" width="14.5" height="14.5" rx="4" stroke="currentColor" stroke-width="1.5"/><circle cx="10" cy="10" r="3.4" stroke="currentColor" stroke-width="1.5"/><circle cx="14.4" cy="5.6" r=".9" fill="currentColor"/></svg>',
+    "fb": '<svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M11.2 18v-7h2.35l.35-2.73H11.2V6.53c0-.79.22-1.33 1.36-1.33H14V2.76c-.25-.03-1.11-.11-2.11-.11-2.1 0-3.54 1.28-3.54 3.63v1.99H6v2.73h2.35v7z"/></svg>',
     "wa": '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3Z"/></svg>',
 }
 ARROW = ICON["arrow"]
@@ -377,7 +378,8 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
     base = '<base href="/">\n' if page == "404" else ""
     ld = f'<script type="application/ld+json">{json.dumps(schema, ensure_ascii=False)}</script>' if schema else ""
     case_links = "".join(f'<li><a href="case-study-{c["slug"]}.html">{E(c["name"])}</a></li>' for c in CASES)
-    svc_links = "".join(f'<li><a href="services.html#{s[0]}">{E(s[1].split(" &")[0].replace(" (IPO)", ""))}</a></li>' for s in SERVICES[:6])
+    svc_links = "".join(f'<li><a href="services.html#{s[0]}">{E(s[1])}</a></li>' for s in SERVICES)
+    footer_nav = "".join(f'<li><a href="{href(k)}">{E(label)}</a></li>' for k, label in NAV)
     return f'''<!doctype html>
 <html lang="en">
 <head>
@@ -412,19 +414,21 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
 {body}
 </main>
 <footer class="footer"><div class="wrap">
-  <div class="footer__grid">
-    <div class="footer__brand">{logo(light=True)}<p>Strategy, branding, design and marketing under one roof. We build brands made to last.</p></div>
-    <div><h4>Services</h4><ul>{svc_links}<li><a href="services.html">All services</a></li></ul></div>
-    <div><h4>Case studies</h4><ul>{case_links}<li><a href="case-studies.html">All case studies</a></li></ul></div>
-    <div><h4>Contact</h4><ul>
-      <li><a href="mailto:{CONTACT["email"]}">{CONTACT["email"]}</a></li>
-      <li><a href="tel:{CONTACT["tel"]}">{CONTACT["phone"]}</a></li>
-      <li><a href="https://wa.me/{CONTACT["wa"]}" target="_blank" rel="noopener">WhatsApp</a></li>
-      <li><a href="https://instagram.com/{CONTACT["ig"]}" target="_blank" rel="noopener">@{CONTACT["ig"]}</a></li>
-      <li><a href="{CONTACT["fb"]}" target="_blank" rel="noopener">Facebook</a></li>
-    </ul></div>
+  <div class="footer__main">
+    <div class="footer__contact-cards" aria-label="Contact BEINTOX">
+      <a class="footer__contact-card" href="mailto:{CONTACT["email"]}"><span class="footer__contact-icon">{ICON["mail"]}</span><span>{CONTACT["email"]}</span></a>
+      <a class="footer__contact-card" href="tel:{CONTACT["tel"]}"><span class="footer__contact-icon">{ICON["phone"]}</span><span>{CONTACT["phone"]}</span></a>
+      <a class="footer__contact-card" href="https://wa.me/{CONTACT["wa"]}" target="_blank" rel="noopener"><span class="footer__contact-icon">{ICON["wa"]}</span><span>WhatsApp</span></a>
+    </div>
+    <div class="footer__columns">
+      <nav class="footer__column" aria-label="Footer menu"><h4>Menu</h4><ul>{footer_nav}</ul></nav>
+      <nav class="footer__column footer__column--services" aria-label="Footer services"><h4>Services</h4><ul>{svc_links}<li><a href="services.html">All services</a></li></ul></nav>
+    </div>
   </div>
-  <div class="footer__contact-cta"><p>Got something to say?</p><a href="mailto:{CONTACT["email"]}">Get in touch {ARROW}</a></div>
+  <div class="footer__social"><h4>Follow us</h4><div class="footer__social-links">
+    <a href="{CONTACT["fb"]}" target="_blank" rel="noopener" aria-label="BEINTOX on Facebook">{ICON["fb"]}</a>
+    <a href="https://www.instagram.com/{CONTACT["ig"]}/" target="_blank" rel="noopener" aria-label="BEINTOX on Instagram">{ICON["ig"]}</a>
+  </div></div>
   <div class="footer__bar"><span>© <span data-year>2026</span> BEINTOX Marketing Solutions</span><span>Being memorable is what makes brands grow.</span></div>
 </div></footer>
 <a class="wa" href="https://wa.me/{CONTACT["wa"]}" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">{ICON["wa"]}</a>
