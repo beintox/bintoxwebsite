@@ -17,7 +17,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 IMG = ROOT / "assets" / "img"
-VERSION = "28"  # bump to bust CSS/JS caches
+VERSION = "29"  # bump to bust CSS/JS caches
 
 # =====================================================================
 # DATA
@@ -405,7 +405,7 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
 <main id="main">
 {body}
 </main>
-<footer class="footer"><div class="wrap">
+<footer class="footer"><span class="footer__watermark" aria-hidden="true">BEINTOX</span><div class="wrap">
   <div class="footer__main">
     <div class="footer__contact-cards" aria-label="Contact BEINTOX">
       <a class="footer__contact-card" href="mailto:{CONTACT["email"]}"><span class="footer__contact-icon">{ICON["mail"]}</span><span>{CONTACT["email"]}</span></a>
@@ -551,27 +551,26 @@ def logo_marquee() -> str:
 
 
 def stats_band() -> str:
-    """Dark band under the logo strip: copy left, four counting numbers right."""
-    made = sum(case_counts(c)["posts"] + case_counts(c)["applications"] for c in CASES)
-    kpis = [(str(len(SERVICES)), "", "", "Services, one team"),
-            (str(len(CASES)), "", "", "Complete brand systems"),
-            (str(made), "+", "", "Creatives &amp; touchpoints"),
-            ("6", "wk", "3–", "Typical identity project")]
+    """Brand promise and four animated proof points for the home page."""
+    metrics = [
+        ("11", "", "Integrated Services", "Everything your brand needs, under one roof.", "M10 3v18M3 10h14l4 4v7H3zM7 14h6"),
+        ("360", "°", "Brand Growth", "From logo design to building a complete brand.", "M4 17 9 12l4 3 7-9M14 6h6v6"),
+        ("95", "%", "Client Retention Rate", "Built on trust, consistency, and results.", "M12 21s-8-4.5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 6.5-8 11-8 11Z"),
+        ("500", "+", "Creative Assets Produced", "Ideas transformed into impactful creative work.", "M4 4h7v7H4zM14 4h7v7h-7zM4 14h7v7H4zM14 14h7v7h-7z"),
+    ]
     cells = "".join(
-        f'<div class="kpi rv" style="--i:{i}"><b>{pre}<span data-count="{n}">{n}</span><sup>{suf}</sup></b><span>{label}</span></div>'
-        for i, (n, suf, pre, label) in enumerate(kpis))
-    pills = "".join(f'<span>{E(x[1])}</span>' for x in SERVICES)
+        f'<article class="kpi rv" style="--i:{i}"><div class="kpi__meta"><span>0{i + 1} / IMPACT</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="{icon}" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></div><strong class="kpi__number"><span class="kpi__prefix">+</span><span data-count="{n}">{n}</span><sup>{suf}</sup></strong><h3>{title}</h3><p>{desc}</p></article>'
+        for i, (n, suf, title, desc, icon) in enumerate(metrics))
     return f'''<section class="kband"><div class="wrap">
-  <div>
-    <span class="eyebrow"><b>—</b> Branding · Social · Growth · Web</span>
-    <h2 class="h2">The name is step one. <em>Now build the brand.</em></h2>
-    <p class="lead">One team builds your brand and grows it through social media, performance marketing, search, photography and web.</p>
-    <div class="kband__pills">{pills}</div>
-    <a class="btn btn--gold" href="services.html">Explore our services {ARROW}</a>
+  <div class="kband__intro">
+    <span class="eyebrow"><b>BRANDING</b> CREATIVITY · STRATEGY · GROWTH</span>
+    <h2 class="h2">From an idea to <em>a brand that stands out.</em></h2>
+    <p class="lead">We turn ideas into powerful brand identities and transform businesses through creative strategy, digital marketing, content production, and Automation. Everything your brand needs to build, connect, and grow — all under one roof.</p>
+    <div class="kband__pills"><span>Brand Strategy &amp; Identity</span><span>Social Media</span><span>Performance Marketing</span><span>SEO</span><span>Creative Production</span><span>Web Development</span></div>
+    <a class="btn btn--gold" href="contact.html">Let's Build Your Brand {ARROW}</a>
   </div>
-  <div class="kpis">{cells}</div>
-</div></section>'''
-
+  <div class="kpis" aria-label="BEINTOX results">{cells}</div>
+</div></section>
 
 # Service cards on the home page: colour + decorative shape per service.
 SVC_LOOK = {
