@@ -17,7 +17,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 IMG = ROOT / "assets" / "img"
-VERSION = "25"  # bump to bust CSS/JS caches
+VERSION = "26"  # bump to bust CSS/JS caches
 
 # =====================================================================
 # DATA
@@ -372,7 +372,7 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
     svc_links = "".join(f'<li><a href="services.html#{s[0]}">{E(s[1])}</a></li>' for s in SERVICES)
     footer_nav = "".join(f'<li><a href="{href(k)}">{E(label)}</a></li>' for k, label in NAV)
     header = f'''<header class="nav"><div class="wrap">
-  <a href="/" aria-label="BEINTOX home">{logo()}</a>
+  <a href="/" aria-label="BEINTOX home">{logo(light=True)}</a>
   <ul class="nav__links" id="nav-links">{links}</ul>
   <a class="btn btn--gold nav__cta" href="contact.html">Let's Make a Strategy Call {ARROW}</a>
   <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">{ICON["menu"]}</button>
