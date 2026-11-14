@@ -17,7 +17,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 IMG = ROOT / "assets" / "img"
-VERSION = "19"  # bump to bust CSS/JS caches
+VERSION = "20"  # bump to bust CSS/JS caches
 
 # =====================================================================
 # DATA
@@ -1048,8 +1048,18 @@ def page_contact() -> str:
   <h1 class="h1">Let's build something <em>worth remembering.</em></h1>
   <p class="lead">Tell us about your business and what you need. We'll reply with questions and a scoped proposal. Proposals are free.</p>
 </div></section>
-<section class="sec"><div class="wrap contact">
-  <form class="card form" id="brief" data-wa="{CONTACT["wa"]}" data-email="{CONTACT["email"]}" style="padding:28px">
+<section class="sec"><div class="wrap contact contact--talk">
+  <div class="contact__intro">
+    <span class="eyebrow">Contact us</span>
+    <h2 class="contact__headline">Let's<br><em>Talk!</em></h2>
+    <p class="lead">Tell us about your business and what you need. We'll reply with a few questions and a clear proposal.</p>
+    <div class="contact__quick">
+      <a href="https://wa.me/{CONTACT["wa"]}" target="_blank" rel="noopener">{ICON["wa"]} WhatsApp</a>
+      <a href="mailto:{CONTACT["email"]}">{ICON["mail"]} Email us</a>
+      <a href="tel:{CONTACT["tel"]}">{ICON["phone"]} Call us</a>
+    </div>
+  </div>
+  <form class="card form" id="brief" data-wa="{CONTACT["wa"]}" data-email="{CONTACT["email"]}">
     <div class="field"><label for="f-name">Your name *</label><input id="f-name" name="name" required autocomplete="name"></div>
     <div class="field"><label for="f-biz">Business / brand</label><input id="f-biz" name="business" autocomplete="organization"></div>
     <div class="field field--full"><label for="f-contact">Phone or email *</label><input id="f-contact" name="contact" required autocomplete="email"></div>
@@ -1062,17 +1072,8 @@ def page_contact() -> str:
       <span class="form__note">Opens WhatsApp or your email app with your brief filled in.</span>
     </div>
   </form>
-  <aside>
-    <span class="eyebrow">Direct</span>
-    <div class="clist mt-s">
-      <a href="https://wa.me/{CONTACT["wa"]}" target="_blank" rel="noopener"><i>{ICON["wa"]}</i><span><small>WhatsApp, fastest reply</small><b>{CONTACT["phone"]}</b></span></a>
-      <a href="tel:{CONTACT["tel"]}"><i>{ICON["phone"]}</i><span><small>Call</small><b>{CONTACT["phone"]}</b></span></a>
-      <a href="mailto:{CONTACT["email"]}"><i>{ICON["mail"]}</i><span><small>Email</small><b>{CONTACT["email"]}</b></span></a>
-      <a href="https://instagram.com/{CONTACT["ig"]}" target="_blank" rel="noopener"><i>{ICON["ig"]}</i><span><small>Instagram</small><b>@{CONTACT["ig"]}</b></span></a>
-    </div>
-    <div class="card mt-m"><span class="eyebrow">What happens next</span>
+  <aside class="card contact__next"><span class="eyebrow">What happens next</span>
       <ol class="checks">{"".join(f"<li>{ICON['check']}<span>{t}</span></li>" for t in ["We read your brief and reply with a few questions.", "A short call to understand goals, audience and budget.", "You receive a scoped proposal with timeline and cost.", "Kick-off, and discovery begins."])}</ol>
-    </div>
   </aside>
 </div></section>
 '''
