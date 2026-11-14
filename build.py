@@ -17,7 +17,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 IMG = ROOT / "assets" / "img"
-VERSION = "20"  # bump to bust CSS/JS caches
+VERSION = "21"  # bump to bust CSS/JS caches
 
 # =====================================================================
 # DATA
@@ -321,8 +321,8 @@ def logo(light: bool = False, sub: bool = True) -> str:
 
 GRAD_DEFS = ('<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>'
              '<linearGradient id="bxg" x1="830" y1="100" x2="968" y2="0" gradientUnits="userSpaceOnUse">'
-             '<stop offset="0" stop-color="#8a5a22"/><stop offset=".35" stop-color="#d9a838"/>'
-             '<stop offset=".55" stop-color="#f7ec8f"/><stop offset="1" stop-color="#c99a3c"/></linearGradient></defs></svg>')
+            '<stop offset="0" stop-color="#D4A017"/><stop offset=".35" stop-color="#D4A017"/>'
+            '<stop offset=".55" stop-color="#D4A017"/><stop offset="1" stop-color="#D4A017"/></linearGradient></defs></svg>')
 
 
 def checks(items) -> str:
@@ -374,7 +374,7 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
 {base}<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{E(title)}</title>
 <meta name="description" content="{E(desc)}">
-<meta name="theme-color" content="#0e0d0c">
+<meta name="theme-color" content="#1F1F1F">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="BEINTOX Marketing Solutions">
 <meta property="og:title" content="{E(title)}">
@@ -642,12 +642,12 @@ def brand_reel() -> str:
             folder = c["cover"].split("/")[0]
             tags = "".join(f'<span>{E(t)}</span>' for t in c["tags"][:3])
             line = REEL_LINE[c["slug"]]
-            out.append(f'''<a class="rc rc--case" href="case-study-{c["slug"]}.html" style="--brand:{c["brand"]}"{attrs}>
+            out.append(f'''<a class="rc rc--case" href="case-study-{c["slug"]}.html" style="--brand:#1F1F1F"{attrs}>
   {img(c["cover"], "" if hidden else f'{c["name"]} brand work by BEINTOX')}
   <span class="rc__top"><span>{E(c["name"])}</span><span>{E(c["sector"].split(" · ")[0])}</span></span>
   <span class="rc__body"><b>{E(line)}</b><span class="rc__tags">{tags}</span></span></a>''')
             key, cap = first_post[c["slug"]].split(":", 1)
-            out.append(f'''<a class="rc rc--post" href="portfolio.html#{c["slug"]}" style="--brand:{c["brand"]}"{attrs}>
+            out.append(f'''<a class="rc rc--post" href="portfolio.html#{c["slug"]}" style="--brand:#1F1F1F"{attrs}>
   {img(f"{folder}/{key}", "" if hidden else f'{c["name"]}: {cap}')}
   <span class="rc__chip">{E(c["name"])} · Social</span></a>''')
         return "".join(out)
@@ -777,7 +777,7 @@ def page_services() -> str:
                   "Logo design and branding, social media management, performance marketing, SEO, photography and videography, website design and development, and brand registration.", body)
 
 
-VERIFIED = '<svg class="ig__tick" viewBox="0 0 40 40" aria-label="Verified"><path fill="#0095f6" d="M19.998 3.094 14.638 0l-2.972 5.15H5.432v6.354L0 14.64 3.094 20 0 25.359l5.432 3.137v5.905h5.975L14.638 40l5.36-3.094L25.358 40l3.232-5.6h6.162v-6.01L40 25.359 36.905 20 40 14.641l-5.248-3.03v-6.46h-6.419L25.358 0l-5.36 3.094Zm7.415 11.225 2.254 2.287-11.43 11.5-6.835-6.93 2.244-2.258 4.587 4.581 9.18-9.18Z"/></svg>'
+VERIFIED = '<svg class="ig__tick" viewBox="0 0 40 40" aria-label="Verified"><path fill="#E8413C" d="M19.998 3.094 14.638 0l-2.972 5.15H5.432v6.354L0 14.64 3.094 20 0 25.359l5.432 3.137v5.905h5.975L14.638 40l5.36-3.094L25.358 40l3.232-5.6h6.162v-6.01L40 25.359 36.905 20 40 14.641l-5.248-3.03v-6.46h-6.419L25.358 0l-5.36 3.094Zm7.415 11.225 2.254 2.287-11.43 11.5-6.835-6.93 2.244-2.258 4.587 4.581 9.18-9.18Z"/></svg>'
 IG_GRID = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="1" stroke="currentColor" stroke-width="1.8"/><path d="M9 3v18M15 3v18M3 9h18M3 15h18" stroke="currentColor" stroke-width="1.8"/></svg>'
 IG_REEL = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4" stroke="currentColor" stroke-width="1.8"/><path d="M3 8h18M8 3l3 5M14 3l3 5M10 12v5l4.5-2.5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>'
 IG_TAG = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="1.8"/><path d="M6.5 19c1-2.5 3-3.6 5.5-3.6s4.5 1.1 5.5 3.6" stroke="currentColor" stroke-width="1.8"/></svg>'
@@ -867,7 +867,7 @@ def page_case_studies() -> str:
     for i, c in enumerate(CASES):
         n = case_counts(c)
         delivered = "".join(f"<li>{ICON['check']}<span>{E(svc_by_id(sid)[1])}</span></li>" for sid in c["services"])
-        rows.append(f'''<a class="cs" href="case-study-{c["slug"]}.html" style="--brand:{c["brand"]}">
+        rows.append(f'''<a class="cs" href="case-study-{c["slug"]}.html" style="--brand:#1F1F1F">
   <div class="cs__img">{img(c["cover"], f'{c["name"]} case study', eager=i == 0)}<span class="cs__logo">{img(c["logo"], c["name"] + " logo")}</span></div>
   <div class="cs__body">
     <div class="cs__top"><span class="eyebrow"><b>Case {i + 1:02d}</b> {E(c["sector"])}</span></div>
@@ -925,7 +925,7 @@ def page_case(c: dict) -> str:
     nxt = CASES[(idx + 1) % len(CASES)]
     overview_media = f'<div class="ig-wrap">{ig_profile(c)}</div>'
     body = f'''
-<section class="chero" style="--brand:{c["brand"]}"><div class="wrap">
+<section class="chero" style="--brand:#1F1F1F"><div class="wrap">
   <div class="chero__copy">
     <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span>/</span><a href="case-studies.html">Case studies</a><span>/</span><span>{E(c["name"])}</span></nav>
     <h1 class="h1">{E(c["name"])}</h1>
