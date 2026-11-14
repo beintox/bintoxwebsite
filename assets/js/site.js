@@ -13,6 +13,66 @@
     $$(".nav__links a").forEach((a) => a.addEventListener("click", () => set(false)));
   }
 
+  /* Match the header wordmark to the page surface behind the transparent nav. */
+  const navLogo = nav && $(".logo__adaptive", nav);
+  if (navLogo) {
+    const rgbLuminance = (value) => {
+      const match = value.match(/rgba?\(([^)]+)\)/i);
+      if (!match) return null;
+      const values = match[1].split(/[,/\s]+/).filter(Boolean).map(Number);
+      if (values.length < 3 || values.slice(0, 3).some(Number.isNaN)) return null;
+      const channels = values.slice(0, 3).map((v) => {
+        v /= 255;
+        return v <= .04045 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4;
+      });
+      return .2126 * channels[0] + .7152 * channels[1] + .0722 * channels[2];
+    };
+    const surfaceLuminance = (element) => {
+      for (let node = element; node && node !== document.documentElement; node = node.parentElement) {
+        const style = getComputedStyle(node);
+        const color = style.backgroundColor.match(/rgba?\(([^)]+)\)/i);
+        if (color) {
+          const parts = color[1].split(/[,/\s]+/).filter(Boolean).map(Number);
+          const alpha = parts.length > 3 && Number.isFinite(parts[3]) ? parts[3] : 1;
+          if (alpha > .1) {
+            const luminance = rgbLuminance(style.backgroundColor);
+            if (luminance !== null) return luminance;
+          }
+        }
+        if (style.backgroundImage && style.backgroundImage !== "none") {
+          const colors = style.backgroundImage.match(/rgba?\([^)]+\)|#[\da-f]{3,8}\b/gi) || [];
+          const values = colors.map((c) => {
+            if (c.startsWith("#")) {
+              let h = c.slice(1);
+              if (h.length === 3 || h.length === 4) h = [...h].map((x) => x + x).join("");
+              return rgbLuminance(`rgb(${parseInt(h.slice(0, 2), 16)}, ${parseInt(h.slice(2, 4), 16)}, ${parseInt(h.slice(4, 6), 16)})`);
+            }
+            return rgbLuminance(c);
+          }).filter((n) => n !== null);
+          if (values.length) return values.reduce((sum, n) => sum + n, 0) / values.length;
+        }
+      }
+      return 1;
+    };
+    let contrastFrame = 0;
+    const updateLogoContrast = () => {
+      cancelAnimationFrame(contrastFrame);
+      contrastFrame = requestAnimationFrame(() => {
+        const rect = navLogo.getBoundingClientRect();
+        const oldVisibility = nav.style.visibility;
+        nav.style.visibility = "hidden";
+        let underlay;
+        try { underlay = document.elementFromPoint(rect.left + rect.width / 2, rect.top + rect.height / 2); }
+        finally { nav.style.visibility = oldVisibility; }
+        nav.classList.toggle("nav--light-underlay", surfaceLuminance(underlay) > .52);
+      });
+    };
+    addEventListener("scroll", updateLogoContrast, { passive: true });
+    addEventListener("resize", updateLogoContrast);
+    addEventListener("load", updateLogoContrast, { once: true });
+    updateLogoContrast();
+  }
+
   /* Lightbox: any [data-lb] link inside a [data-lb-group] container */
   const lb = $("#lb");
   if (lb && typeof lb.showModal === "function") {

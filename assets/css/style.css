@@ -137,8 +137,9 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .logo__sub { font-family: var(--f-sans); font-size: 50px; font-weight: 600; fill: var(--muted); }
 .logo--light { color: #F8F6F2; }
 .logo--light .logo__sub { fill: var(--muted-dark); }
-.logo__adaptive { color: #fff; mix-blend-mode: difference; }
-.logo__adaptive .logo__sub { fill: #fff; }
+.nav .logo__adaptive { color: #F8F6F2; }
+.nav .logo__adaptive .logo__sub { fill: currentColor; }
+.nav.nav--light-underlay .logo__adaptive { color: #1F1F1F; }
 
 /* ---------- 7. Header ---------- */
 .nav { position: fixed; top: 0; left: 0; z-index: 50; width: 100%; background: transparent; backdrop-filter: none; -webkit-backdrop-filter: none; border: 0; border-radius: 0; box-shadow: none; }
