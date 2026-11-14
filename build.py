@@ -17,7 +17,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 IMG = ROOT / "assets" / "img"
-VERSION = "29"  # bump to bust CSS/JS caches
+VERSION = "30"  # bump to bust CSS/JS caches
 
 # =====================================================================
 # DATA
@@ -564,10 +564,10 @@ def stats_band() -> str:
     return f'''<section class="kband"><div class="wrap">
   <div class="kband__intro">
     <span class="eyebrow"><b>BRANDING</b> CREATIVITY · STRATEGY · GROWTH</span>
-    <h2 class="h2">From an idea to <em>a brand that stands out.</em></h2>
-    <p class="lead">We turn ideas into powerful brand identities and transform businesses through creative strategy, digital marketing, content production, and Automation. Everything your brand needs to build, connect, and grow — all under one roof.</p>
-    <div class="kband__pills"><span>Brand Strategy &amp; Identity</span><span>Social Media</span><span>Performance Marketing</span><span>SEO</span><span>Creative Production</span><span>Web Development</span></div>
-    <a class="btn btn--gold" href="contact.html">Let's Build Your Brand {ARROW}</a>
+    <h2 class="h2 rv" style="--i:0">From an idea to <em>a brand that stands out.</em></h2>
+    <p class="lead rv" style="--i:1">We turn ideas into powerful brand identities and transform businesses through creative strategy, digital marketing, content production, and Automation. Everything your brand needs to build, connect, and grow — all under one roof.</p>
+    <div class="kband__pills rv" style="--i:2"><span>Brand Strategy &amp; Identity</span><span>Social Media</span><span>Performance Marketing</span><span>SEO</span><span>Creative Production</span><span>Web Development</span></div>
+    <a class="btn btn--gold rv" style="--i:3" href="contact.html">Let's Build Your Brand {ARROW}</a>
   </div>
   <div class="kpis" aria-label="BEINTOX results">{cells}</div>
 </div></section>
