@@ -367,7 +367,7 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
     case_links = "".join(f'<li><a href="case-study-{c["slug"]}.html">{E(c["name"])}</a></li>' for c in CASES)
     svc_links = "".join(f'<li><a href="services.html#{s[0]}">{E(s[1])}</a></li>' for s in SERVICES)
     footer_nav = "".join(f'<li><a href="{href(k)}">{E(label)}</a></li>' for k, label in NAV)
-    header = "" if page == "contact" else f'''<header class="nav"><div class="wrap">
+    header = f'''<header class="nav"><div class="wrap">
   <a href="/" aria-label="BEINTOX home">{logo()}</a>
   <ul class="nav__links" id="nav-links">{links}</ul>
   <a class="btn btn--dark btn--s nav__cta" href="contact.html">Request a proposal {ARROW}</a>
@@ -1044,11 +1044,6 @@ def page_about() -> str:
 def page_contact() -> str:
     chips = "".join(f'<label><input type="checkbox" name="services" value="{E(s[1])}"><span>{E(s[1])}</span></label>' for s in SERVICES)
     body = f'''
-<section class="phero"><div class="wrap">
-  <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span>/</span><span>Contact</span></nav>
-  <h1 class="h1">Let's build something <em>worth remembering.</em></h1>
-  <p class="lead">Tell us about your business and what you need. We'll reply with questions and a scoped proposal. Proposals are free.</p>
-</div></section>
 <section class="sec"><div class="wrap contact contact--talk">
   <div class="contact__intro">
     <span class="eyebrow">Contact us</span>
