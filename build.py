@@ -17,7 +17,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 IMG = ROOT / "assets" / "img"
-VERSION = "21"  # bump to bust CSS/JS caches
+VERSION = "22"  # bump to bust CSS/JS caches
 
 # =====================================================================
 # DATA
@@ -367,6 +367,12 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
     case_links = "".join(f'<li><a href="case-study-{c["slug"]}.html">{E(c["name"])}</a></li>' for c in CASES)
     svc_links = "".join(f'<li><a href="services.html#{s[0]}">{E(s[1])}</a></li>' for s in SERVICES)
     footer_nav = "".join(f'<li><a href="{href(k)}">{E(label)}</a></li>' for k, label in NAV)
+    header = "" if page == "contact" else f'''<header class="nav"><div class="wrap">
+  <a href="/" aria-label="BEINTOX home">{logo()}</a>
+  <ul class="nav__links" id="nav-links">{links}</ul>
+  <a class="btn btn--dark btn--s nav__cta" href="contact.html">Request a proposal {ARROW}</a>
+  <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">{ICON["menu"]}</button>
+</div></header>'''
     return f'''<!doctype html>
 <html lang="en">
 <head>
@@ -391,12 +397,7 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
 <body>
 {GRAD_DEFS}
 <a class="skip" href="#main">Skip to content</a>
-<header class="nav"><div class="wrap">
-  <a href="index.html" aria-label="BEINTOX home">{logo()}</a>
-  <ul class="nav__links" id="nav-links">{links}</ul>
-  <a class="btn btn--dark btn--s nav__cta" href="contact.html">Request a proposal {ARROW}</a>
-  <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">{ICON["menu"]}</button>
-</div></header>
+{header}
 <main id="main">
 {body}
 </main>
