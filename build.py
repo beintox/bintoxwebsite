@@ -17,7 +17,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 IMG = ROOT / "assets" / "img"
-VERSION = "23"  # bump to bust CSS/JS caches
+VERSION = "24"  # bump to bust CSS/JS caches
 
 # =====================================================================
 # DATA
@@ -374,6 +374,7 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
     header = f'''<header class="nav"><div class="wrap">
   <a href="/" aria-label="BEINTOX home">{logo()}</a>
   <ul class="nav__links" id="nav-links">{links}</ul>
+  <a class="btn btn--gold nav__cta" href="contact.html">Let's Make a Strategy Call {ARROW}</a>
   <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">{ICON["menu"]}</button>
 </div></header>'''
     return f'''<!doctype html>
@@ -691,11 +692,11 @@ def page_home() -> str:
     }
     body = f'''
 <section class="hero"><div class="wrap">
-  <div>
-    <span class="eyebrow"><b>BEINTOX</b> Marketing Solutions</span>
-    <h1 class="h1">Your brand story <em>starts here.</em></h1>
-    <p class="lead">Branding, social media, performance marketing and digital growth for businesses ready to be noticed, trusted and chosen.</p>
-    <div class="btns"><a class="btn btn--gold" href="contact.html">Request a proposal {ARROW}</a><a class="btn btn--ghost" href="portfolio.html">View portfolio</a></div>
+  <div class="hero__copy">
+    <span class="eyebrow"><b>BEINTOX</b> Your creative &amp; growth partner</span>
+    <h1 class="h1">We Build Values<br><em>That Stand Out &amp; Grow.</em></h1>
+    <p class="lead">From brand identity and creative design to digital marketing and web development, we help startups transform their ideas into powerful brands.</p>
+    <div class="btns"><a class="btn btn--gold" href="contact.html">Let's Build Your Brand {ARROW}</a><a class="btn btn--ghost" href="services.html">Explore Our Services</a></div>
   </div>
   {mosaic_html}
 </div></section>
