@@ -17,7 +17,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 IMG = ROOT / "assets" / "img"
-VERSION = "22"  # bump to bust CSS/JS caches
+VERSION = "23"  # bump to bust CSS/JS caches
 
 # =====================================================================
 # DATA
@@ -294,6 +294,7 @@ ICON = {
     "pin": '<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M16 8.2c0 4.3-6 9.2-6 9.2S4 12.5 4 8.2a6 6 0 1 1 12 0Z" stroke="currentColor" stroke-width="1.5"/><circle cx="10" cy="8" r="2" stroke="currentColor" stroke-width="1.5"/></svg>',
     "ig": '<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect x="2.75" y="2.75" width="14.5" height="14.5" rx="4" stroke="currentColor" stroke-width="1.5"/><circle cx="10" cy="10" r="3.4" stroke="currentColor" stroke-width="1.5"/><circle cx="14.4" cy="5.6" r=".9" fill="currentColor"/></svg>',
     "fb": '<svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M11.2 18v-7h2.35l.35-2.73H11.2V6.53c0-.79.22-1.33 1.36-1.33H14V2.76c-.25-.03-1.11-.11-2.11-.11-2.1 0-3.54 1.28-3.54 3.63v1.99H6v2.73h2.35v7z"/></svg>',
+    "linkedin": '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5.3 3.5a2 2 0 1 1 0 4 2 2 0 0 1 0-4ZM3.6 9h3.4v11H3.6zm5.5 0h3.2v1.5h.05A3.5 3.5 0 0 1 15.5 8.8c3.5 0 4.1 2.3 4.1 5.2V20h-3.4v-5.3c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9V20H9.1z"/></svg>',
     "wa": '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3Z"/></svg>',
 }
 ARROW = ICON["arrow"]
@@ -340,8 +341,11 @@ def cta_band(title="Ready to make your brand <em>unforgettable?</em>",
              lead="Tell us where your brand is today and where you want it to go. We'll reply with a scoped proposal.") -> str:
     return f'''<section class="sec"><div class="wrap"><div class="cta">
   <div><h2 class="h2">{title}</h2><p class="lead">{lead}</p></div>
-  <div class="btns"><a class="btn btn--gold" href="contact.html">Request a proposal {ARROW}</a>
-  <a class="btn btn--ghost" href="https://wa.me/{CONTACT["wa"]}" target="_blank" rel="noopener">WhatsApp us</a></div>
+  <form class="subscribe-form" data-email="{CONTACT["email"]}">
+    <label class="sr-only" for="newsletter-email">Email address</label>
+    <input id="newsletter-email" name="email" type="email" placeholder="Email address" autocomplete="email" required>
+    <button class="btn btn--gold" type="submit">Subscribe {ARROW}</button>
+  </form>
 </div></div></section>'''
 
 
@@ -370,7 +374,6 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
     header = f'''<header class="nav"><div class="wrap">
   <a href="/" aria-label="BEINTOX home">{logo()}</a>
   <ul class="nav__links" id="nav-links">{links}</ul>
-  <a class="btn btn--dark btn--s nav__cta" href="contact.html">Request a proposal {ARROW}</a>
   <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">{ICON["menu"]}</button>
 </div></header>'''
     return f'''<!doctype html>
@@ -964,6 +967,12 @@ def team_html() -> str:
     for name, r, ph in TEAM:
         face = img(ph, f"{name}, {r} at BEINTOX") if ph else f'<span class="member__ini" aria-hidden="true">{"".join(w[0] for w in name.split()[:2])}</span>'
         members.append(f'<li class="member rv" tabindex="0" style="--i:{len(members)}"><div class="member__ph">{face}</div><b>{E(name)}</b><span>{E(r)}</span></li>')
+    socials = (
+        ("Facebook", "https://www.facebook.com/ali.imtiaz.7564", ICON["fb"]),
+        ("Instagram", "https://www.instagram.com/ali_imtiaz1122/?hl=en", ICON["ig"]),
+        ("LinkedIn", "https://www.linkedin.com/in/ali-imtiaz-a683231b7/", ICON["linkedin"]),
+    )
+    social_links = "".join(f'<a href="{url}" target="_blank" rel="noopener noreferrer" aria-label="Ali Imtiaz on {label}">{icon}</a>' for label, url, icon in socials)
     return f'''<div class="founder">
   <div class="founder__frame">
     <div class="founder__ring" aria-hidden="true"></div>
@@ -973,6 +982,7 @@ def team_html() -> str:
   <div class="founder__txt"><span class="eyebrow"><b>Leadership</b></span>
     <blockquote class="h2 mt-s">“{E(bio)}”</blockquote>
     <p class="founder__name"><b>{E(n)}</b><span>{E(role)}</span></p>
+    <nav class="founder__socials" aria-label="Ali Imtiaz social profiles">{social_links}</nav>
   </div>
 </div>
 <ul class="team">{"".join(members)}</ul>'''

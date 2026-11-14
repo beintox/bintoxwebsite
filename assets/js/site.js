@@ -67,6 +67,19 @@
     });
   }
 
+  /* Newsletter requests open a prefilled email to the BEINTOX inbox. */
+  const subscribeForm = $(".subscribe-form");
+  if (subscribeForm) {
+    subscribeForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      if (!subscribeForm.reportValidity()) return;
+      const email = new FormData(subscribeForm).get("email");
+      const subject = encodeURIComponent("BEINTOX newsletter subscription");
+      const body = encodeURIComponent(`Please add ${email} to the BEINTOX newsletter.`);
+      location.href = `mailto:${subscribeForm.dataset.email}?subject=${subject}&body=${body}`;
+    });
+  }
+
   /* Reveal cards once as they scroll in, and count numbers up from 0 */
   const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const reveals = $$(".rv"), counters = $$("[data-count]");
