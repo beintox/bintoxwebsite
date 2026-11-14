@@ -17,7 +17,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 IMG = ROOT / "assets" / "img"
-VERSION = "26"  # bump to bust CSS/JS caches
+VERSION = "27"  # bump to bust CSS/JS caches
 
 # =====================================================================
 # DATA
@@ -317,7 +317,7 @@ def logo(light: bool = False, sub: bool = True) -> str:
     t = ('<text class="logo__sub" x="2" y="178" textLength="964" lengthAdjust="spacing">MARKETING SOLUTIONS</text>' if sub else "")
     h = 182 if sub else 102
     return (f'<span class="logo{" logo--light" if light else ""}"><svg viewBox="0 0 968 {h}" role="img" aria-label="BEINTOX Marketing Solutions">'
-            f'<path d="{LOGO_PATHS}" fill="currentColor"/>{xs}{t}</svg></span>')
+            f'<g class="logo__adaptive"><path d="{LOGO_PATHS}" fill="currentColor"/>{t}</g>{xs}</svg></span>')
 
 
 GRAD_DEFS = ('<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>'
@@ -693,10 +693,10 @@ def page_home() -> str:
     body = f'''
 <section class="hero"><div class="wrap">
   <div class="hero__copy">
-    <span class="eyebrow"><b>BEINTOX</b> Your creative &amp; growth partner</span>
     <h1 class="h1">We Build Values<br><em>That Stand Out &amp; Grow.</em></h1>
     <p class="lead">From brand identity and creative design to digital marketing and web development, we help startups transform their ideas into powerful brands.</p>
     <div class="btns"><a class="btn btn--gold" href="contact.html">Let's Build Your Brand {ARROW}</a><a class="btn btn--ghost" href="services.html">Explore Our Services</a></div>
+    <span class="eyebrow hero__signature"><b>BEINTOX</b> Your creative &amp; growth partner</span>
   </div>
   {mosaic_html}
 </div></section>
