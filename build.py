@@ -424,7 +424,7 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400&family=Instrument+Serif:ital@1&family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="assets/css/style.css?v={css_version}">
 <script>document.documentElement.classList.add("js")</script>
 {ld}
@@ -570,8 +570,8 @@ def logo_marquee() -> str:
     items = [(f'portfolio.html#{c["slug"]}', c["name"], c["logo"], LOGO_SIZE.get(c["slug"], "s")) for c in CASES]
     items += [(None, n, path, size) for n, path, size in EXTRA_CLIENTS]
     one = "".join(
-        f'<a href="{h}" class="logo-{sz}" aria-label="{E(n)}">{img(p, n + " logo", eager=True)}</a>' if h else
-        f'<span class="logo-{sz}" role="img" aria-label="{E(n)}">{img(p, n + " logo", eager=True)}</span>'
+        f'<a href="{h}" class="logo-{sz}" aria-label="{E(n)}">{img(p, n + " logo")}</a>' if h else
+        f'<span class="logo-{sz}" role="img" aria-label="{E(n)}">{img(p, n + " logo")}</span>'
         for h, n, p, sz in items)
     half = one * 2
     dup = half.replace("<a ", '<a tabindex="-1" aria-hidden="true" ').replace('role="img" ', 'aria-hidden="true" ')
@@ -970,7 +970,7 @@ def page_portfolio() -> str:
   </div>
   {ig_profile(c)}
 </section>''')
-    filt = "".join(f'<li><a href="#{c["slug"]}">{img(c["logo"], "", eager=True)}<span>{E(c["name"])}</span></a></li>' for c in CASES)
+    filt = "".join(f'<li><a href="#{c["slug"]}">{img(c["logo"], "")}<span>{E(c["name"])}</span></a></li>' for c in CASES)
     body = f'''
 <section class="phero"><div class="wrap">
   <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span>/</span><span>Portfolio</span></nav>
