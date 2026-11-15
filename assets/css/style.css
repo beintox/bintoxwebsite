@@ -752,6 +752,19 @@ a.tag:hover { border-color: var(--text); color: var(--text); }
 .svcx--more .svcx__go { background: var(--gold-grad); color: #1F1F1F; }
 @media (max-width: 1024px) { .svcx-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 560px) { .svcx-grid { grid-template-columns: 1fr; } .svcx { min-height: 320px; } .svcx__art { width: 170px; height: 170px; top: 44px; right: -28px; opacity: .7; } .svcx__go { opacity: 1; transform: none; } .svcx__tags { padding-right: 46px; } }
+/* Home page services preview only: mobile sticky card stack. */
+@media (max-width: 767px) {
+  .home-services-preview .svcx-grid { display: block; padding-bottom: 18vh; }
+  .home-services-preview .svcx { position: sticky; margin-bottom: 18px; transform: scale(var(--stack-scale, .964)); transform-origin: center top; transition: box-shadow 420ms var(--ease); }
+  .home-services-preview .svcx:nth-child(1) { top: 84px; z-index: 1; --stack-scale: .964; }
+  .home-services-preview .svcx:nth-child(2) { top: 89px; z-index: 2; --stack-scale: .970; }
+  .home-services-preview .svcx:nth-child(3) { top: 94px; z-index: 3; --stack-scale: .976; }
+  .home-services-preview .svcx:nth-child(4) { top: 99px; z-index: 4; --stack-scale: .982; }
+  .home-services-preview .svcx:nth-child(5) { top: 104px; z-index: 5; --stack-scale: .988; }
+  .home-services-preview .svcx:nth-child(6) { top: 109px; z-index: 6; --stack-scale: .994; }
+  .home-services-preview .svcx:nth-child(7) { top: 114px; z-index: 7; --stack-scale: 1; }
+  .home-services-preview .svcx:hover { transform: scale(var(--stack-scale)); }
+}
 @media (prefers-reduced-motion: reduce) { .svcx__art { animation: none; } .svcx::after { display: none; } }
 
 /* ---------- 34. Brands reel (moving row of mixed cards, pauses on hover) ---------- */

@@ -377,6 +377,7 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
   <a class="btn btn--gold nav__cta" href="contact.html">Let's Make a Strategy Call {ARROW}</a>
   <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">{ICON["menu"]}</button>
 </div></header>'''
+    css_version = f"{VERSION}-home-stack" if page == "index" else VERSION
     return f'''<!doctype html>
 <html lang="en">
 <head>
@@ -394,7 +395,7 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400&family=Instrument+Serif:ital@1&family=Montserrat:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="assets/css/style.css?v={VERSION}">
+<link rel="stylesheet" href="assets/css/style.css?v={css_version}">
 <script>document.documentElement.classList.add("js")</script>
 {ld}
 </head>
@@ -704,7 +705,7 @@ def page_home() -> str:
 
 {stats_band()}
 
-<section class="sec"><div class="wrap">
+<section class="sec home-services-preview"><div class="wrap">
   {head_block("<b>01</b> What we do", "Seven services. <em>One clear voice.</em>", "Logo design, social media, paid growth, search, photography, websites and brand registration.")}
   <div class="svcx-grid">{"".join(svc_feature(s, i) for i, s in enumerate(featured))}
   </div>
