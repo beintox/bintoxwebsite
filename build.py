@@ -407,7 +407,7 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
   <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">{ICON["menu"]}</button>
 </div></header>'''
     css_version = (f"{VERSION}-home-process-v5" if page == "index" else
-                   f"{VERSION}-services-layout-v6" if page == "services" else VERSION)
+                   f"{VERSION}-services-layout-v7" if page == "services" else VERSION)
     return f'''<!doctype html>
 <html lang="en">
 <head>
@@ -862,17 +862,24 @@ def service_comparison_section() -> str:
 
 
 def service_client_videos() -> str:
-    cards = "".join(f'''<article class="client-video rv" style="--i:{i}">
-  <div class="client-video__poster">{img(poster, f"{brand} project preview", cls="client-video__image")}
+    def cards(clone: bool = False) -> str:
+        rendered = []
+        for i, (brand, poster) in enumerate(CLIENT_VIDEO_PREVIEWS):
+            card_class = "client-video client-video--clone" if clone else "client-video rv"
+            attrs = ' aria-hidden="true"' if clone else f' style="--i:{i}"'
+            alt = "" if clone else f"{brand} project preview"
+            rendered.append(f'''<article class="{card_class}"{attrs}>
+  <div class="client-video__poster">{img(poster, alt, cls="client-video__image")}
     <span class="client-video__badge">VIDEO PREVIEW</span><span class="client-video__play" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M6 3.5 16 10 6 16.5z" fill="currentColor"/></svg></span>
     <div class="client-video__controls" aria-hidden="true"><span>▶</span><span>00:00</span><i></i><span>Replace with video</span></div></div>
   <div class="client-video__body"><span>CLIENT STORY</span><h3>{E(brand)}</h3><p>Video testimonial coming soon.</p></div>
-</article>''' for i, (brand, poster) in enumerate(CLIENT_VIDEO_PREVIEWS))
+</article>''')
+        return "".join(rendered)
+
     return f'''<section class="sec client-videos" aria-labelledby="client-videos-title"><div class="wrap">
   <div class="client-videos__heading"><span class="client-videos__kicker">Our Clients</span><h2 class="h2" id="client-videos-title">Hear it directly from our <em>clients.</em></h2><p class="lead">Hear what our clients have to say. Our testimonials reflect the satisfaction our clients have in our services.</p></div>
-  <div class="client-videos__grid">{cards}</div>
+  <div class="client-videos__viewport"><div class="client-videos__track"><div class="client-videos__set">{cards()}</div><div class="client-videos__set client-videos__set--clone" aria-hidden="true">{cards(True)}</div></div></div>
 </div></section>'''
-
 
 def page_services() -> str:
     offerings = "".join(service_offering(item, i) for i, item in enumerate(SERVICE_PAGE_COPY))
