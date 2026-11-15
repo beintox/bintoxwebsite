@@ -377,7 +377,7 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
   <a class="btn btn--gold nav__cta" href="contact.html">Let's Make a Strategy Call {ARROW}</a>
   <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">{ICON["menu"]}</button>
 </div></header>'''
-    css_version = f"{VERSION}-home-stack-v3" if page == "index" else VERSION
+    css_version = f"{VERSION}-home-process" if page == "index" else VERSION
     return f'''<!doctype html>
 <html lang="en">
 <head>
@@ -573,6 +573,37 @@ def stats_band() -> str:
   <div class="kpis" aria-label="BEINTOX results">{cells}</div>
 </div></section>
 
+PROCESS_STEPS = [
+    ("Discover & Strategize", "We take time to understand your business problems, target audience, market, and objectives. Through research and strategic planning, we identify opportunities and create a clear direction for your brand.",
+     '<circle class="ring" cx="62" cy="62" r="34"/><circle class="ring ring--inner" cx="62" cy="62" r="20"/><path class="line" d="M62 18v18M62 88v18M18 62h18M88 62h18M62 62l28-28"/><circle class="dot" cx="62" cy="62" r="5"/>'),
+    ("Design & Create", "Transform ideas into meaningful brand experiences through creative design, visual identity, engaging content, and digital solutions that reflect your brand's personality.",
+     '<rect class="ring" x="20" y="20" width="34" height="34" rx="8"/><rect class="ring ring--inner" x="70" y="20" width="34" height="34" rx="8"/><rect class="ring" x="20" y="70" width="34" height="34" rx="8"/><path class="line" d="m70 88 12 12 22-28"/>'),
+    ("Launch & Execute", "Turn strategies into action by launching campaigns, managing digital platforms, producing creative content, and delivering solutions that connect your brand with the right audience.",
+     '<path class="line" d="M22 88h18l10-18 12 9 16-30 10 8 12-24"/><path class="line" d="M84 33h16v16"/><path class="ring" d="M24 102h76"/><circle class="dot" cx="50" cy="70" r="4"/>'),
+    ("Optimize & Grow", "We continuously monitor performance, analyze results, and refine our strategies to improve engagement, strengthen brand presence, and achieve sustainable business growth.",
+     '<path class="ring" d="M20 100V72h17v28M48 100V54h17v46M76 100V32h17v68"/><path class="line" d="m20 61 24-16 18 8 32-31M82 22h12v12"/><circle class="dot" cx="44" cy="45" r="4"/>'),
+]
+
+
+def home_process_section() -> str:
+    cards = "".join(
+        f'''<article class="process-card rv" style="--i:{i}">
+  <span class="process-card__step">0{i + 1} <span>/ PROCESS</span></span>
+  <svg class="process-card__art" viewBox="0 0 124 124" fill="none" aria-hidden="true">{graphic}</svg>
+  <div class="process-card__copy"><h3>{E(title)}</h3><p>{E(description)}</p></div>
+  <span class="process-card__index" aria-hidden="true">0{i + 1}</span>
+</article>'''
+        for i, (title, description, graphic) in enumerate(PROCESS_STEPS))
+    return f'''<section class="sec home-process" aria-labelledby="home-process-title"><div class="wrap">
+  <div class="home-process__intro">
+    <span class="eyebrow"><b>How can we help you?</b></span>
+    <h2 class="h2" id="home-process-title">Take Your Brand <em>to New Heights</em></h2>
+    <p class="lead">At Beintox, we take the stress out of social media management.</p>
+  </div>
+  <div class="home-process__stack" aria-label="Our four-step process">{cards}</div>
+</div></section>'''
+
+
 # Service cards on the home page: colour + decorative shape per service.
 SVC_LOOK = {
     "identity": ("#c0602f", "#4d1d0c", "rings"),
@@ -691,7 +722,6 @@ def creative_wall() -> str:
 
 def page_home() -> str:
     mosaic_html = creative_wall()
-    featured = [s[0] for s in SERVICES]
     schema = {
         "@context": "https://schema.org", "@type": "ProfessionalService", "name": "BEINTOX Marketing Solutions",
         "description": "Logo design, social media management and digital marketing services.", "email": CONTACT["email"], "telephone": CONTACT["tel"],
@@ -713,11 +743,7 @@ def page_home() -> str:
 
 {stats_band()}
 
-<section class="sec home-services-preview"><div class="wrap">
-  {head_block("<b>01</b> What we do", "Seven services. <em>One clear voice.</em>", "Logo design, social media, paid growth, search, photography, websites and brand registration.")}
-  <div class="svcx-grid">{"".join(svc_feature(s, i) for i, s in enumerate(featured))}
-  </div>
-</div></section>
+{home_process_section()}
 
 <section class="sec sec--white bt"><div class="wrap">
   {head_block("<b>02</b> Portfolio", "Brands we've <em>built.</em>", "Complete brand systems, from the logo to the packaging, the storefront and the feed.", f'<div class="btns" style="gap:20px"><a class="link" href="case-studies.html">Read the case studies {ARROW}</a><a class="link" href="portfolio.html">Open the portfolio {ARROW}</a></div>')}
