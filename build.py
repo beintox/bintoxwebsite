@@ -377,7 +377,7 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
   <a class="btn btn--gold nav__cta" href="contact.html">Let's Make a Strategy Call {ARROW}</a>
   <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">{ICON["menu"]}</button>
 </div></header>'''
-    css_version = f"{VERSION}-home-process" if page == "index" else VERSION
+    css_version = f"{VERSION}-home-process-v2" if page == "index" else VERSION
     return f'''<!doctype html>
 <html lang="en">
 <head>
@@ -588,7 +588,7 @@ PROCESS_STEPS = [
 def home_process_section() -> str:
     cards = "".join(
         f'''<article class="process-card rv" style="--i:{i}">
-  <span class="process-card__step">0{i + 1} <span>/ PROCESS</span></span>
+  <span class="process-card__step">0{i + 1}</span>
   <svg class="process-card__art" viewBox="0 0 124 124" fill="none" aria-hidden="true">{graphic}</svg>
   <div class="process-card__copy"><h3>{E(title)}</h3><p>{E(description)}</p></div>
   <span class="process-card__index" aria-hidden="true">0{i + 1}</span>
@@ -597,7 +597,7 @@ def home_process_section() -> str:
     return f'''<section class="sec home-process" aria-labelledby="home-process-title"><div class="wrap">
   <div class="home-process__intro">
     <span class="eyebrow"><b>How can we help you?</b></span>
-    <h2 class="h2" id="home-process-title">Take Your Brand <em>to New Heights</em></h2>
+    <h2 class="h2" id="home-process-title">Take Your<br>Brand to <em>New Heights</em></h2>
     <p class="lead">At Beintox, we take the stress out of social media management.</p>
   </div>
   <div class="home-process__stack" aria-label="Our four-step process">{cards}</div>
