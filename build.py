@@ -377,7 +377,7 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
   <a class="btn btn--gold nav__cta" href="contact.html">Let's Make a Strategy Call {ARROW}</a>
   <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">{ICON["menu"]}</button>
 </div></header>'''
-    css_version = f"{VERSION}-home-process-v3" if page == "index" else VERSION
+    css_version = f"{VERSION}-home-process-v4" if page == "index" else VERSION
     return f'''<!doctype html>
 <html lang="en">
 <head>
@@ -575,13 +575,13 @@ def stats_band() -> str:
 
 PROCESS_STEPS = [
     ("Discover & Strategize", "We take time to understand your business problems, target audience, market, and objectives. Through research and strategic planning, we identify opportunities and create a clear direction for your brand.",
-     '<circle class="ring" cx="62" cy="62" r="34"/><circle class="ring ring--inner" cx="62" cy="62" r="20"/><path class="line" d="M62 18v18M62 88v18M18 62h18M88 62h18M62 62l28-28"/><circle class="dot" cx="62" cy="62" r="5"/>'),
+     '<path class="icon-accent icon-chat" d="M28 22h60a8 8 0 0 1 8 8v28a8 8 0 0 1-8 8H61L46 78V66H28a8 8 0 0 1-8-8V30a8 8 0 0 1 8-8Z"/><path class="icon-accent icon-draw" d="M49 36v16M41 44h16"/><circle class="icon-muted" cx="34" cy="91" r="8"/><circle class="icon-muted" cx="60" cy="87" r="9"/><circle class="icon-muted" cx="87" cy="91" r="8"/><path class="icon-muted" d="M19 113c1-11 7-16 15-16s14 5 15 16M41 116c1-13 8-20 19-20s18 7 19 20M75 113c1-11 7-16 15-16s14 5 15 16"/>'),
     ("Design & Create", "Transform ideas into meaningful brand experiences through creative design, visual identity, engaging content, and digital solutions that reflect your brand's personality.",
-     '<rect class="ring" x="20" y="20" width="34" height="34" rx="8"/><rect class="ring ring--inner" x="70" y="20" width="34" height="34" rx="8"/><rect class="ring" x="20" y="70" width="34" height="34" rx="8"/><path class="line" d="m70 88 12 12 22-28"/>'),
+     '<path class="icon-accent icon-chat" d="M22 23h48a7 7 0 0 1 7 7v21a7 7 0 0 1-7 7H49L37 69V58H22a7 7 0 0 1-7-7V30a7 7 0 0 1 7-7ZM61 40h38a7 7 0 0 1 7 7v20a7 7 0 0 1-7 7H88L77 84V74h-4"/><circle class="icon-muted" cx="43" cy="94" r="8"/><circle class="icon-muted" cx="72" cy="94" r="8"/><path class="icon-muted" d="M26 116c1-11 7-16 17-16s16 5 17 16M55 116c1-11 7-16 17-16s16 5 17 16"/>'),
     ("Launch & Execute", "Turn strategies into action by launching campaigns, managing digital platforms, producing creative content, and delivering solutions that connect your brand with the right audience.",
-     '<path class="line" d="M22 88h18l10-18 12 9 16-30 10 8 12-24"/><path class="line" d="M84 33h16v16"/><path class="ring" d="M24 102h76"/><circle class="dot" cx="50" cy="70" r="4"/>'),
+     '<rect class="icon-muted" x="17" y="23" width="90" height="70" rx="8"/><path class="icon-accent" d="M17 42h90M31 32h1M41 32h1M52 32h1"/><path class="icon-accent icon-draw" d="m36 76 18-17 14 10 25-25M81 44h12v12"/><path class="icon-muted" d="M48 105h28M62 93v12"/>'),
     ("Optimize & Grow", "We continuously monitor performance, analyze results, and refine our strategies to improve engagement, strengthen brand presence, and achieve sustainable business growth.",
-     '<path class="ring" d="M20 100V72h17v28M48 100V54h17v46M76 100V32h17v68"/><path class="line" d="m20 61 24-16 18 8 32-31M82 22h12v12"/><circle class="dot" cx="44" cy="45" r="4"/>'),
+     '<rect class="icon-muted" x="19" y="23" width="88" height="78" rx="7"/><path class="icon-muted" d="M19 43h88M39 23v78M58 23v78M77 23v78M19 62h88M19 82h88"/><path class="icon-accent icon-draw" d="m30 79 16-13 14 7 25-24 11 3M85 52l11-3-2 11"/><circle class="icon-accent" cx="35" cy="34" r="3"/>'),
 ]
 
 
