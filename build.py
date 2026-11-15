@@ -377,7 +377,7 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
   <a class="btn btn--gold nav__cta" href="contact.html">Let's Make a Strategy Call {ARROW}</a>
   <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">{ICON["menu"]}</button>
 </div></header>'''
-    css_version = f"{VERSION}-home-process-v2" if page == "index" else VERSION
+    css_version = f"{VERSION}-home-process-v3" if page == "index" else VERSION
     return f'''<!doctype html>
 <html lang="en">
 <head>
@@ -588,7 +588,6 @@ PROCESS_STEPS = [
 def home_process_section() -> str:
     cards = "".join(
         f'''<article class="process-card rv" style="--i:{i}">
-  <span class="process-card__step">0{i + 1}</span>
   <svg class="process-card__art" viewBox="0 0 124 124" fill="none" aria-hidden="true">{graphic}</svg>
   <div class="process-card__copy"><h3>{E(title)}</h3><p>{E(description)}</p></div>
   <span class="process-card__index" aria-hidden="true">0{i + 1}</span>
