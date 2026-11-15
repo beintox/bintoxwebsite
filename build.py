@@ -231,11 +231,11 @@ SERVICE_PAGE_COPY = [
 SERVICE_INDUSTRIES = ["Startup", "Small Business", "Entrepreneur", "Tech Company", "Corporate", "Nonprofit", "E-commerce Store", "Consulting Firm", "Restaurants"]
 SERVICE_FEATURES = [
     ("Creation", "Tailored posts that resonate with your audience, boosting engagement and brand loyalty.", "M5 34 29 10l9 9-24 24H5v-9ZM25 14l9 9M5 43l9-1"),
-    ("Management", "Seamless management of all your social media channels, ensuring consistent and effective communication.", "M8 8h32v32H8zM16 16h16M16 24h16M16 32h10"),
-    ("Advertising", "Strategic ad placements that reach your ideal audience, driving traffic and conversions.", "M6 40V26h9v14M20 40V16h9v24M34 40V7h9v33M5 43h40"),
+    ("Management", "Seamless management of all your social media channels, ensuring consistent and effective communication.", "M5 15 24 5l19 10-19 10L5 15ZM5 24l19 10 19-10M5 33l19 10 19-10"),
+    ("Advertising", "Strategic ad placements that reach your ideal audience, driving traffic and conversions.", "M17 20a6 6 0 1 0 0-12 6 6 0 0 0 0 12ZM5 41v-5a11 11 0 0 1 22 0v5M33 21a5 5 0 1 0 0-10M31 27a10 10 0 0 1 12 10v4M29 17h5l8-5v20l-8-5h-5z"),
     ("Analytics", "Detailed reports that offer insights into your social media performance, helping you refine your strategy.", "M7 39V25h8v14M20 39V14h8v25M33 39V6h8v33M5 43h38"),
-    ("Engagement", "Active engagement with your followers, building a strong and supportive community around your brand.", "M24 41s-17-10-17-23a9 9 0 0 1 17-5 9 9 0 0 1 17 5c0 13-17 23-17 23Z"),
-    ("Consulting", "Expert advice on how to position your brand for success in the digital landscape.", "M24 5l5 4 7-1 2 7 5 5-4 6 1 7-7 2-5 5-6-4-7 1-2-7-5-5 4-6-1-7 7-2 5-5 6 4ZM18 24l4 4 9-10"),
+    ("Engagement", "Active engagement with your followers, building a strong and supportive community around your brand.", "M7 28h8l5 5h10l8-7a4 4 0 0 1 6 5L32 43H17L7 37zM15 28l7-12a4 4 0 0 1 7 4l-4 8M8 26v14"),
+    ("Consulting", "Expert advice on how to position your brand for success in the digital landscape.", "M24 5a10 10 0 1 0 0 20 10 10 0 0 0 0-20ZM18 24l-2 19 8-5 8 5-2-19"),
 ]
 SERVICE_COMPARISON = {
     "other": ["Slow communication", "Single channel approach", "Outdated growth strategies", "Lack of industry research", "Outsourced to mediocre talent"],
@@ -826,10 +826,10 @@ def service_offering(item: tuple, i: int) -> str:
 
 
 def industries_strip() -> str:
-    colors = ["#D4A017", "#E8413C", "#8B6B12", "#1F1F1F", "#B48512", "#C5433B", "#8B6B12", "#1F1F1F", "#D4A017"]
+    colors = ["#D4A017", "#E8413C", "#7A5C00", "#27241E", "#B77700", "#C3312B", "#986A0C", "#6E4C10", "#A96E00"]
     items = "".join(f'<span class="industries-strip__item" style="--industry-color:{colors[i]}">{E(name)}<i aria-hidden="true">✳</i></span>' for i, name in enumerate(SERVICE_INDUSTRIES))
     return f'''<section class="industries-strip" aria-label="Industries we serve"><div class="wrap">
-  <div class="industries-strip__frame"><h2 class="industries-strip__label">Industries we serve</h2><span class="sr-only">{E(', '.join(SERVICE_INDUSTRIES))}</span>
+  <div class="industries-strip__frame"><p class="industries-strip__label">Industries<br>we serve</p><span class="sr-only">{E(', '.join(SERVICE_INDUSTRIES))}</span>
     <div class="industries-strip__viewport"><div class="industries-strip__track" aria-hidden="true">{items}{items}</div></div>
   </div>
 </div></section>'''
@@ -840,7 +840,7 @@ def service_features_section() -> str:
   <span class="service-feature__icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none"><path d="{path}" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
   <h3>{E(title)}</h3><p>{E(copy)}</p></article>''' for i, (title, copy, path) in enumerate(SERVICE_FEATURES))
     return f'''<section class="sec service-features" aria-labelledby="service-features-title"><div class="wrap">
-  <div class="service-features__heading"><span class="eyebrow"><b>What sets us apart</b></span><h2 class="h2" id="service-features-title">Why Choose Us<br>for <em>Success?</em></h2><p class="lead">Discover how Beintox empowers your brand.</p></div>
+  <div class="service-features__heading"><span class="service-features__kicker">Features</span><h2 class="h2" id="service-features-title">Why Choose Us<br>for <em>Success?</em></h2><p class="lead">Discover how Beintox empowers your brand.</p></div>
   <div class="service-features__grid">{cards}</div>
   <div class="service-features__action"><a class="btn btn--dark" href="contact.html">Schedule a Call {ARROW}</a></div>
 </div></section>'''
