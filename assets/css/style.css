@@ -794,9 +794,9 @@ a.tag:hover { border-color: var(--text); color: var(--text); }
 }
 
 /* ---------- 30. Hero creative wall (continuous vertical scroll, pauses on hover) ---------- */
-.hero .wrap { padding-top: clamp(160px, 18vh, 210px); padding-bottom: 40px; }
+.hero .wrap { padding-top: clamp(92px, 11vh, 124px); padding-bottom: 24px; }
 .hero__wall { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; height: 640px; overflow: hidden;
-  -webkit-mask-image: linear-gradient(transparent, #000 9%, #000 91%, transparent); mask-image: linear-gradient(transparent, #000 9%, #000 91%, transparent); }
+  -webkit-mask-image: none; mask-image: none; }
 .wall__col { overflow: hidden; }
 .wall__track { display: flex; flex-direction: column; gap: 12px; animation: wall-up var(--dur, 64s) linear infinite; will-change: transform; }
 .wall__col--down .wall__track { animation-direction: reverse; }
@@ -910,7 +910,7 @@ a.tag:hover { border-color: var(--text); color: var(--text); }
 .work-play-icon { display: none; }
 .work-reel__controls button.is-paused .work-pause-icon { display: none; }
 .work-reel__controls button.is-paused .work-play-icon { display: inline-flex; }
-.reel--work { width: 100%; max-width: calc(3 * clamp(260px, 24vw, 360px) + 32px); margin-inline: auto; cursor: default; }
+.reel--work { width: 100%; max-width: calc(3 * clamp(260px, 24vw, 360px) + 32px); margin-inline: auto; cursor: default; -webkit-mask-image: none; mask-image: none; }
 .reel--work .reel__track { animation-duration: 46s; }
 .reel--work .reel__track.is-paused { animation-play-state: paused; }
 .rc--work { display: block; width: clamp(260px, 24vw, 360px); height: auto; aspect-ratio: 9 / 16; padding: 0; border: 0; background: #111; color: var(--paper); text-align: left; cursor: pointer; }
@@ -1037,7 +1037,7 @@ a.tag:hover { border-color: var(--text); color: var(--text); }
   .phero::before { width: 90%; right: -40%; }
   .phero .h1 { margin: 14px 0 12px; }
   /* home */
-  .hero .wrap { padding-top: 144px; }
+  .hero .wrap { padding-top: 100px; }
   .kband .wrap { gap: 32px; }
   .kpi { padding: 18px 14px 16px; }
   .kpi__meta { font-size: 9px; }

@@ -755,7 +755,7 @@ def brand_reel() -> str:
   <div class="reel reel--work" aria-label="Selected video work"><div class="reel__track">{cards()}{cards(True)}</div></div>
   <dialog class="work-lightbox" aria-label="Brand film player">
     <button class="work-lightbox__close" type="button" data-work-close aria-label="Close video">{ICON["close"]}</button>
-    <video controls playsinline preload="none" aria-label="Selected brand film"></video>
+    <video controls controlsList="nodownload" playsinline preload="none" aria-label="Selected brand film"></video>
   </dialog>
 </div>'''
 # Hero creative wall: three columns scrolling in alternating directions. The supplied client posts replace the previous artwork.

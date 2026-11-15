@@ -1,13 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" role="img" aria-label="Nisa Sultan brand film poster">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" role="img" aria-label="Nisa Sultan brand film cover">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#29251b"/><stop offset=".55" stop-color="#1f1f1f"/><stop offset="1" stop-color="#111"/></linearGradient>
-    <radialGradient id="glow"><stop stop-color="#d4a017" stop-opacity=".34"/><stop offset="1" stop-color="#d4a017" stop-opacity="0"/></radialGradient>
+    <linearGradient id="backdrop" x1="0" y1="0" x2=".9" y2="1"><stop stop-color="#17120d"/><stop offset=".48" stop-color="#302313"/><stop offset="1" stop-color="#100e0b"/></linearGradient>
+    <radialGradient id="halo"><stop stop-color="#d4a017" stop-opacity=".46"/><stop offset="1" stop-color="#d4a017" stop-opacity="0"/></radialGradient>
+    <linearGradient id="silhouette" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#e2bd69"/><stop offset="1" stop-color="#88601a"/></linearGradient>
   </defs>
-  <rect width="1080" height="1920" fill="url(#bg)"/>
-  <circle cx="540" cy="820" r="560" fill="url(#glow)"/>
-  <circle cx="540" cy="820" r="360" fill="none" stroke="#d4a017" stroke-opacity=".32" stroke-width="2"/>
-  <circle cx="540" cy="820" r="390" fill="none" stroke="#f8f6f2" stroke-opacity=".12" stroke-width="1"/>
-  <path d="M220 820h640M540 500v640" stroke="#d4a017" stroke-opacity=".28" stroke-width="2"/>
-  <text x="540" y="1480" text-anchor="middle" fill="#f8f6f2" font-family="Montserrat,Arial,sans-serif" font-size="74" font-weight="600" letter-spacing="9">NISA SULTAN</text>
-  <path d="M390 1545h300" stroke="#d4a017" stroke-width="4"/>
+  <rect width="1080" height="1920" fill="url(#backdrop)"/>
+  <circle cx="540" cy="780" r="520" fill="url(#halo)"/>
+  <circle cx="540" cy="760" r="330" fill="none" stroke="#d4a017" stroke-opacity=".42" stroke-width="2"/>
+  <circle cx="540" cy="760" r="356" fill="none" stroke="#f8f6f2" stroke-opacity=".14" stroke-width="1"/>
+  <path d="M118 760h120M842 760h120M540 338v120M540 1062v120" stroke="#d4a017" stroke-opacity=".55" stroke-width="2"/>
+  <path d="M540 480c-128 0-218 95-218 228 0 90 44 163 104 208 20 16 33 44 34 75l1 35h158l1-35c1-31 14-59 34-75 60-45 104-118 104-208 0-133-90-228-218-228Z" fill="url(#silhouette)" fill-opacity=".88"/>
+  <path d="M376 735c34-18 65-18 96 0m136 0c31-18 62-18 96 0M473 850c44 34 90 34 134 0" fill="none" stroke="#2b2011" stroke-width="12" stroke-linecap="round"/>
+  <path d="M246 1100c66-92 165-138 294-138s228 46 294 138l112 240H134l112-240Z" fill="#191510" stroke="#d4a017" stroke-opacity=".7" stroke-width="3"/>
+  <path d="M540 978v357" stroke="#d4a017" stroke-opacity=".45" stroke-width="2"/>
+  <text x="540" y="1512" text-anchor="middle" fill="#f8f6f2" font-family="Arial,sans-serif" font-size="84" font-weight="600" letter-spacing="13">NISA SULTAN</text>
+  <path d="M390 1570h300" stroke="#d4a017" stroke-width="4"/>
+  <text x="540" y="1642" text-anchor="middle" fill="#d4a017" font-family="Arial,sans-serif" font-size="30" letter-spacing="11">BRAND FILM</text>
 </svg>
