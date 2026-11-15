@@ -622,13 +622,18 @@ a.shot:hover { border-color: #D4A017; }
 .service-features__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: clamp(24px, 5vw, 72px); row-gap: 42px; margin: 48px auto 0; max-width: 980px; }
 .service-feature { min-height: 0; padding: 8px 12px; border: 0; border-radius: 0; background: transparent; text-align: center; }
 .service-feature__icon { display: grid; place-items: center; width: 48px; height: 48px; margin: 0 auto; border: 0; border-radius: 0; color: var(--gold); }
-.service-feature__icon svg { width: 42px; height: 42px; overflow: visible; transform-origin: center; animation: service-feature-icon-pulse 2.8s ease-in-out infinite; }
-.service-feature:nth-child(6n + 2) .service-feature__icon svg { animation-delay: .24s; }
-.service-feature:nth-child(6n + 3) .service-feature__icon svg { animation-delay: .48s; }
-.service-feature:nth-child(6n + 4) .service-feature__icon svg { animation-delay: .72s; }
-.service-feature:nth-child(6n + 5) .service-feature__icon svg { animation-delay: .96s; }
-.service-feature:nth-child(6n + 6) .service-feature__icon svg { animation-delay: 1.2s; }
-@keyframes service-feature-icon-pulse { 0%, 100% { transform: scale(1); filter: drop-shadow(0 0 0 rgba(212, 160, 23, 0)); } 50% { transform: scale(1.08); filter: drop-shadow(0 0 7px rgba(212, 160, 23, .3)); } }
+.service-feature__icon svg { width: 42px; height: 42px; overflow: visible; transform-origin: center; color: var(--gold); animation: feature-icon-pencil 1.7s ease-in-out infinite; }
+.service-feature:nth-child(6n + 2) .service-feature__icon svg { animation-name: feature-icon-layers; animation-delay: .18s; }
+.service-feature:nth-child(6n + 3) .service-feature__icon svg { animation-name: feature-icon-ad; animation-delay: .36s; }
+.service-feature:nth-child(6n + 4) .service-feature__icon svg { animation-name: feature-icon-chart; animation-delay: .54s; transform-origin: 50% 90%; }
+.service-feature:nth-child(6n + 5) .service-feature__icon svg { animation-name: feature-icon-engagement; animation-delay: .72s; }
+.service-feature:nth-child(6n + 6) .service-feature__icon svg { animation-name: feature-icon-medal; animation-delay: .9s; }
+@keyframes feature-icon-pencil { 0%, 100% { transform: rotate(0) scale(1); color: var(--gold); } 18% { transform: rotate(-12deg) scale(.92); } 42% { transform: rotate(10deg) scale(1.18); color: var(--tomato); filter: drop-shadow(0 5px 5px rgba(232, 65, 60, .23)); } 66% { transform: rotate(-4deg) scale(1.06); } 82% { transform: rotate(0) scale(1); color: var(--gold); filter: none; } }
+@keyframes feature-icon-layers { 0%, 100% { transform: translateY(0) scale(1); color: var(--gold); } 22% { transform: translateY(5px) scale(.93); } 48% { transform: translateY(-7px) scale(1.13); color: var(--tomato); filter: drop-shadow(0 6px 5px rgba(232, 65, 60, .2)); } 72% { transform: translateY(2px) scale(1.03); } 86% { transform: translateY(0) scale(1); color: var(--gold); filter: none; } }
+@keyframes feature-icon-ad { 0%, 100% { transform: scale(1); color: var(--gold); } 16% { transform: scale(.78); } 38% { transform: scale(1.22); color: var(--tomato); filter: drop-shadow(0 5px 6px rgba(232, 65, 60, .24)); } 58% { transform: scale(.96); } 74% { transform: scale(1.08); color: var(--gold); filter: none; } 86% { transform: scale(1); } }
+@keyframes feature-icon-chart { 0%, 100% { transform: scaleY(1); color: var(--gold); } 24% { transform: scaleY(.72); } 49% { transform: scaleY(1.18); color: var(--tomato); filter: drop-shadow(0 5px 5px rgba(232, 65, 60, .22)); } 70% { transform: scaleY(.94); } 84% { transform: scaleY(1); color: var(--gold); filter: none; } }
+@keyframes feature-icon-engagement { 0%, 100% { transform: rotate(0) translateX(0) scale(1); color: var(--gold); } 22% { transform: rotate(-9deg) translateX(-4px) scale(.96); } 48% { transform: rotate(9deg) translateX(4px) scale(1.13); color: var(--tomato); filter: drop-shadow(0 5px 5px rgba(232, 65, 60, .22)); } 70% { transform: rotate(-4deg) translateX(-1px) scale(1.03); } 84% { transform: rotate(0) translateX(0) scale(1); color: var(--gold); filter: none; } }
+@keyframes feature-icon-medal { 0%, 100% { transform: translateY(0) scale(1); color: var(--gold); } 18% { transform: translateY(4px) scale(.9); } 42% { transform: translateY(-8px) scale(1.17); color: var(--tomato); filter: drop-shadow(0 6px 5px rgba(232, 65, 60, .24)); } 64% { transform: translateY(1px) scale(1.04); } 82% { transform: translateY(0) scale(1); color: var(--gold); filter: none; } }
 .service-feature__icon svg path { stroke: currentColor; }
 .service-feature h3 { margin-top: 14px; color: var(--text); font-size: 18px; font-weight: 600; }
 .service-feature p { max-width: 38ch; margin: 8px auto 0; color: var(--muted); font-size: 13px; line-height: 1.65; }
