@@ -228,6 +228,16 @@ SERVICE_PAGE_COPY = [
     ("registration", "Brand Registration (IPO)", "We guide businesses through the intellectual property protection process, from trademark searches and search reports to trademark and copyright registration, documentation, and filing support.", ["Search Report", "Trademark & Copyright Registration", "Documentation", "Filing Support", "Newspaper Ads"]),
 ]
 
+SERVICE_INDUSTRIES = ["Startup", "Small Business", "Entrepreneur", "Tech Company", "Corporate", "Nonprofit", "E-commerce Store", "Consulting Firm", "Restaurants"]
+SERVICE_FEATURES = [
+    ("Creation", "Tailored posts that resonate with your audience, boosting engagement and brand loyalty.", "M5 34 29 10l9 9-24 24H5v-9ZM25 14l9 9M5 43l9-1"),
+    ("Management", "Seamless management of all your social media channels, ensuring consistent and effective communication.", "M8 8h32v32H8zM16 16h16M16 24h16M16 32h10"),
+    ("Advertising", "Strategic ad placements that reach your ideal audience, driving traffic and conversions.", "M6 40V26h9v14M20 40V16h9v24M34 40V7h9v33M5 43h40"),
+    ("Analytics", "Detailed reports that offer insights into your social media performance, helping you refine your strategy.", "M7 39V25h8v14M20 39V14h8v25M33 39V6h8v33M5 43h38"),
+    ("Engagement", "Active engagement with your followers, building a strong and supportive community around your brand.", "M24 41s-17-10-17-23a9 9 0 0 1 17-5 9 9 0 0 1 17 5c0 13-17 23-17 23Z"),
+    ("Consulting", "Expert advice on how to position your brand for success in the digital landscape.", "M24 5l5 4 7-1 2 7 5 5-4 6 1 7-7 2-5 5-6-4-7 1-2-7-5-5 4-6-1-7 7-2 5-5 6 4ZM18 24l4 4 9-10"),
+]
+
 STEPS = [("Discover", "We study your business, audience and competitors to find what makes you worth choosing."),
          ("Define", "Positioning, personality and message: the strategy every design decision answers to."),
          ("Design", "Identity, content and campaigns crafted with one look, one voice and one feeling."),
@@ -388,7 +398,7 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
   <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">{ICON["menu"]}</button>
 </div></header>'''
     css_version = (f"{VERSION}-home-process-v5" if page == "index" else
-                   f"{VERSION}-services-layout-v1" if page == "services" else VERSION)
+                   f"{VERSION}-services-layout-v2" if page == "services" else VERSION)
     return f'''<!doctype html>
 <html lang="en">
 <head>
@@ -811,19 +821,33 @@ def service_offering(item: tuple, i: int) -> str:
     return f'<article class="service-offering rv" id="{E(sid)}" style="--i:{i % 2}">{content}</article>'
 
 
+def industries_strip() -> str:
+    colors = ["#D4A017", "#E8413C", "#8B6B12", "#1F1F1F", "#B48512", "#C5433B", "#8B6B12", "#1F1F1F", "#D4A017"]
+    items = "".join(f'<span class="industries-strip__item" style="--industry-color:{colors[i]}">{E(name)}<i aria-hidden="true">✳</i></span>' for i, name in enumerate(SERVICE_INDUSTRIES))
+    return f'''<section class="industries-strip" aria-label="Industries we serve"><div class="wrap">
+  <div class="industries-strip__frame"><h2 class="industries-strip__label">Industries<br>we serve</h2><span class="sr-only">{E(', '.join(SERVICE_INDUSTRIES))}</span>
+    <div class="industries-strip__viewport"><div class="industries-strip__track" aria-hidden="true">{items}{items}</div></div>
+  </div>
+</div></section>'''
+
+
+def service_features_section() -> str:
+    cards = "".join(f'''<article class="service-feature rv" style="--i:{i % 3}">
+  <span class="service-feature__icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none"><path d="{path}" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+  <h3>{E(title)}</h3><p>{E(copy)}</p></article>''' for i, (title, copy, path) in enumerate(SERVICE_FEATURES))
+    return f'''<section class="sec service-features" aria-labelledby="service-features-title"><div class="wrap">
+  <div class="service-features__heading"><span class="eyebrow"><b>What sets us apart</b></span><h2 class="h2" id="service-features-title">Why Choose Us<br>for <em>Success?</em></h2><p class="lead">Discover how Beintox empowers your brand.</p></div>
+  <div class="service-features__grid">{cards}</div>
+  <div class="service-features__action"><a class="btn btn--dark" href="contact.html">Schedule a Call {ARROW}</a></div>
+</div></section>'''
+
+
 def page_services() -> str:
     offerings = "".join(service_offering(item, i) for i, item in enumerate(SERVICE_PAGE_COPY))
     body = f'''
-<section class="phero phero--services"><div class="wrap">
-  <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span>/</span><span>Services</span></nav>
-  <h1 class="h1">Services designed to build and grow <em>your brand.</em></h1>
-  <p class="lead">Seven focused services to build, protect and grow your brand.</p>
-</div></section>
+{industries_strip()}
 <section class="sec services-showcase"><div class="wrap">{offerings}</div></section>
-<section class="sec sec--white bt" id="process"><div class="wrap">
-  {head_block("<b>Process</b>", "From idea to <em>identity.</em>", "A clear four-step process, so you always know what's happening, what's next and why.")}
-  {steps_html()}
-</div></section>
+{service_features_section()}
 <section class="sec" id="engagement"><div class="wrap">
   {head_block("<b>Engagement</b>", "Pay per project, or <em>retain the team.</em>", "Start with what you need now. Every engagement begins with a scoped proposal: no surprises, no lock-in.")}
   {plans_html()}
