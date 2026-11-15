@@ -407,7 +407,7 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
   <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">{ICON["menu"]}</button>
 </div></header>'''
     css_version = (f"{VERSION}-home-process-v5" if page == "index" else
-                   f"{VERSION}-services-layout-v4" if page == "services" else VERSION)
+                   f"{VERSION}-services-layout-v5" if page == "services" else VERSION)
     return f'''<!doctype html>
 <html lang="en">
 <head>
