@@ -377,7 +377,7 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
   <a class="btn btn--gold nav__cta" href="contact.html">Let's Make a Strategy Call {ARROW}</a>
   <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">{ICON["menu"]}</button>
 </div></header>'''
-    css_version = f"{VERSION}-home-stack" if page == "index" else VERSION
+    css_version = f"{VERSION}-home-stack-v2" if page == "index" else VERSION
     return f'''<!doctype html>
 <html lang="en">
 <head>
@@ -564,11 +564,11 @@ def stats_band() -> str:
         for i, (n, suf, title, desc, icon) in enumerate(metrics))
     return f'''<section class="kband"><div class="wrap">
   <div class="kband__intro">
-    <span class="eyebrow"><b>BRANDING</b> CREATIVITY · STRATEGY · GROWTH</span>
-    <h2 class="h2 rv" style="--i:0">From an idea to <em>a brand that stands out.</em></h2>
+    <h2 class="h2 rv" style="--i:0"><span class="kband__headline-main">From an idea to a brand that</span><em>stands out.</em></h2>
     <p class="lead rv" style="--i:1">We turn ideas into powerful brand identities and transform businesses through creative strategy, digital marketing, content production, and Automation. Everything your brand needs to build, connect, and grow — all under one roof.</p>
     <div class="kband__pills rv" style="--i:2"><span>Brand Strategy &amp; Identity</span><span>Social Media</span><span>Performance Marketing</span><span>SEO</span><span>Creative Production</span><span>Web Development</span></div>
     <a class="btn btn--gold rv" style="--i:3" href="contact.html">Let's Build Your Brand {ARROW}</a>
+    <span class="eyebrow kband__signature rv" style="--i:4"><b>BRANDING</b> · CREATIVITY · STRATEGY · GROWTH</span>
   </div>
   <div class="kpis" aria-label="BEINTOX results">{cells}</div>
 </div></section>
@@ -595,19 +595,27 @@ SHAPES = {
 }
 
 
+HOME_CARD_CONTENT = {
+    "identity": ("Distinctive logos and cohesive brand identities that make your business recognizable.", ["Logo Design", "Brand Identity", "Brand Guidelines"]),
+    "social": ("Engaging social media experiences through strategic content, consistent publishing, and community management.", ["Content Calendar", "Content Strategy", "Community Management"]),
+    "ads": ("Data-driven advertising campaigns designed to generate quality leads, increase conversions, and accelerate business growth.", ["Paid Advertising", "Lead Generation", "Conversion Optimization", "Audit Management"]),
+    "seo": ("Improving search visibility through strategic optimization that attracts relevant traffic and builds long-term growth.", ["Technical SEO", "On-Page SEO", "Search Optimization"]),
+    "photo": ("We produce high-quality visual content that showcases your products, tells your story, and connects with your audience.", ["Product Photography", "Video Production", "Creative Shoots", "Photo & Video Editing", "AI & UGC Video Ads"]),
+    "web": ("Design and develop responsive, user-friendly websites that strengthen your digital presence and turn visitors into customers.", ["UI/UX Design", "Web Development", "Responsive Websites"]),
+    "registration": ("From guidance on trademark and copyright registration through documentation and case filing, we help businesses protect their brand identity.", ["Search Report", "Trademark & Copyright Registration", "Documentation", "Newspaper Ads"]),
+}
+
+
 def svc_feature(sid: str, i: int) -> str:
     s = svc_by_id(sid)
+    description, card_tags = HOME_CARD_CONTENT[sid]
     c1, c2, shape = SVC_LOOK[sid]
     group = next(g[0] for g in GROUPS if sid in g[2])
-    picks = []
-    for t in s[4]:  # deliverable pills that fit on one line
-        if len(picks) < 2 and sum(len(x) for x in picks) + len(t) <= 30:
-            picks.append(t)
-    tags = "".join(f"<span>{E(t)}</span>" for t in picks)
+    tags = "".join(f"<span>{E(t)}</span>" for t in card_tags)
     return f'''<a class="svcx rv" href="services.html#{sid}" style="--c1:{c1};--c2:{c2};--i:{i}">
   <div class="svcx__top"><span>Service {svc_num(sid)}</span><span>{group}</span></div>
   <svg class="svcx__art" viewBox="0 0 200 200" aria-hidden="true">{SHAPES[shape]}</svg>
-  <div class="svcx__body"><h3>{E(s[1])}</h3><p>{E(s[2])}</p><div class="svcx__tags">{tags}</div></div>
+  <div class="svcx__body"><h3>{E(s[1])}</h3><p>{E(description)}</p><div class="svcx__tags">{tags}</div></div>
   <span class="svcx__go" aria-hidden="true">{ARROW}</span>
 </a>'''
 
