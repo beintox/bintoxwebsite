@@ -478,7 +478,7 @@ a.shot:hover { border-color: #D4A017; }
 /* ---------- 23. Footer ---------- */
 .footer { position: relative; overflow: hidden; background: #1F1F1F; color: var(--muted-dark); font-size: var(--fs-s); padding: 48px 0 0; }
 .footer::before { content: ""; position: absolute; inset: 0 0 auto; height: 230px; pointer-events: none; opacity: .34; background: repeating-linear-gradient(90deg, transparent 0 72px, rgba(248,246,242,.035) 72px 104px, transparent 104px 140px), radial-gradient(ellipse at 28% 0%, rgba(212,160,23,.08), transparent 55%); }
-.footer__watermark { position: absolute; z-index: 0; left: 50%; bottom: 34px; transform: translateX(-50%); color: rgba(248, 246, 242, .035); font-size: clamp(100px, 20vw, 280px); font-weight: 700; line-height: .78; letter-spacing: .035em; white-space: nowrap; pointer-events: none; user-select: none; }
+.footer__watermark { display: none; }
 .footer > .wrap { position: relative; z-index: 1; }
 .footer__main { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(360px, .9fr); gap: clamp(32px, 5vw, 72px); padding: 0 24px 12px; }
 .footer__contact-cards { display: grid; align-content: start; gap: 10px; }
@@ -698,8 +698,8 @@ a.tag:hover { border-color: var(--text); color: var(--text); }
 /* ---------- 32. Numbers band (under the logo strip) â€” same paper background as the page ---------- */
 .kband { position: relative; overflow: hidden; background: radial-gradient(ellipse at 82% 18%, rgba(212, 160, 23, .075), transparent 38%), var(--paper); color: var(--text); }
 .kband + .sec { padding-top: 0; }
-.kband .wrap { display: grid; grid-template-columns: minmax(0, .88fr) minmax(0, 1.12fr); gap: clamp(36px, 5vw, 72px); align-items: center; padding-top: var(--sec); padding-bottom: var(--sec); }
-.kband__intro .h2 { max-width: none; margin: 0 0 18px; font-size: clamp(26px, 2.25vw, 32px); }
+.kband .wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(36px, 5vw, 72px); align-items: center; padding-top: var(--sec); padding-bottom: var(--sec); }
+.kband__intro .h2 { max-width: 100%; margin: 0 0 18px; font-size: clamp(22px, 2vw, 28px); }
 .kband__headline-main { display: block; white-space: nowrap; }
 .kband__intro .h2 em { display: block; width: max-content; margin-top: -.12em; font-size: clamp(48px, 5vw, 64px); }
 .kband__intro .lead { max-width: 58ch; }
@@ -754,6 +754,10 @@ a.tag:hover { border-color: var(--text); color: var(--text); }
 .svcx--more .svcx__art .a { fill: rgba(212, 160, 23, .3); stroke: rgba(212, 160, 23, .5); }
 .svcx--more .svcx__art .o { stroke: rgba(212, 160, 23, .5); }
 .svcx--more .svcx__go { background: var(--gold-grad); color: #1F1F1F; }
+.home-services-preview .svcx { height: 440px; justify-content: flex-start; }
+.home-services-preview .svcx__body { position: relative; z-index: 2; display: flex; flex: 1; flex-direction: column; min-height: 0; margin-top: 48px; }
+.home-services-preview .svcx__body h3 { min-height: 2.16em; }
+.home-services-preview .svcx__tags { margin-top: auto; padding-top: 16px; }
 @media (max-width: 1024px) { .svcx-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 560px) { .svcx-grid { grid-template-columns: 1fr; } .svcx { min-height: 320px; } .svcx__art { width: 170px; height: 170px; top: 44px; right: -28px; opacity: .7; } .svcx__go { opacity: 1; transform: none; } .svcx__tags { padding-right: 46px; } }
 /* Home page services preview only: mobile sticky card stack. */
