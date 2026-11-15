@@ -857,7 +857,7 @@ a.tag:hover { border-color: var(--text); color: var(--text); }
 .home-process__intro h2 > span { display: block; }
 .home-process__intro h2 em { display: block; margin-top: .08em; color: var(--gold); }
 .home-process__intro .lead { max-width: 56ch; margin-top: 22px; font-size: clamp(15px, 1.15vw, 16px); line-height: 1.5; }
-.home-process__stack { position: relative; width: 100%; max-width: 520px; justify-self: end; padding-bottom: 30vh; }
+.home-process__stack { position: relative; width: 100%; max-width: 520px; justify-self: end; padding-bottom: 0; }
 .process-card { position: sticky; isolation: isolate; overflow: hidden; min-height: 320px; margin-bottom: 18px; padding: 26px clamp(22px, 2.8vw, 34px) 26px; border: 1px solid rgba(212, 160, 23, .42); border-radius: 24px; background: linear-gradient(145deg, #282621, #1F1F1F 62%, #191817); color: var(--paper); box-shadow: 0 22px 60px -42px rgba(31, 31, 31, .72), inset 0 1px rgba(248, 246, 242, .08); transition: border-color 420ms var(--ease), box-shadow 420ms var(--ease), background 420ms var(--ease); }
 .process-card:nth-child(1) { top: 98px; z-index: 1; }
 .process-card:nth-child(2) { top: 108px; z-index: 2; }

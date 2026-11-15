@@ -17,7 +17,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 IMG = ROOT / "assets" / "img"
-VERSION = "31"  # bump to bust CSS/JS caches
+VERSION = "32"  # bump to bust CSS/JS caches
 
 # =====================================================================
 # DATA
@@ -406,8 +406,8 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
   <a class="btn btn--gold nav__cta" href="contact.html">Let's Make a Strategy Call {ARROW}</a>
   <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">{ICON["menu"]}</button>
 </div></header>'''
-    css_version = (f"{VERSION}-home-process-v5" if page == "index" else
-                   f"{VERSION}-services-layout-v7" if page == "services" else VERSION)
+    css_version = (f"{VERSION}-home-process-v6" if page == "index" else
+                   f"{VERSION}-services-layout-v8" if page == "services" else VERSION)
     return f'''<!doctype html>
 <html lang="en">
 <head>
