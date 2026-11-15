@@ -318,6 +318,8 @@ ICON = {
     "close": '<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
     "prev": '<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
     "next": '<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    "play": '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8 5.5v13l10-6.5-10-6.5Z" fill="currentColor"/></svg>',
+    "pause": '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8 6v12M16 6v12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>',
     "mail": '<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect x="2.5" y="4.5" width="15" height="11" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M3 5.5l7 5 7-5" stroke="currentColor" stroke-width="1.5"/></svg>',
     "phone": '<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 2.8h2.6l1.3 3.4-1.7 1.1a9.5 9.5 0 0 0 5.5 5.5l1.1-1.7 3.4 1.3V15a2.2 2.2 0 0 1-2.2 2.2A13.2 13.2 0 0 1 2.8 5 2.2 2.2 0 0 1 5 2.8Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>',
     "pin": '<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M16 8.2c0 4.3-6 9.2-6 9.2S4 12.5 4 8.2a6 6 0 1 1 12 0Z" stroke="currentColor" stroke-width="1.5"/><circle cx="10" cy="8" r="2" stroke="currentColor" stroke-width="1.5"/></svg>',
@@ -406,7 +408,7 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
   <a class="btn btn--gold nav__cta" href="contact.html">Let's Make a Strategy Call {ARROW}</a>
   <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">{ICON["menu"]}</button>
 </div></header>'''
-    css_version = (f"{VERSION}-home-process-v8" if page == "index" else
+    css_version = (f"{VERSION}-home-process-v9" if page == "index" else
                    f"{VERSION}-services-layout-v8" if page == "services" else VERSION)
     return f'''<!doctype html>
 <html lang="en">
@@ -457,7 +459,7 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
 <a class="wa" href="https://wa.me/{CONTACT["wa"]}" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">{ICON["wa"]}</a>
 <dialog class="lb" id="lb" aria-label="Image viewer"><img alt=""><div class="lb__bar"><span></span>
   <button type="button" data-prev aria-label="Previous">{ICON["prev"]}</button><button type="button" data-next aria-label="Next">{ICON["next"]}</button><button type="button" data-close aria-label="Close">{ICON["close"]}</button></div></dialog>
-<script src="assets/js/site.js?v={VERSION}" defer></script>
+<script src="assets/js/site.js?v={VERSION}-work-controls-v1" defer></script>
 </body>
 </html>
 '''
@@ -697,31 +699,40 @@ def testimonials() -> str:
 
 
 def brand_reel() -> str:
-    """Expandable, looping portfolio reel with click-to-play client video work."""
+    """Three client videos in a looping carousel with arrows and a full-screen player."""
     videos = [
-        ("Khyber Sajji", "AI brand film · Reel 01", "assets/videos/khyber-sajji-ai-reel-1.mp4", "assets/img/khyber/post-curtain.webp"),
-        ("Khyber Sajji", "AI brand film · Reel 02", "assets/videos/khyber-sajji-ai-reel-2.mp4", "assets/img/khyber/post-lahore.webp"),
+        ("Khyber Sajji", "assets/videos/khyber-sajji-ai-reel-1.mp4", "assets/img/khyber/post-curtain.webp"),
+        ("Khyber Sajji", "assets/videos/khyber-sajji-ai-reel-2.mp4", "assets/img/khyber/post-lahore.webp"),
+        ("Nisa Sultan", "assets/videos/nisa-sultan-brand-film.mp4", "assets/img/posters/nisa-sultan.svg"),
     ]
 
     def cards(clone: bool = False) -> str:
         rendered = []
-        for brand, label, src, poster in videos:
+        for brand, src, poster in videos:
             if clone:
                 rendered.append(f'''<div class="rc rc--work rc--work-clone" aria-hidden="true">
-  <img src="{poster}" alt="" width="800" height="1000" loading="lazy" decoding="async">
-  <span class="rc__top"><span>{E(brand)}</span><span>AI Film</span></span>
-  <span class="rc__chip">{E(label)}</span></div>''')
+  <img src="{poster}" alt="" width="1080" height="1920" loading="lazy" decoding="async">
+  <span class="rc__top"><span>{E(brand)}</span></span>
+  <span class="work-play" aria-hidden="true">{ICON["play"]}</span></div>''')
             else:
-                rendered.append(f'''<article class="rc rc--work">
-  <video controls playsinline preload="none" poster="{poster}" width="1080" height="1920" aria-label="Play {E(brand)} {E(label)}">
-    <source src="{src}" type="video/mp4">
-  </video>
-  <span class="rc__top"><span>{E(brand)}</span><span>AI Film</span></span>
-  <span class="rc__chip">{E(label)}</span></article>''')
+                rendered.append(f'''<button class="rc rc--work" type="button" data-work-video="{src}" data-work-poster="{poster}" aria-label="Play {E(brand)} brand film">
+  <img src="{poster}" alt="" width="1080" height="1920" loading="lazy" decoding="async">
+  <span class="rc__top"><span>{E(brand)}</span></span>
+  <span class="work-play" aria-hidden="true">{ICON["play"]}</span></button>''')
         return "".join(rendered)
 
-    return f'<div class="reel reel--work" aria-label="AI video work"><div class="reel__track">{cards()}{cards(True)}</div></div>'
-
+    return f'''<div class="work-reel" data-work-reel>
+  <div class="work-reel__controls" aria-label="Video slider controls">
+    <button type="button" data-work-prev aria-label="Previous video">{ICON["prev"]}</button>
+    <button type="button" data-work-toggle aria-label="Pause video slider" aria-pressed="false"><span class="work-pause-icon">{ICON["pause"]}</span><span class="work-play-icon">{ICON["play"]}</span></button>
+    <button type="button" data-work-next aria-label="Next video">{ICON["next"]}</button>
+  </div>
+  <div class="reel reel--work" aria-label="Selected video work"><div class="reel__track">{cards()}{cards(True)}</div></div>
+  <dialog class="work-lightbox" aria-label="Brand film player">
+    <button class="work-lightbox__close" type="button" data-work-close aria-label="Close video">{ICON["close"]}</button>
+    <video controls playsinline preload="none" aria-label="Selected brand film"></video>
+  </dialog>
+</div>'''
 # Hero creative wall: three columns scrolling in alternating directions. Mixed portrait posts and landscape mockups.
 WALL = [
     ["tomgai/post-drumstick", "twentytwo/pk-range", "shehar/post-golden-layers", "khyber/post-door", "tomgai/app-billboard-1", "twentytwo/post-crunch"],
@@ -770,7 +781,7 @@ def page_home() -> str:
 {home_process_section()}
 
 <section class="sec sec--white bt"><div class="wrap">
-  {head_block("<b>02</b> Our Work", "Our work, <em>in motion.</em>", "AI-crafted films and creative campaigns, made to turn ideas into stories people remember.", f'<div class="btns" style="gap:20px"><a class="link" href="case-studies.html">Read the case studies {ARROW}</a><a class="link" href="portfolio.html">Open the portfolio {ARROW}</a></div>')}
+  {head_block("<b>02</b> Our Work", "<em>Ready</em> to see these kinds of results for your <em>brand?</em>", "Our approach combines strategy, execution, and consistency. We handle the planning, posting, and platform management so you can focus on running the business.", f'<div class="btns" style="gap:20px"><a class="link" href="case-studies.html">Read the case studies {ARROW}</a><a class="link" href="portfolio.html">Open the portfolio {ARROW}</a></div>')}
 </div>
 {brand_reel()}
 </section>

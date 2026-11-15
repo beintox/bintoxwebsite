@@ -140,6 +140,61 @@
     });
   }
 
+  /* Home page work reel: pause, step through cards and open a full-screen player. */
+  const workReel = $("[data-work-reel]");
+  if (workReel) {
+    const track = $(".reel__track", workReel);
+    const viewport = $(".reel--work", workReel);
+    const toggle = $("[data-work-toggle]", workReel);
+    const dialog = $(".work-lightbox", workReel);
+    const player = $("video", dialog);
+    let wasPausedBeforeDialog = false;
+
+    const setPaused = (paused) => {
+      track.classList.toggle("is-paused", paused);
+      toggle.classList.toggle("is-paused", paused);
+      toggle.setAttribute("aria-label", paused ? "Play video slider" : "Pause video slider");
+      toggle.setAttribute("aria-pressed", String(paused));
+    };
+
+    toggle.addEventListener("click", () => setPaused(!track.classList.contains("is-paused")));
+    const step = (direction) => {
+      const animation = track.getAnimations().find((item) => item.animationName === "marquee");
+      const firstCard = $("[data-work-video]", track);
+      if (!animation || !firstCard) {
+        const distance = firstCard ? firstCard.getBoundingClientRect().width + 16 : 300;
+        viewport.scrollBy({ left: direction * distance, behavior: still ? "auto" : "smooth" });
+        return;
+      }
+      const duration = Number(animation.effect.getTiming().duration);
+      const cycleWidth = track.scrollWidth / 2;
+      const stride = firstCard.getBoundingClientRect().width + (parseFloat(getComputedStyle(track).columnGap) || 16);
+      const offset = duration * stride / cycleWidth;
+      const current = Number(animation.currentTime) || 0;
+      animation.currentTime = (current + direction * offset + duration) % duration;
+    };
+    $("[data-work-prev]", workReel).addEventListener("click", () => step(-1));
+    $("[data-work-next]", workReel).addEventListener("click", () => step(1));
+
+    $$('[data-work-video]', workReel).forEach((card) => card.addEventListener("click", () => {
+      wasPausedBeforeDialog = track.classList.contains("is-paused");
+      setPaused(true);
+      player.src = card.dataset.workVideo;
+      player.poster = card.dataset.workPoster;
+      dialog.showModal();
+      player.play().catch(() => {});
+    }));
+    $("[data-work-close]", dialog).addEventListener("click", () => dialog.close());
+    dialog.addEventListener("click", (e) => { if (e.target === dialog) dialog.close(); });
+    dialog.addEventListener("close", () => {
+      player.pause();
+      player.removeAttribute("src");
+      player.removeAttribute("poster");
+      player.load();
+      if (!wasPausedBeforeDialog) setPaused(false);
+    });
+  }
+
   /* Reveal cards once as they scroll in, and count numbers up from 0 */
   const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const reveals = $$(".rv"), counters = $$("[data-count]");
