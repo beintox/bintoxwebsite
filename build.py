@@ -218,6 +218,16 @@ SVC_IMG = {
     "web": "khyber/app-website",
 }
 
+SERVICE_PAGE_COPY = [
+    ("identity", "Logo Design & Branding", "We create distinctive logos and cohesive brand identities that capture your business personality, establish recognition, and build a consistent visual presence across every touchpoint.", ["Logo Design", "Brand Identity", "Brand Guidelines"]),
+    ("social", "Social Media Management", "We build engaging social media experiences through strategic content planning, consistent publishing, and active community management to strengthen your online presence and audience relationships.", ["Content Calendar", "Content Strategy", "Community Management"]),
+    ("ads", "Performance Marketing", "We develop data-driven advertising campaigns that reach the right audience, generate qualified leads, improve conversions, and maximize your marketing performance.", ["Paid Advertising", "Lead Generation", "Conversion Optimization", "Ad Management"]),
+    ("seo", "SEO", "We improve your website's search visibility through strategic optimization, helping attract relevant organic traffic, strengthen search rankings, and build sustainable online growth.", ["Technical SEO", "On-Page SEO", "Search Optimization"]),
+    ("photo", "Photography & Videography", "We create compelling visual content through professional photography, video production, and creative storytelling that showcases your products and brings your brand vision to life.", ["Product Photography", "Video Production", "Creative Shoots", "Photo & Video Editing", "AI & UGC Video Ads"]),
+    ("web", "Website Design & Development", "We design and develop modern, responsive websites with intuitive user experiences, combining creative design and functional technology to strengthen your digital presence and convert visitors into customers.", ["UI/UX Design", "Web Development", "Responsive Websites"]),
+    ("registration", "Brand Registration (IPO)", "We guide businesses through the intellectual property protection process, from trademark searches and search reports to trademark and copyright registration, documentation, and filing support.", ["Search Report", "Trademark & Copyright Registration", "Documentation", "Filing Support", "Newspaper Ads"]),
+]
+
 STEPS = [("Discover", "We study your business, audience and competitors to find what makes you worth choosing."),
          ("Define", "Positioning, personality and message: the strategy every design decision answers to."),
          ("Design", "Identity, content and campaigns crafted with one look, one voice and one feeling."),
@@ -377,7 +387,8 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
   <a class="btn btn--gold nav__cta" href="contact.html">Let's Make a Strategy Call {ARROW}</a>
   <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">{ICON["menu"]}</button>
 </div></header>'''
-    css_version = f"{VERSION}-home-process-v5" if page == "index" else VERSION
+    css_version = (f"{VERSION}-home-process-v5" if page == "index" else
+                   f"{VERSION}-services-layout-v1" if page == "services" else VERSION)
     return f'''<!doctype html>
 <html lang="en">
 <head>
@@ -782,18 +793,33 @@ def svc_tile(sid: str, i: int = 0) -> str:
 </article>'''
 
 
+def service_offering(item: tuple, i: int) -> str:
+    sid, title, description, included = item
+    image = SVC_IMG[sid]
+    media = f'''<aside class="service-offering__visual" aria-label="Project investment information">
+  <div class="service-offering__image">{img(image, f"{title}: BEINTOX portfolio work", cls="service-offering__photo")}
+    <span class="service-offering__image-label">BEINTOX · SELECTED WORK</span></div>
+  <div class="service-offering__investment"><span class="service-offering__investment-label">Project investment</span>
+    <p>Every project is scoped around your goals, deliverables, and timeline. We’ll recommend the right approach before work begins.</p>
+    <a class="btn btn--gold btn--s" href="contact.html">Discuss this service {ARROW}</a></div>
+</aside>'''
+    details = f'''<div class="service-offering__copy"><span class="service-offering__number">{i + 1:02d} <i>/</i> OUR SERVICES</span>
+  <h2 class="h2">{E(title)}</h2><p class="lead">{E(description)}</p>
+  <h3 class="service-offering__included-title">What’s included?</h3>
+  <ul class="service-offering__included">{"".join(f"<li>{E(value)}</li>" for value in included)}</ul></div>'''
+    content = f"{details}{media}" if i % 2 == 0 else f"{media}{details}"
+    return f'<article class="service-offering rv" id="{E(sid)}" style="--i:{i % 2}">{content}</article>'
+
+
 def page_services() -> str:
-    tiles = "".join(svc_tile(x[0], i) for i, x in enumerate(SERVICES))
-    cta = f'''<a class="svc3 svc3--cta" href="contact.html"><div class="svc3__body"><span class="card__n">Not sure where to start?</span>
-  <h3 class="h3">Tell us your goal. We'll recommend the smallest set of services that gets you there.</h3>
-  <span class="svc3__see">Request a proposal {ARROW}</span></div></a>'''
+    offerings = "".join(service_offering(item, i) for i, item in enumerate(SERVICE_PAGE_COPY))
     body = f'''
-<section class="phero"><div class="wrap">
+<section class="phero phero--services"><div class="wrap">
   <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span>/</span><span>Services</span></nav>
-  <h1 class="h1">Strategy, creativity and marketing <em>under one roof.</em></h1>
+  <h1 class="h1">Services designed to build and grow <em>your brand.</em></h1>
   <p class="lead">Seven focused services to build, protect and grow your brand.</p>
 </div></section>
-<section class="sec"><div class="wrap"><div class="svc-grid">{tiles}{cta}</div></div></section>
+<section class="sec services-showcase"><div class="wrap">{offerings}</div></section>
 <section class="sec sec--white bt" id="process"><div class="wrap">
   {head_block("<b>Process</b>", "From idea to <em>identity.</em>", "A clear four-step process, so you always know what's happening, what's next and why.")}
   {steps_html()}
