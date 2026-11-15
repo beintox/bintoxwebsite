@@ -377,7 +377,7 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
   <a class="btn btn--gold nav__cta" href="contact.html">Let's Make a Strategy Call {ARROW}</a>
   <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">{ICON["menu"]}</button>
 </div></header>'''
-    css_version = f"{VERSION}-home-process-v4" if page == "index" else VERSION
+    css_version = f"{VERSION}-home-process-v5" if page == "index" else VERSION
     return f'''<!doctype html>
 <html lang="en">
 <head>
@@ -596,8 +596,8 @@ def home_process_section() -> str:
     return f'''<section class="sec home-process" aria-labelledby="home-process-title"><div class="wrap">
   <div class="home-process__intro">
     <span class="eyebrow"><b>How can we help you?</b></span>
-    <h2 class="h2" id="home-process-title">Take Your<br>Brand to <em>New Heights</em></h2>
-    <p class="lead">At Beintox, we take the stress out of social media management.</p>
+    <h2 class="h2" id="home-process-title"><span>Take Your Brand &amp;</span><span>Social Media to</span><em>New Heights</em></h2>
+    <p class="lead">At Beintox, we make social media management stress-free.</p>
   </div>
   <div class="home-process__stack" aria-label="Our four-step process">{cards}</div>
 </div></section>'''

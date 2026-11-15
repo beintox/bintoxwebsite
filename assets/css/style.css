@@ -728,33 +728,34 @@ a.tag:hover { border-color: var(--text); color: var(--text); }
 
 /* Home page process section: four layered brand-work cards. */
 .home-process { position: relative; overflow: clip; background: var(--paper); }
-.home-process > .wrap { display: grid; grid-template-columns: minmax(0, .98fr) minmax(0, 1.02fr); gap: clamp(34px, 5vw, 76px); align-items: start; }
+.home-process > .wrap { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr); gap: clamp(28px, 4vw, 64px); align-items: start; }
 .home-process__intro { position: sticky; top: 118px; align-self: start; padding-top: 28px; }
 .home-process__intro .eyebrow { color: var(--muted); }
 .home-process__intro .eyebrow b { color: var(--gold); }
-.home-process__intro h2 { max-width: 12ch; margin-top: 24px; font-size: clamp(60px, 6.6vw, 96px); line-height: .99; letter-spacing: -.055em; }
+.home-process__intro h2 { max-width: none; margin-top: 24px; font-size: clamp(58px, 5.5vw, 76px); line-height: .99; letter-spacing: -.065em; }
+.home-process__intro h2 > span { display: block; }
 .home-process__intro h2 em { display: block; margin-top: .08em; color: var(--gold); }
-.home-process__intro .lead { max-width: 34ch; margin-top: 26px; font-size: clamp(17px, 1.55vw, 21px); line-height: 1.55; }
-.home-process__stack { position: relative; width: 100%; max-width: 600px; justify-self: end; padding-bottom: 30vh; }
-.process-card { position: sticky; isolation: isolate; overflow: hidden; min-height: 360px; margin-bottom: 22px; padding: 28px clamp(26px, 3vw, 40px) 28px; border: 1px solid rgba(212, 160, 23, .42); border-radius: 26px; background: linear-gradient(145deg, #282621, #1F1F1F 62%, #191817); color: var(--paper); box-shadow: 0 22px 60px -42px rgba(31, 31, 31, .72), inset 0 1px rgba(248, 246, 242, .08); transition: border-color 420ms var(--ease), box-shadow 420ms var(--ease), background 420ms var(--ease); }
+.home-process__intro .lead { max-width: 56ch; margin-top: 22px; font-size: clamp(15px, 1.15vw, 16px); line-height: 1.5; }
+.home-process__stack { position: relative; width: 100%; max-width: 520px; justify-self: end; padding-bottom: 30vh; }
+.process-card { position: sticky; isolation: isolate; overflow: hidden; min-height: 320px; margin-bottom: 18px; padding: 26px clamp(22px, 2.8vw, 34px) 26px; border: 1px solid rgba(212, 160, 23, .42); border-radius: 24px; background: linear-gradient(145deg, #282621, #1F1F1F 62%, #191817); color: var(--paper); box-shadow: 0 22px 60px -42px rgba(31, 31, 31, .72), inset 0 1px rgba(248, 246, 242, .08); transition: border-color 420ms var(--ease), box-shadow 420ms var(--ease), background 420ms var(--ease); }
 .process-card:nth-child(1) { top: 98px; z-index: 1; }
 .process-card:nth-child(2) { top: 108px; z-index: 2; }
 .process-card:nth-child(3) { top: 118px; z-index: 3; }
 .process-card:nth-child(4) { top: 128px; z-index: 4; }
 .process-card:hover { border-color: rgba(212, 160, 23, .78); background: linear-gradient(145deg, #302d26, #22211e 62%, #191817); box-shadow: 0 28px 70px -40px rgba(31, 31, 31, .8), inset 0 1px rgba(248, 246, 242, .12); }
-.process-card__art { position: absolute; z-index: 1; top: 24px; left: 30px; width: clamp(72px, 7vw, 86px); height: auto; overflow: visible; opacity: .96; transform-origin: 50% 50%; transition: transform 460ms var(--ease), filter 460ms var(--ease); }
+.process-card__art { position: absolute; z-index: 1; top: 20px; left: 26px; width: clamp(68px, 6vw, 78px); height: auto; overflow: visible; opacity: .96; transform-origin: 50% 50%; transition: transform 460ms var(--ease), filter 460ms var(--ease); }
 .process-card:hover .process-card__art { transform: translateY(-7px) rotate(-5deg) scale(1.1); filter: drop-shadow(0 6px 9px rgba(212, 160, 23, .24)); }
 .process-card__art .icon-accent { fill: none; stroke: var(--gold); stroke-width: 3.4; stroke-linecap: round; stroke-linejoin: round; transition: stroke-dashoffset 620ms var(--ease), transform 460ms var(--ease); }
 .process-card__art .icon-muted { fill: none; stroke: rgba(248, 246, 242, .46); stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; transform-box: fill-box; transform-origin: center; transition: transform 460ms var(--ease), stroke 460ms var(--ease); }
 .process-card__art .icon-draw { stroke-dasharray: 140; stroke-dashoffset: 0; }
 .process-card:hover .process-card__art .icon-draw { stroke-dashoffset: -42; }
 .process-card:hover .process-card__art .icon-muted { transform: translateY(-3px); stroke: rgba(248, 246, 242, .78); }
-.process-card__copy { position: relative; z-index: 1; max-width: 58ch; margin-top: 88px; }
-.process-card__copy h3 { max-width: 18ch; font-size: clamp(28px, 3vw, 40px); line-height: 1.08; letter-spacing: -.035em; }
-.process-card__copy p { max-width: 58ch; margin-top: 16px; color: rgba(248, 246, 242, .76); font-size: clamp(15px, 1.35vw, 18px); line-height: 1.65; }
+.process-card__copy { position: relative; z-index: 1; max-width: 58ch; margin-top: 68px; }
+.process-card__copy h3 { max-width: 18ch; font-size: clamp(24px, 2.2vw, 30px); line-height: 1.08; letter-spacing: -.035em; }
+.process-card__copy p { max-width: 58ch; margin-top: 12px; color: rgba(248, 246, 242, .76); font-size: clamp(14px, 1.15vw, 16px); line-height: 1.55; }
 .process-card__index { position: absolute; right: 24px; bottom: -35px; z-index: -1; color: rgba(212, 160, 23, .075); font-size: clamp(130px, 20vw, 240px); font-weight: 700; line-height: 1; letter-spacing: -.08em; pointer-events: none; }
-@media (max-width: 1024px) { .home-process > .wrap { grid-template-columns: 1fr; gap: 42px; } .home-process__intro { position: relative; top: auto; padding-top: 0; } .home-process__intro h2 { max-width: 12ch; } .home-process__stack { max-width: 680px; width: 100%; justify-self: center; } }
-@media (max-width: 767px) { .home-process > .wrap { gap: 32px; } .home-process__intro h2 { margin-top: 18px; font-size: clamp(54px, 14vw, 74px); } .home-process__intro .lead { margin-top: 18px; } .home-process__stack { padding-bottom: 24vh; } .process-card { min-height: 390px; margin-bottom: 20px; padding: 24px 22px 28px; border-radius: 22px; } .process-card:nth-child(1) { top: 82px; } .process-card:nth-child(2) { top: 90px; } .process-card:nth-child(3) { top: 98px; } .process-card:nth-child(4) { top: 106px; } .process-card__art { top: 19px; left: 22px; width: 68px; } .process-card__copy { margin-top: 76px; } .process-card__copy h3 { font-size: clamp(27px, 8vw, 34px); } .process-card__copy p { margin-top: 13px; font-size: 14px; line-height: 1.5; } .process-card__index { right: 16px; bottom: -24px; font-size: 150px; } }
+@media (max-width: 1024px) { .home-process > .wrap { grid-template-columns: 1fr; gap: 42px; } .home-process__intro { position: relative; top: auto; padding-top: 0; } .home-process__stack { max-width: 600px; width: 100%; justify-self: center; } }
+@media (max-width: 767px) { .home-process > .wrap { gap: 32px; } .home-process__intro h2 { margin-top: 18px; font-size: clamp(50px, 13vw, 68px); } .home-process__intro .lead { margin-top: 16px; } .home-process__stack { padding-bottom: 24vh; } .process-card { min-height: 350px; margin-bottom: 18px; padding: 22px 20px 24px; border-radius: 22px; } .process-card:nth-child(1) { top: 82px; } .process-card:nth-child(2) { top: 90px; } .process-card:nth-child(3) { top: 98px; } .process-card:nth-child(4) { top: 106px; } .process-card__art { top: 16px; left: 20px; width: 64px; } .process-card__copy { margin-top: 66px; } .process-card__copy h3 { font-size: clamp(25px, 7vw, 30px); } .process-card__copy p { margin-top: 11px; font-size: 14px; line-height: 1.45; } .process-card__index { right: 16px; bottom: -24px; font-size: 150px; } }
 
 
 /* ---------- 34. Brands reel (moving row of mixed cards, pauses on hover) ---------- */
