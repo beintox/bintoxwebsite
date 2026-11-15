@@ -406,7 +406,7 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
   <a class="btn btn--gold nav__cta" href="contact.html">Let's Make a Strategy Call {ARROW}</a>
   <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">{ICON["menu"]}</button>
 </div></header>'''
-    css_version = (f"{VERSION}-home-process-v7" if page == "index" else
+    css_version = (f"{VERSION}-home-process-v8" if page == "index" else
                    f"{VERSION}-services-layout-v8" if page == "services" else VERSION)
     return f'''<!doctype html>
 <html lang="en">
@@ -680,14 +680,6 @@ def svc_feature(sid: str, i: int) -> str:
 </a>'''
 
 
-REEL_LINE = {
-    "tomgai": "A bamboo-stroke wordmark and a chef mascot for a Chinese & Thai kitchen.",
-    "twenty-two": "One monogram for two cravings: burgers and pizza.",
-    "khyber-sajji": "A mascot in a Peshawari cap launched the brand before the doors opened.",
-    "shehar-e-lazzat": "A navy-and-gold bakery brand, crowned by a croissant.",
-}
-
-
 def testimonials() -> str:
     stars = '<span class="tm__stars" aria-label="5 out of 5">★★★★★</span>'
 
@@ -705,27 +697,30 @@ def testimonials() -> str:
 
 
 def brand_reel() -> str:
-    """Moving row of mixed cards: a wide case card + a portrait feed post for every brand."""
-    first_post = {c["slug"]: next(items for _a, _b, _c, _d, kind, items in c["sections"] if kind == "posts")[0] for c in CASES}
+    """Expandable, looping portfolio reel with click-to-play client video work."""
+    videos = [
+        ("Khyber Sajji", "AI brand film · Reel 01", "assets/videos/khyber-sajji-ai-reel-1.mp4", "assets/img/khyber/post-curtain.webp"),
+        ("Khyber Sajji", "AI brand film · Reel 02", "assets/videos/khyber-sajji-ai-reel-2.mp4", "assets/img/khyber/post-lahore.webp"),
+    ]
 
-    def cards(hidden: bool) -> str:
-        out = []
-        attrs = ' tabindex="-1" aria-hidden="true"' if hidden else ""
-        for c in CASES:
-            folder = c["cover"].split("/")[0]
-            tags = "".join(f'<span>{E(t)}</span>' for t in c["tags"][:3])
-            line = REEL_LINE[c["slug"]]
-            out.append(f'''<a class="rc rc--case" href="case-study-{c["slug"]}.html" style="--brand:#1F1F1F"{attrs}>
-  {img(c["cover"], "" if hidden else f'{c["name"]} brand work by BEINTOX')}
-  <span class="rc__top"><span>{E(c["name"])}</span><span>{E(c["sector"].split(" · ")[0])}</span></span>
-  <span class="rc__body"><b>{E(line)}</b><span class="rc__tags">{tags}</span></span></a>''')
-            key, cap = first_post[c["slug"]].split(":", 1)
-            out.append(f'''<a class="rc rc--post" href="portfolio.html#{c["slug"]}" style="--brand:#1F1F1F"{attrs}>
-  {img(f"{folder}/{key}", "" if hidden else f'{c["name"]}: {cap}')}
-  <span class="rc__chip">{E(c["name"])} · Social</span></a>''')
-        return "".join(out)
-    return f'<div class="reel" aria-label="Brands we have built"><div class="reel__track">{cards(False)}{cards(True)}</div></div>'
+    def cards(clone: bool = False) -> str:
+        rendered = []
+        for brand, label, src, poster in videos:
+            if clone:
+                rendered.append(f'''<div class="rc rc--work rc--work-clone" aria-hidden="true">
+  <img src="{poster}" alt="" width="800" height="1000" loading="lazy" decoding="async">
+  <span class="rc__top"><span>{E(brand)}</span><span>AI Film</span></span>
+  <span class="rc__chip">{E(label)}</span></div>''')
+            else:
+                rendered.append(f'''<article class="rc rc--work">
+  <video controls playsinline preload="none" poster="{poster}" width="1080" height="1920" aria-label="Play {E(brand)} {E(label)}">
+    <source src="{src}" type="video/mp4">
+  </video>
+  <span class="rc__top"><span>{E(brand)}</span><span>AI Film</span></span>
+  <span class="rc__chip">{E(label)}</span></article>''')
+        return "".join(rendered)
 
+    return f'<div class="reel reel--work" aria-label="AI video work"><div class="reel__track">{cards()}{cards(True)}</div></div>'
 
 # Hero creative wall: three columns scrolling in alternating directions. Mixed portrait posts and landscape mockups.
 WALL = [
@@ -775,7 +770,7 @@ def page_home() -> str:
 {home_process_section()}
 
 <section class="sec sec--white bt"><div class="wrap">
-  {head_block("<b>02</b> Portfolio", "Brands we've <em>built.</em>", "Complete brand systems, from the logo to the packaging, the storefront and the feed.", f'<div class="btns" style="gap:20px"><a class="link" href="case-studies.html">Read the case studies {ARROW}</a><a class="link" href="portfolio.html">Open the portfolio {ARROW}</a></div>')}
+  {head_block("<b>02</b> Our Work", "Our work, <em>in motion.</em>", "AI-crafted films and creative campaigns, made to turn ideas into stories people remember.", f'<div class="btns" style="gap:20px"><a class="link" href="case-studies.html">Read the case studies {ARROW}</a><a class="link" href="portfolio.html">Open the portfolio {ARROW}</a></div>')}
 </div>
 {brand_reel()}
 </section>
