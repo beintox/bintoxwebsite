@@ -728,7 +728,7 @@ def brand_reel() -> str:
     videos = [
         ("Khyber Sajji", "assets/videos/khyber-sajji-ai-reel-1.mp4", "assets/img/khyber/post-curtain.webp"),
         ("Khyber Sajji", "assets/videos/khyber-sajji-ai-reel-2.mp4", "assets/img/khyber/post-lahore.webp"),
-        ("Nisa Sultan", "assets/videos/nisa-sultan-brand-film.mp4", "assets/img/posters/nisa-sultan.svg"),
+        ("Nisa Sultan", "assets/videos/nisa-sultan-brand-film.mp4", "assets/img/posters/nisa-sultan-cover.jpeg"),
     ]
 
     def cards(clone: bool = False) -> str:
