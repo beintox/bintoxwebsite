@@ -278,8 +278,9 @@ E = html.escape
 
 
 def img_size(path: Path) -> tuple[int, int]:
-    """Read pixel dimensions of a WebP/PNG without third-party libraries."""
-    b = path.read_bytes()[:40]
+    """Read pixel dimensions of supported image formats without third-party libraries."""
+    with path.open("rb") as image_file:
+        b = image_file.read(65536)
     if b[:8] == b"\x89PNG\r\n\x1a\n":
         return struct.unpack(">II", b[16:24])
     if b[:4] == b"RIFF" and b[8:12] == b"WEBP":
@@ -292,6 +293,30 @@ def img_size(path: Path) -> tuple[int, int]:
         if kind == b"VP8L":
             v = int.from_bytes(b[21:25], "little")
             return ((v & 0x3FFF) + 1, ((v >> 14) & 0x3FFF) + 1)
+    if b[:2] == b"\xff\xd8":
+        i = 2
+        while i < len(b):
+            if b[i] != 0xFF:
+                i += 1
+                continue
+            while i < len(b) and b[i] == 0xFF:
+                i += 1
+            if i >= len(b):
+                break
+            marker = b[i]
+            i += 1
+            if marker in (0xD8, 0xD9) or 0xD0 <= marker <= 0xD7:
+                continue
+            if i + 2 > len(b):
+                break
+            length = int.from_bytes(b[i:i + 2], "big")
+            if marker in (0xC0, 0xC1, 0xC2, 0xC3, 0xC5, 0xC6, 0xC7, 0xC9, 0xCA, 0xCB, 0xCD, 0xCE, 0xCF):
+                if i + 7 <= len(b):
+                    return (int.from_bytes(b[i + 5:i + 7], "big"), int.from_bytes(b[i + 3:i + 5], "big"))
+                break
+            if length < 2:
+                break
+            i += length
     raise ValueError(f"Unsupported image: {path}")
 
 
@@ -733,11 +758,11 @@ def brand_reel() -> str:
     <video controls playsinline preload="none" aria-label="Selected brand film"></video>
   </dialog>
 </div>'''
-# Hero creative wall: three columns scrolling in alternating directions. Mixed portrait posts and landscape mockups.
+# Hero creative wall: three columns scrolling in alternating directions. The supplied client posts replace the previous artwork.
 WALL = [
-    ["tomgai/post-drumstick", "twentytwo/pk-range", "shehar/post-golden-layers", "khyber/post-door", "tomgai/app-billboard-1", "twentytwo/post-crunch"],
-    ["twentytwo/post-pull-up", "khyber/app-storefront", "shehar/post-sundae", "tomgai/post-dumplings", "shehar/app-mockups", "khyber/post-hello-jii"],
-    ["khyber/post-tension", "shehar/post-cookies", "tomgai/app-chefs", "twentytwo/post-double", "khyber/photo-roast", "shehar/post-donuts", "tomgai/post-legacy"],
+    ["tomgai/home-creative-01.jpg", "twentytwo/home-creative-02.jpg", "shehar/home-creative-03.jpg", "khyber/home-creative-04.jpg", "tomgai/home-creative-05.jpg", "twentytwo/home-creative-06.jpg", "twentytwo/home-creative-07.jpg", "khyber/home-creative-08.jpg", "shehar/home-creative-09.jpg"],
+    ["tomgai/home-creative-10.jpg", "shehar/home-creative-11.jpg", "khyber/home-creative-12.jpg", "khyber/home-creative-13.jpg", "shehar/home-creative-14.jpg", "tomgai/home-creative-15.jpg", "twentytwo/home-creative-16.jpg", "khyber/home-creative-17.jpg", "shehar/home-creative-18.jpg"],
+    ["tomgai/home-creative-19.jpg", "tomgai/home-creative-20.jpg", "twentytwo/home-creative-21.jpg", "shehar/home-creative-22.jpg", "khyber/home-creative-23.jpg", "tomgai/home-creative-24.jpg", "twentytwo/home-creative-25.jpg", "twentytwo/home-creative-26.jpg"],
 ]
 WALL_BRAND = {"tomgai": ("tomgai", "Tomgai"), "twentytwo": ("twenty-two", "Twenty Two"), "khyber": ("khyber-sajji", "Khyber Sajji"), "shehar": ("shehar-e-lazzat", "Shehar-e-Lazzat")}
 
