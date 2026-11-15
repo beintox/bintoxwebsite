@@ -237,6 +237,10 @@ SERVICE_FEATURES = [
     ("Engagement", "Active engagement with your followers, building a strong and supportive community around your brand.", "M24 41s-17-10-17-23a9 9 0 0 1 17-5 9 9 0 0 1 17 5c0 13-17 23-17 23Z"),
     ("Consulting", "Expert advice on how to position your brand for success in the digital landscape.", "M24 5l5 4 7-1 2 7 5 5-4 6 1 7-7 2-5 5-6-4-7 1-2-7-5-5 4-6-1-7 7-2 5-5 6 4ZM18 24l4 4 9-10"),
 ]
+SERVICE_COMPARISON = {
+    "other": ["Slow communication", "Single channel approach", "Outdated growth strategies", "Lack of industry research", "Outsourced to mediocre talent"],
+    "beintox": ["Constant, proactive communication", "Omni-channel approach", "Tailored best-fit solutions", "Provides industry specific expertise", "Experts with 10+ years of experience"],
+}
 
 STEPS = [("Discover", "We study your business, audience and competitors to find what makes you worth choosing."),
          ("Define", "Positioning, personality and message: the strategy every design decision answers to."),
@@ -398,7 +402,7 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
   <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">{ICON["menu"]}</button>
 </div></header>'''
     css_version = (f"{VERSION}-home-process-v5" if page == "index" else
-                   f"{VERSION}-services-layout-v2" if page == "services" else VERSION)
+                   f"{VERSION}-services-layout-v3" if page == "services" else VERSION)
     return f'''<!doctype html>
 <html lang="en">
 <head>
@@ -825,7 +829,7 @@ def industries_strip() -> str:
     colors = ["#D4A017", "#E8413C", "#8B6B12", "#1F1F1F", "#B48512", "#C5433B", "#8B6B12", "#1F1F1F", "#D4A017"]
     items = "".join(f'<span class="industries-strip__item" style="--industry-color:{colors[i]}">{E(name)}<i aria-hidden="true">✳</i></span>' for i, name in enumerate(SERVICE_INDUSTRIES))
     return f'''<section class="industries-strip" aria-label="Industries we serve"><div class="wrap">
-  <div class="industries-strip__frame"><h2 class="industries-strip__label">Industries<br>we serve</h2><span class="sr-only">{E(', '.join(SERVICE_INDUSTRIES))}</span>
+  <div class="industries-strip__frame"><h2 class="industries-strip__label">Industries we serve</h2><span class="sr-only">{E(', '.join(SERVICE_INDUSTRIES))}</span>
     <div class="industries-strip__viewport"><div class="industries-strip__track" aria-hidden="true">{items}{items}</div></div>
   </div>
 </div></section>'''
@@ -842,16 +846,23 @@ def service_features_section() -> str:
 </div></section>'''
 
 
+def service_comparison_section() -> str:
+    other = "".join(f'<li><span aria-hidden="true">×</span>{E(text)}</li>' for text in SERVICE_COMPARISON["other"])
+    beintox = "".join(f'<li><span aria-hidden="true">✓</span>{E(text)}</li>' for text in SERVICE_COMPARISON["beintox"])
+    return f'''<section class="sec service-comparison" aria-labelledby="service-comparison-title"><div class="wrap">
+  <h2 class="service-comparison__title" id="service-comparison-title">But, why would you<br>want to work <em>with us?</em></h2>
+  <div class="service-comparison__grid"><article class="service-comparison__side service-comparison__side--other"><h3>Other Agencies</h3><ul>{other}</ul></article>
+    <article class="service-comparison__side service-comparison__side--beintox"><h3>BEINTOX</h3><ul>{beintox}</ul></article></div>
+</div></section>'''
+
+
 def page_services() -> str:
     offerings = "".join(service_offering(item, i) for i, item in enumerate(SERVICE_PAGE_COPY))
     body = f'''
 {industries_strip()}
 <section class="sec services-showcase"><div class="wrap">{offerings}</div></section>
 {service_features_section()}
-<section class="sec" id="engagement"><div class="wrap">
-  {head_block("<b>Engagement</b>", "Pay per project, or <em>retain the team.</em>", "Start with what you need now. Every engagement begins with a scoped proposal: no surprises, no lock-in.")}
-  {plans_html()}
-</div></section>
+{service_comparison_section()}
 <section class="sec sec--white bt" id="faq"><div class="wrap">
   <div class="split" style="align-items:start">
     <div><span class="eyebrow"><b>FAQ</b></span><h2 class="h2 mt-s">Asked <em>often.</em></h2><p class="lead mt-s">Something else on your mind? Message us on WhatsApp and we'll answer directly.</p>
