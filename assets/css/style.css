@@ -890,14 +890,20 @@ a.tag:hover { border-color: var(--text); color: var(--text); }
 .process-card:nth-child(2) { min-height: 282px; background: linear-gradient(145deg, #ffead9, #fff6ed); }
 .process-card:nth-child(3) { min-height: 310px; background: linear-gradient(145deg, #deedf5, #f2f7fb); }
 .process-card:nth-child(4) { min-height: 338px; background: linear-gradient(145deg, #e9e2f5, #f7f3fb); }
-.process-card:hover { transform: translateY(-9px); box-shadow: 0 25px 52px -32px rgba(31, 31, 31, .34), inset 0 1px rgba(255, 255, 255, .9); }
+.process-card:nth-child(1) { rotate: -5deg; }
+.process-card:nth-child(2) { rotate: -2deg; }
+.process-card:nth-child(3) { rotate: 2deg; }
+.process-card:nth-child(4) { rotate: 5deg; }
+.process-card:hover { translate: 0 -9px; box-shadow: 0 25px 52px -32px rgba(31, 31, 31, .34), inset 0 1px rgba(255, 255, 255, .9); }
 .process-card__index { position: relative; z-index: 1; align-self: flex-start; display: grid; place-items: center; width: 52px; height: 52px; margin-bottom: auto; border-radius: 50%; background: var(--gold); color: var(--ink); font-size: 17px; font-weight: 700; }
 .process-card__label { position: absolute; top: 34px; right: 22px; color: var(--muted); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; }
 .process-card__copy { position: relative; z-index: 1; margin-top: 36px; }
 .process-card__copy h3 { max-width: 18ch; font-size: clamp(21px, 2vw, 28px); line-height: 1.08; letter-spacing: -.035em; }
 .process-card__copy p { max-width: 38ch; margin-top: 11px; color: var(--muted); font-size: clamp(13px, 1vw, 15px); line-height: 1.55; }
-@media (max-width: 900px) { .home-process__stack { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: stretch; } .process-card, .process-card:nth-child(n) { min-height: 270px; } }
-@media (max-width: 600px) { .home-process > .wrap { gap: 30px; } .home-process__eyebrow { padding: 9px 14px; font-size: clamp(15px, 4.2vw, 18px); letter-spacing: .055em; } .home-process__intro h2 { max-width: 13ch; font-size: clamp(42px, 11vw, 58px); } .home-process__intro h2 em { display: block; margin-left: 0; } .home-process__stack { grid-template-columns: 1fr; gap: 12px; padding: 6px 0 20px; } .process-card, .process-card:nth-child(n) { min-height: 230px; padding: 20px; border-radius: 20px; } .process-card__copy { margin-top: 28px; } .process-card__copy h3 { font-size: 24px; } .process-card__copy p { font-size: 14px; } }
+@media (max-width: 900px) { .home-process__stack { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: stretch; } .process-card, .process-card:nth-child(n) { min-height: 270px; rotate: 0deg; } }
+@media (max-width: 600px) { .home-process > .wrap { gap: 30px; } .home-process__eyebrow { padding: 9px 14px; font-size: clamp(15px, 4.2vw, 18px); letter-spacing: .055em; } .home-process__intro h2 { max-width: 13ch; font-size: clamp(42px, 11vw, 58px); } .home-process__intro h2 em { display: block; margin-left: 0; } .home-process__stack { grid-template-columns: 1fr; gap: 12px; padding: 6px 0 20px; } .process-card, .process-card:nth-child(n) { min-height: 230px; padding: 20px; border-radius: 20px; rotate: 0deg; } .js .home-process .process-card.rv:not(.in) { opacity: 0; transform: translateX(36px); } .js .home-process .process-card.rv.in { animation: process-card-from-right 700ms var(--ease) both; animation-delay: calc(var(--i, 0) * 110ms); } .process-card__copy { margin-top: 28px; } .process-card__copy h3 { font-size: 24px; } .process-card__copy p { font-size: 14px; } }
+@keyframes process-card-from-right { from { opacity: 0; transform: translateX(36px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .js .home-process .process-card.rv:not(.in) { opacity: 1; transform: none; translate: none; } .js .home-process .process-card.rv.in { animation: none; } }
 /* ---------- 34. Brands reel (moving row of mixed cards, pauses on hover) ---------- */
 .sec--white:has(.reel) { padding-bottom: calc(var(--sec) - 8px); }
 .reel { overflow: hidden; padding: 6px 0 14px; -webkit-mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent); mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent); }
