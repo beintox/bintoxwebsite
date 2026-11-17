@@ -238,26 +238,5 @@
     });
   }
 
-  /* Manually browse the editorial client testimonials. */
-  const testimonialTrack = $("[data-testimonial-track]");
-  if (testimonialTrack) {
-    const cards = $$(".tm", testimonialTrack);
-    const gap = () => parseFloat(getComputedStyle(testimonialTrack).gap) || 0;
-    const stride = () => (cards[0]?.getBoundingClientRect().width || testimonialTrack.clientWidth) + gap();
-    const move = (direction) => {
-      const max = testimonialTrack.scrollWidth - testimonialTrack.clientWidth;
-      const atStart = testimonialTrack.scrollLeft <= 2;
-      const atEnd = testimonialTrack.scrollLeft >= max - 2;
-      const left = direction > 0 && atEnd ? 0 : direction < 0 && atStart ? max : testimonialTrack.scrollLeft + direction * stride();
-      testimonialTrack.scrollTo({ left, behavior: still ? "auto" : "smooth" });
-    };
-    $("[data-testimonial-prev]")?.addEventListener("click", () => move(-1));
-    $("[data-testimonial-next]")?.addEventListener("click", () => move(1));
-    testimonialTrack.addEventListener("keydown", (event) => {
-      if (event.key === "ArrowLeft") { event.preventDefault(); move(-1); }
-      if (event.key === "ArrowRight") { event.preventDefault(); move(1); }
-    });
-  }
-
   const y = $("[data-year]"); if (y) y.textContent = new Date().getFullYear();
 })();

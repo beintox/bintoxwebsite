@@ -433,7 +433,7 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
   <a class="btn btn--gold nav__cta" href="contact.html">Let's Make a Strategy Call {ARROW}</a>
   <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">{ICON["menu"]}</button>
 </div></header>'''
-    css_version = (f"{VERSION}-testimonial-editorial-v4" if page == "index" else
+    css_version = (f"{VERSION}-testimonial-editorial-v3" if page == "index" else
                    f"{VERSION}-services-layout-v8" if page == "services" else VERSION)
     return f'''<!doctype html>
 <html lang="en">
@@ -491,7 +491,7 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
 <a class="wa" href="https://wa.me/{CONTACT["wa"]}" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">{ICON["wa"]}</a>
 <dialog class="lb" id="lb" aria-label="Image viewer"><img alt=""><div class="lb__bar"><span></span>
   <button type="button" data-prev aria-label="Previous">{ICON["prev"]}</button><button type="button" data-next aria-label="Next">{ICON["next"]}</button><button type="button" data-close aria-label="Close">{ICON["close"]}</button></div></dialog>
-<script src="assets/js/site.js?v={VERSION}-work-controls-v2" defer></script>
+<script src="assets/js/site.js?v={VERSION}-work-controls-v1" defer></script>
 </body>
 </html>
 '''
@@ -777,10 +777,11 @@ def testimonials() -> str:
   <figcaption><span class="tm__av">{E(initials)}</span><span><b>{E(name)}</b><small>{E(role)}</small></span></figcaption>
 </figure>'''
 
-    cards = "".join(card(item, index=i) for i, item in enumerate(TESTIMONIALS[:5]))
+    featured = card(TESTIMONIALS[0], True, 0)
+    supporting = "".join(card(item, index=i + 1) for i, item in enumerate(TESTIMONIALS[1:5]))
     return f'''<section class="sec tms tms--editorial" aria-labelledby="testimonials-title"><div class="wrap">
-  <div class="tms__heading rv" style="--i:0"><h2 class="h2" id="testimonials-title">Clients say it <em>better.</em></h2><div class="tms__controls" aria-label="Testimonial navigation"><button type="button" data-testimonial-prev aria-label="Previous testimonials">{ICON["prev"]}</button><button type="button" data-testimonial-next aria-label="Next testimonials">{ICON["next"]}</button></div></div>
-  <div class="tms__track" data-testimonial-track tabindex="0" role="region" aria-label="Client testimonials">{cards}</div>
+  <div class="tms__heading rv" style="--i:0"><span class="eyebrow">03 / Testimonials</span><h2 class="h2" id="testimonials-title">Clients say it <em>better.</em></h2></div>
+  <div class="tms__layout" aria-label="Client testimonials">{featured}<div class="tms__support">{supporting}</div></div>
 </div></section>'''
 
 def brand_reel() -> str:
