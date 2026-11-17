@@ -433,7 +433,7 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
   <a class="btn btn--gold nav__cta" href="contact.html">Let's Make a Strategy Call {ARROW}</a>
   <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">{ICON["menu"]}</button>
 </div></header>'''
-    css_version = (f"{VERSION}-home-process-v9" if page == "index" else
+    css_version = (f"{VERSION}-home-impact-process-v1" if page == "index" else
                    f"{VERSION}-services-layout-v8" if page == "services" else VERSION)
     return f'''<!doctype html>
 <html lang="en">
@@ -622,10 +622,7 @@ def stats_band() -> str:
     return f'''<section class="kband"><div class="wrap">
   <div class="kband__intro">
     <h2 class="h2 rv" style="--i:0"><span class="kband__headline-main">From an idea to a brand that</span><em>stands out.</em></h2>
-    <p class="lead rv" style="--i:1">We turn ideas into powerful brand identities and transform businesses through creative strategy, digital marketing, content production, and Automation. Everything your brand needs to build, connect, and grow — all under one roof.</p>
-    <div class="kband__pills rv" style="--i:2"><span>Brand Strategy &amp; Identity</span><span>Social Media</span><span>Performance Marketing</span><span>SEO</span><span>Creative Production</span><span>Web Development</span></div>
-    <a class="btn btn--gold rv" style="--i:3" href="contact.html">Let's Build Your Brand {ARROW}</a>
-    <span class="eyebrow kband__signature rv" style="--i:4"><b>BRANDING</b> · CREATIVITY · STRATEGY · GROWTH</span>
+    <p class="lead rv" style="--i:1">We turn ideas into powerful brand identities and transform businesses through creative strategy.</p>
   </div>
   <div class="kpis" aria-label="BEINTOX results">{cells}</div>
 </div></section>
@@ -645,9 +642,9 @@ PROCESS_STEPS = [
 def home_process_section() -> str:
     cards = "".join(
         f'''<article class="process-card rv" style="--i:{i}">
-  <svg class="process-card__art" viewBox="0 0 124 124" fill="none" aria-hidden="true">{graphic}</svg>
-  <div class="process-card__copy"><h3>{E(title)}</h3><p>{E(description)}</p></div>
   <span class="process-card__index" aria-hidden="true">0{i + 1}</span>
+  <span class="process-card__label">STEP 0{i + 1}</span>
+  <div class="process-card__copy"><h3>{E(title)}</h3><p>{E(description)}</p></div>
 </article>'''
         for i, (title, description, graphic) in enumerate(PROCESS_STEPS))
     return f'''<section class="sec home-process" aria-labelledby="home-process-title"><div class="wrap">
@@ -770,13 +767,12 @@ WALL_BRAND = {"tomgai": ("tomgai", "Tomgai"), "twentytwo": ("twenty-two", "Twent
 def creative_wall() -> str:
     cols = []
     for ci, col in enumerate(WALL):
-        def tile(rel: str, first: bool, hidden: bool, tile_index: int) -> str:
+        def tile(rel: str, first: bool, hidden: bool) -> str:
             slug, name = WALL_BRAND[rel.split("/")[0]]
             attrs = ' tabindex="-1" aria-hidden="true"' if hidden else ""
-            pop_delay = (tile_index * .37 + ci * .23) % 4.8
-            return f'<a class="wall__item" href="portfolio.html#{slug}" style="--pop-delay:-{pop_delay:.2f}s"{attrs}>{img(rel, f"{name} creative by BEINTOX", eager=first)}<span>{name}</span></a>'
-        a = "".join(tile(r, i < 3, False, i) for i, r in enumerate(col))
-        b = "".join(tile(r, False, True, i) for i, r in enumerate(col))
+            return f'<a class="wall__item" href="portfolio.html#{slug}"{attrs}>{img(rel, f"{name} creative by BEINTOX", eager=first)}<span>{name}</span></a>'
+        a = "".join(tile(r, i < 3, False) for i, r in enumerate(col))
+        b = "".join(tile(r, False, True) for r in col)
         cols.append(f'<div class="wall__col{" wall__col--down" if ci == 1 else ""}" style="--dur:{[64, 76, 58][ci]}s"><div class="wall__track">{a}{b}</div></div>')
     return f'<div class="hero__wall" aria-label="Creatives designed by BEINTOX">{"".join(cols)}</div>'
 
@@ -795,7 +791,6 @@ def page_home() -> str:
     <h1 class="h1">We Build Values<br><em>That Stand Out &amp; Grow.</em></h1>
     <p class="lead">From brand identity and creative design to digital marketing and web development, we help startups transform their ideas into powerful brands.</p>
     <div class="btns"><a class="btn btn--gold" href="contact.html">Let's Build Your Brand {ARROW}</a><a class="btn btn--ghost" href="services.html">Explore Our Services</a></div>
-    <div class="hero__reactions" aria-label="Loved by growing brands"><span aria-hidden="true">👍</span><span aria-hidden="true">💛</span><span aria-hidden="true">😂</span><span aria-hidden="true">🥰</span><span aria-hidden="true">✨</span><b>Brand love</b></div>
     <span class="eyebrow hero__signature"><b>BEINTOX</b> Your creative &amp; growth partner</span>
   </div>
   {mosaic_html}
