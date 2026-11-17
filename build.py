@@ -433,7 +433,7 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
   <a class="btn btn--gold nav__cta" href="contact.html">Let's Make a Strategy Call {ARROW}</a>
   <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">{ICON["menu"]}</button>
 </div></header>'''
-    css_version = (f"{VERSION}-home-process-mobile-v2" if page == "index" else
+    css_version = (f"{VERSION}-home-process-loop-v1" if page == "index" else
                    f"{VERSION}-services-layout-v8" if page == "services" else VERSION)
     return f'''<!doctype html>
 <html lang="en">
@@ -653,12 +653,12 @@ PROCESS_STEPS = [
 
 
 def home_process_section() -> str:
-    cards = "".join(
-        f'''<article class="process-card rv" style="--i:{i}">
-  <span class="process-card__index" aria-hidden="true">0{i + 1}</span>
-  <span class="process-card__label">STEP 0{i + 1}</span>
-  <div class="process-card__copy"><h3>{E(title)}</h3><p>{E(description)}</p></div>
-</article>'''
+    steps = "".join(
+        f'''<li class="process-step" data-process-step="{i}" style="--step:{i}">
+  <span class="process-step__icon" aria-hidden="true"><svg viewBox="0 0 128 128">{graphic}</svg></span>
+  <span class="process-step__label">Step 0{i + 1}</span>
+  <h3>{E(title)}</h3><p>{E(description)}</p>
+</li>'''
         for i, (title, description, graphic) in enumerate(PROCESS_STEPS))
     return f'''<section class="sec home-process" aria-labelledby="home-process-title"><div class="wrap">
   <div class="home-process__intro">
@@ -666,8 +666,16 @@ def home_process_section() -> str:
     <h2 class="h2" id="home-process-title"><span>A simple 4 step process</span><em>for business growth</em></h2>
     <p class="lead">At Beintox, we make social media management stress-free.</p>
   </div>
-  <div class="home-process__stack" aria-label="Our four-step process" role="region" tabindex="0">{cards}</div>
-  <div class="home-process__controls" aria-label="Process card controls">
+  <div class="process-journey" aria-label="Our four-step process">
+    <svg class="process-journey__track" viewBox="0 0 1200 300" preserveAspectRatio="none" aria-hidden="true">
+      <defs><linearGradient id="journeyGold" x1="0" x2="1"><stop stop-color="#c8940b"/><stop offset=".5" stop-color="#e7b823"/><stop offset="1" stop-color="#b78300"/></linearGradient></defs>
+      <path class="process-journey__ribbon" d="M50 150 C135 22 300 22 390 150 C480 278 635 278 720 150 C805 22 970 22 1150 150"/>
+      <path class="process-journey__flow" d="M50 150 C135 22 300 22 390 150 C480 278 635 278 720 150 C805 22 970 22 1150 150"/>
+      <g class="process-journey__nodes"><circle cx="50" cy="150" r="18"/><circle cx="390" cy="150" r="18"/><circle cx="720" cy="150" r="18"/><circle cx="1150" cy="150" r="18"/></g>
+    </svg>
+    <ol class="process-journey__steps" tabindex="0">{steps}</ol>
+  </div>
+  <div class="home-process__controls" aria-label="Process step navigation">
     <button type="button" data-process-prev aria-label="Previous process step">{ICON["prev"]}</button>
     <span data-process-status aria-live="polite">01 <i>/</i> 04</span>
     <button type="button" data-process-next aria-label="Next process step">{ICON["next"]}</button>
@@ -675,9 +683,9 @@ def home_process_section() -> str:
 </div></section>
 <script>
 (() => {{
-  const deck = document.querySelector('.home-process__stack');
-  if (!deck) return;
-  const cards = [...deck.querySelectorAll('.process-card')];
+  const journey = document.querySelector('.home-process');
+  if (!journey) return;
+  const steps = [...journey.querySelectorAll('.process-step')];
   const mobile = window.matchMedia('(max-width: 600px)');
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
   const status = document.querySelector('[data-process-status]');
@@ -685,56 +693,23 @@ def home_process_section() -> str:
   const nextButton = document.querySelector('[data-process-next]');
   let active = 0;
   let timer;
-  let cleanupTimer;
+  const updateSteps = () => steps.forEach((step, i) => {{
+    step.classList.toggle('is-current', i === active);
+    step.setAttribute('aria-current', i === active ? 'step' : 'false');
+  }});
   const updateStatus = () => {{ if (status) status.innerHTML = String(active + 1).padStart(2, '0') + ' <i>/</i> 04'; }};
   const restartTimer = () => {{
     clearInterval(timer);
     if (mobile.matches && !reduced.matches) timer = setInterval(() => change(1), 4200);
   }};
-  const reset = () => {{
-    clearInterval(timer);
-    clearTimeout(cleanupTimer);
-    cards.forEach(card => card.classList.remove('is-active', 'is-entering', 'is-exiting', 'is-stack-1', 'is-stack-2', 'is-stack-3'));
-    if (!mobile.matches) {{ updateStatus(); return; }}
-    cards.forEach((card, i) => card.classList.add(i === active ? 'is-active' : 'is-stack-' + ((i - active + cards.length) % cards.length)));
-    updateStatus();
-    restartTimer();
-  }};
+  const reset = () => {{ clearInterval(timer); updateSteps(); updateStatus(); restartTimer(); }};
   const change = direction => {{
-    if (!mobile.matches) return;
-    const previous = active;
-    const next = (active + direction + cards.length) % cards.length;
-    deck.dataset.direction = direction > 0 ? 'next' : 'prev';
-    const outgoing = cards[previous];
-    const incoming = cards[next];
-    outgoing.classList.remove('is-active');
-    outgoing.classList.add('is-exiting');
-    incoming.classList.remove('is-stack-1', 'is-stack-2', 'is-stack-3');
-    incoming.classList.add('is-entering');
-    cards.forEach((card, i) => {{
-      if (i === previous || i === next) return;
-      card.classList.remove('is-stack-1', 'is-stack-2', 'is-stack-3');
-      card.classList.add('is-stack-' + ((i - next + cards.length) % cards.length));
-    }});
-    requestAnimationFrame(() => {{
-      incoming.classList.remove('is-entering');
-      incoming.classList.add('is-active');
-    }});
-    active = next;
-    updateStatus();
-    restartTimer();
-    clearTimeout(cleanupTimer);
-    cleanupTimer = setTimeout(() => {{
-      outgoing.style.transition = 'none';
-      outgoing.classList.remove('is-exiting');
-      outgoing.classList.add(direction > 0 ? 'is-stack-3' : 'is-stack-1');
-      void outgoing.offsetWidth;
-      outgoing.style.transition = '';
-    }}, 720);
+    active = (active + direction + steps.length) % steps.length;
+    updateSteps(); updateStatus(); restartTimer();
   }};
   previousButton?.addEventListener('click', () => change(-1));
   nextButton?.addEventListener('click', () => change(1));
-  deck.addEventListener('keydown', event => {{
+  journey.querySelector('.process-journey__steps').addEventListener('keydown', event => {{
     if (event.key === 'ArrowLeft') {{ event.preventDefault(); change(-1); restartTimer(); }}
     if (event.key === 'ArrowRight') {{ event.preventDefault(); change(1); restartTimer(); }}
   }});
