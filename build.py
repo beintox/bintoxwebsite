@@ -433,7 +433,7 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
   <a class="btn btn--gold nav__cta" href="contact.html">Let's Make a Strategy Call {ARROW}</a>
   <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">{ICON["menu"]}</button>
 </div></header>'''
-    css_version = (f"{VERSION}-testimonial-editorial-v4" if page == "index" else
+    css_version = (f"{VERSION}-testimonial-editorial-v5" if page == "index" else
                    f"{VERSION}-services-layout-v8" if page == "services" else VERSION)
     return f'''<!doctype html>
 <html lang="en">
@@ -780,7 +780,7 @@ def testimonials() -> str:
     featured = card(TESTIMONIALS[0], True, 0)
     supporting = "".join(card(item, index=i + 1) for i, item in enumerate(TESTIMONIALS[1:5]))
     return f'''<section class="sec tms tms--editorial" aria-labelledby="testimonials-title"><div class="wrap">
-  <div class="tms__heading rv" style="--i:0"><span class="eyebrow">03 / Testimonials</span><h2 class="h2" id="testimonials-title">Clients say it <em>better.</em></h2></div>
+  <div class="tms__heading rv" style="--i:0"><h2 class="h2" id="testimonials-title">Clients say it <em>better.</em></h2></div>
   <div class="tms__layout" aria-label="Client testimonials">{featured}<div class="tms__support">{supporting}</div></div>
 </div></section>'''
 
