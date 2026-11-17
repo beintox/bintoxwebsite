@@ -878,6 +878,8 @@ a.tag:hover { border-color: var(--text); color: var(--text); }
 .home-process__intro { max-width: 780px; margin: 0 auto; text-align: center; }
 .home-process__intro .eyebrow { color: var(--muted); }
 .home-process__intro .eyebrow b { color: var(--gold); }
+.home-process__eyebrow { gap: 10px; margin: 0 auto; padding: 10px 17px; border: 1px solid rgba(212, 160, 23, .32); border-radius: 999px; background: linear-gradient(110deg, rgba(212, 160, 23, .12), rgba(255, 255, 255, .72)); box-shadow: 0 8px 20px -16px rgba(31, 31, 31, .42); font-size: clamp(16px, 1.45vw, 20px); font-weight: 700; letter-spacing: .08em; }
+.home-process__eyebrow::before { content: ""; width: 8px; height: 8px; flex: none; border-radius: 50%; background: var(--gold); box-shadow: 0 0 0 4px rgba(212, 160, 23, .14); }
 .home-process__intro h2 { max-width: 16ch; margin: 18px auto 0; font-size: clamp(48px, 6vw, 78px); line-height: .98; letter-spacing: -.065em; }
 .home-process__intro h2 > span { display: block; }
 .home-process__intro h2 em { display: inline; margin-left: .12em; color: var(--gold); }
@@ -895,7 +897,7 @@ a.tag:hover { border-color: var(--text); color: var(--text); }
 .process-card__copy h3 { max-width: 18ch; font-size: clamp(21px, 2vw, 28px); line-height: 1.08; letter-spacing: -.035em; }
 .process-card__copy p { max-width: 38ch; margin-top: 11px; color: var(--muted); font-size: clamp(13px, 1vw, 15px); line-height: 1.55; }
 @media (max-width: 900px) { .home-process__stack { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: stretch; } .process-card, .process-card:nth-child(n) { min-height: 270px; } }
-@media (max-width: 600px) { .home-process > .wrap { gap: 30px; } .home-process__intro h2 { max-width: 13ch; font-size: clamp(42px, 11vw, 58px); } .home-process__intro h2 em { display: block; margin-left: 0; } .home-process__stack { grid-template-columns: 1fr; gap: 12px; padding: 6px 0 20px; } .process-card, .process-card:nth-child(n) { min-height: 230px; padding: 20px; border-radius: 20px; } .process-card__copy { margin-top: 28px; } .process-card__copy h3 { font-size: 24px; } .process-card__copy p { font-size: 14px; } }
+@media (max-width: 600px) { .home-process > .wrap { gap: 30px; } .home-process__eyebrow { padding: 9px 14px; font-size: clamp(15px, 4.2vw, 18px); letter-spacing: .055em; } .home-process__intro h2 { max-width: 13ch; font-size: clamp(42px, 11vw, 58px); } .home-process__intro h2 em { display: block; margin-left: 0; } .home-process__stack { grid-template-columns: 1fr; gap: 12px; padding: 6px 0 20px; } .process-card, .process-card:nth-child(n) { min-height: 230px; padding: 20px; border-radius: 20px; } .process-card__copy { margin-top: 28px; } .process-card__copy h3 { font-size: 24px; } .process-card__copy p { font-size: 14px; } }
 /* ---------- 34. Brands reel (moving row of mixed cards, pauses on hover) ---------- */
 .sec--white:has(.reel) { padding-bottom: calc(var(--sec) - 8px); }
 .reel { overflow: hidden; padding: 6px 0 14px; -webkit-mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent); mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent); }

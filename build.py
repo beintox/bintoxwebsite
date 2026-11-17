@@ -433,7 +433,7 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
   <a class="btn btn--gold nav__cta" href="contact.html">Let's Make a Strategy Call {ARROW}</a>
   <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">{ICON["menu"]}</button>
 </div></header>'''
-    css_version = (f"{VERSION}-impact-badges-ladder-v1" if page == "index" else
+    css_version = (f"{VERSION}-impact-badges-ladder-v2" if page == "index" else
                    f"{VERSION}-services-layout-v8" if page == "services" else VERSION)
     return f'''<!doctype html>
 <html lang="en">
@@ -655,7 +655,7 @@ def home_process_section() -> str:
         for i, (title, description, graphic) in enumerate(PROCESS_STEPS))
     return f'''<section class="sec home-process" aria-labelledby="home-process-title"><div class="wrap">
   <div class="home-process__intro">
-    <span class="eyebrow"><b>How can we help you?</b></span>
+    <span class="eyebrow home-process__eyebrow"><b>How can we help you?</b></span>
     <h2 class="h2" id="home-process-title"><span>Take Your Brand &amp;</span><span>Social Media to</span><em>New Heights</em></h2>
     <p class="lead">At Beintox, we make social media management stress-free.</p>
   </div>
