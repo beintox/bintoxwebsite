@@ -862,7 +862,7 @@ def service_offering(item: tuple, i: int) -> str:
 
 
 def industries_strip() -> str:
-    colors = ["#D4A017", "#E8413C", "#7A5C00", "#27241E", "#B77700", "#C3312B", "#986A0C", "#6E4C10", "#A96E00"]
+    colors = ["#3B5BFA", "#FF5A36", "#73C5B3", "#FFD479", "#3D5BD5", "#FFB5B5", "#6D9FDE", "#FF9F7B", "#E5A911"]
     items = "".join(f'<span class="industries-strip__item" style="--industry-color:{colors[i]}">{E(name)}<i aria-hidden="true">✳</i></span>' for i, name in enumerate(SERVICE_INDUSTRIES))
     return f'''<section class="industries-strip" aria-label="Industries we serve"><div class="wrap">
   <div class="industries-strip__frame"><p class="industries-strip__label">Industries<br>we serve</p><span class="sr-only">{E(', '.join(SERVICE_INDUSTRIES))}</span>
