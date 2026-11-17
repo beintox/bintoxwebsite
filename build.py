@@ -770,12 +770,13 @@ WALL_BRAND = {"tomgai": ("tomgai", "Tomgai"), "twentytwo": ("twenty-two", "Twent
 def creative_wall() -> str:
     cols = []
     for ci, col in enumerate(WALL):
-        def tile(rel: str, first: bool, hidden: bool) -> str:
+        def tile(rel: str, first: bool, hidden: bool, tile_index: int) -> str:
             slug, name = WALL_BRAND[rel.split("/")[0]]
             attrs = ' tabindex="-1" aria-hidden="true"' if hidden else ""
-            return f'<a class="wall__item" href="portfolio.html#{slug}"{attrs}>{img(rel, f"{name} creative by BEINTOX", eager=first)}<span>{name}</span></a>'
-        a = "".join(tile(r, i < 3, False) for i, r in enumerate(col))
-        b = "".join(tile(r, False, True) for r in col)
+            pop_delay = (tile_index * .37 + ci * .23) % 4.8
+            return f'<a class="wall__item" href="portfolio.html#{slug}" style="--pop-delay:-{pop_delay:.2f}s"{attrs}>{img(rel, f"{name} creative by BEINTOX", eager=first)}<span>{name}</span></a>'
+        a = "".join(tile(r, i < 3, False, i) for i, r in enumerate(col))
+        b = "".join(tile(r, False, True, i) for i, r in enumerate(col))
         cols.append(f'<div class="wall__col{" wall__col--down" if ci == 1 else ""}" style="--dur:{[64, 76, 58][ci]}s"><div class="wall__track">{a}{b}</div></div>')
     return f'<div class="hero__wall" aria-label="Creatives designed by BEINTOX">{"".join(cols)}</div>'
 
@@ -794,6 +795,7 @@ def page_home() -> str:
     <h1 class="h1">We Build Values<br><em>That Stand Out &amp; Grow.</em></h1>
     <p class="lead">From brand identity and creative design to digital marketing and web development, we help startups transform their ideas into powerful brands.</p>
     <div class="btns"><a class="btn btn--gold" href="contact.html">Let's Build Your Brand {ARROW}</a><a class="btn btn--ghost" href="services.html">Explore Our Services</a></div>
+    <div class="hero__reactions" aria-label="Loved by growing brands"><span aria-hidden="true">👍</span><span aria-hidden="true">💛</span><span aria-hidden="true">😂</span><span aria-hidden="true">🥰</span><span aria-hidden="true">✨</span><b>Brand love</b></div>
     <span class="eyebrow hero__signature"><b>BEINTOX</b> Your creative &amp; growth partner</span>
   </div>
   {mosaic_html}
