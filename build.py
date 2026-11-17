@@ -17,7 +17,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 IMG = ROOT / "assets" / "img"
-VERSION = "32"  # bump to bust CSS/JS caches
+VERSION = "33"  # bump to bust CSS/JS caches
 
 # =====================================================================
 # DATA
@@ -433,7 +433,7 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
   <a class="btn btn--gold nav__cta" href="contact.html">Let's Make a Strategy Call {ARROW}</a>
   <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">{ICON["menu"]}</button>
 </div></header>'''
-    css_version = (f"{VERSION}-testimonial-editorial-v2" if page == "index" else
+    css_version = (f"{VERSION}-testimonial-editorial-v3" if page == "index" else
                    f"{VERSION}-services-layout-v8" if page == "services" else VERSION)
     return f'''<!doctype html>
 <html lang="en">
@@ -463,6 +463,13 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
 <main id="main">
 {body}
 </main>
+<div class="grow-ticker" aria-label="Want to grow your business? Let’s talk.">
+  <span class="sr-only">Want to grow your business? Let’s talk.</span>
+  <div class="grow-ticker__track" aria-hidden="true">
+    <div class="grow-ticker__group">{''.join('<span class="grow-ticker__item">Want to grow your business? <em>Let’s talk.</em><b>✳</b></span>' for _ in range(6))}</div>
+    <div class="grow-ticker__group">{''.join('<span class="grow-ticker__item">Want to grow your business? <em>Let’s talk.</em><b>✳</b></span>' for _ in range(6))}</div>
+  </div>
+</div>
 <footer class="footer"><span class="footer__watermark" aria-hidden="true">BEINTOX</span><div class="wrap">
   <div class="footer__main">
     <div class="footer__contact-cards" aria-label="Contact BEINTOX">
