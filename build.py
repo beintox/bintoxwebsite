@@ -433,7 +433,7 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
   <a class="btn btn--gold nav__cta" href="contact.html">Let's Make a Strategy Call {ARROW}</a>
   <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">{ICON["menu"]}</button>
 </div></header>'''
-    css_version = (f"{VERSION}-home-process-loop-v1" if page == "index" else
+    css_version = (f"{VERSION}-home-process-mailbox-v1" if page == "index" else
                    f"{VERSION}-services-layout-v8" if page == "services" else VERSION)
     return f'''<!doctype html>
 <html lang="en">
@@ -654,9 +654,9 @@ PROCESS_STEPS = [
 
 def home_process_section() -> str:
     steps = "".join(
-        f'''<li class="process-step" data-process-step="{i}" style="--step:{i}">
-  <span class="process-step__icon" aria-hidden="true"><svg viewBox="0 0 128 128">{graphic}</svg></span>
-  <span class="process-step__label">Step 0{i + 1}</span>
+        f'''<li class="process-mail__card{' is-current' if i == 0 else ''}" data-process-step="{i}" aria-hidden="{'false' if i == 0 else 'true'}" style="--step:{i}">
+  <span class="process-mail__card-step">STEP 0{i + 1}</span>
+  <span class="process-mail__card-icon" aria-hidden="true"><svg viewBox="0 0 128 128">{graphic}</svg></span>
   <h3>{E(title)}</h3><p>{E(description)}</p>
 </li>'''
         for i, (title, description, graphic) in enumerate(PROCESS_STEPS))
@@ -666,16 +666,25 @@ def home_process_section() -> str:
     <h2 class="h2" id="home-process-title"><span>A simple 4 step process</span><em>for business growth</em></h2>
     <p class="lead">At Beintox, we make social media management stress-free.</p>
   </div>
-  <div class="process-journey" aria-label="Our four-step process">
-    <svg class="process-journey__track" viewBox="0 0 1200 300" preserveAspectRatio="none" aria-hidden="true">
-      <defs><linearGradient id="journeyGold" x1="0" x2="1"><stop stop-color="#c8940b"/><stop offset=".5" stop-color="#e7b823"/><stop offset="1" stop-color="#b78300"/></linearGradient></defs>
-      <path class="process-journey__ribbon" d="M50 150 C135 22 300 22 390 150 C480 278 635 278 720 150 C805 22 970 22 1150 150"/>
-      <path class="process-journey__flow" d="M50 150 C135 22 300 22 390 150 C480 278 635 278 720 150 C805 22 970 22 1150 150"/>
-      <g class="process-journey__nodes"><circle cx="50" cy="150" r="18"/><circle cx="390" cy="150" r="18"/><circle cx="720" cy="150" r="18"/><circle cx="1150" cy="150" r="18"/></g>
-    </svg>
-    <ol class="process-journey__steps" tabindex="0">{steps}</ol>
+  <div class="process-mail" aria-label="Swipe upward to reveal each step in our four-step process" tabindex="0">
+    <div class="process-mail__stage">
+      <ol class="process-mail__deck">{steps}</ol>
+      <svg class="process-mail__illustration" viewBox="0 0 440 470" role="img" aria-label="A gold post-mounted mailbox">
+        <defs><linearGradient id="mailGold" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#f3cf62"/><stop offset="1" stop-color="#c8940b"/></linearGradient></defs>
+        <ellipse cx="220" cy="442" rx="105" ry="15" fill="rgba(31,31,31,.12)"/>
+        <path d="M205 276h30l15 158h-60z" fill="url(#mailGold)"/><path d="M187 434h66l18 12H169z" fill="#b78300"/>
+        <path d="M91 141c0-38 30-68 68-68h140c30 0 54 24 54 54v130c0 21-17 38-38 38H129c-21 0-38-17-38-38z" fill="url(#mailGold)" stroke="#b78300" stroke-width="5"/>
+        <path d="M117 146c0-22 18-40 40-40h132c22 0 40 18 40 40v80H117z" fill="#f8f6f2" stroke="#d9b544" stroke-width="3"/>
+        <path d="M117 226h212v26c0 15-12 27-27 27H144c-15 0-27-12-27-27z" fill="#e9c14a"/>
+        <path class="process-mail__slot" d="M150 163h146" stroke="#201f1d" stroke-width="8" stroke-linecap="round"/>
+        <path d="M302 107V39h15v68" fill="#d4a017"/><path class="process-mail__flag" d="M317 43h72v39h-72z" fill="#c8462e"/><circle cx="309" cy="115" r="7" fill="#201f1d"/>
+        <path d="M159 194h128" stroke="#d8d2c6" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+      <span class="process-mail__spark process-mail__spark--one" aria-hidden="true">+</span><span class="process-mail__spark process-mail__spark--two" aria-hidden="true">+</span>
+    </div>
+    <p class="process-mail__hint">Swipe up to open the next step <span aria-hidden="true"></span></p>
   </div>
-  <div class="home-process__controls" aria-label="Process step navigation">
+  <div class="home-process__controls" aria-label="Process step controls">
     <button type="button" data-process-prev aria-label="Previous process step">{ICON["prev"]}</button>
     <span data-process-status aria-live="polite">01 <i>/</i> 04</span>
     <button type="button" data-process-next aria-label="Next process step">{ICON["next"]}</button>
@@ -683,39 +692,44 @@ def home_process_section() -> str:
 </div></section>
 <script>
 (() => {{
-  const journey = document.querySelector('.home-process');
-  if (!journey) return;
-  const steps = [...journey.querySelectorAll('.process-step')];
-  const mobile = window.matchMedia('(max-width: 600px)');
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const status = document.querySelector('[data-process-status]');
-  const previousButton = document.querySelector('[data-process-prev]');
-  const nextButton = document.querySelector('[data-process-next]');
+  const section = document.querySelector('.home-process');
+  const stage = section?.querySelector('.process-mail');
+  if (!stage) return;
+  const cards = [...stage.querySelectorAll('.process-mail__card')];
+  const status = section.querySelector('[data-process-status]');
+  const previousButton = section.querySelector('[data-process-prev]');
+  const nextButton = section.querySelector('[data-process-next]');
   let active = 0;
-  let timer;
-  const updateSteps = () => steps.forEach((step, i) => {{
-    step.classList.toggle('is-current', i === active);
-    step.setAttribute('aria-current', i === active ? 'step' : 'false');
+  let startY = 0;
+  let lastWheel = 0;
+  const updateCards = () => cards.forEach((card, i) => {{
+    card.classList.toggle('is-current', i === active);
+    card.setAttribute('aria-hidden', i === active ? 'false' : 'true');
   }});
   const updateStatus = () => {{ if (status) status.innerHTML = String(active + 1).padStart(2, '0') + ' <i>/</i> 04'; }};
-  const restartTimer = () => {{
-    clearInterval(timer);
-    if (mobile.matches && !reduced.matches) timer = setInterval(() => change(1), 4200);
-  }};
-  const reset = () => {{ clearInterval(timer); updateSteps(); updateStatus(); restartTimer(); }};
   const change = direction => {{
-    active = (active + direction + steps.length) % steps.length;
-    updateSteps(); updateStatus(); restartTimer();
+    const outgoing = cards[active];
+    outgoing.classList.add('is-leaving');
+    active = (active + direction + cards.length) % cards.length;
+    updateCards(); updateStatus();
+    outgoing.addEventListener('animationend', () => outgoing.classList.remove('is-leaving'), {{ once: true }});
   }};
   previousButton?.addEventListener('click', () => change(-1));
   nextButton?.addEventListener('click', () => change(1));
-  journey.querySelector('.process-journey__steps').addEventListener('keydown', event => {{
-    if (event.key === 'ArrowLeft') {{ event.preventDefault(); change(-1); restartTimer(); }}
-    if (event.key === 'ArrowRight') {{ event.preventDefault(); change(1); restartTimer(); }}
+  stage.addEventListener('touchstart', event => {{ startY = event.changedTouches[0].clientY; }}, {{ passive: true }});
+  stage.addEventListener('touchend', event => {{
+    const distance = startY - event.changedTouches[0].clientY;
+    if (Math.abs(distance) > 42) change(distance > 0 ? 1 : -1);
+  }}, {{ passive: true }});
+  stage.addEventListener('wheel', event => {{
+    if (Math.abs(event.deltaY) < 24 || Date.now() - lastWheel < 520) return;
+    lastWheel = Date.now(); change(event.deltaY > 0 ? 1 : -1);
+  }}, {{ passive: true }});
+  stage.addEventListener('keydown', event => {{
+    if (event.key === 'ArrowUp' || event.key === 'ArrowRight') {{ event.preventDefault(); change(1); }}
+    if (event.key === 'ArrowDown' || event.key === 'ArrowLeft') {{ event.preventDefault(); change(-1); }}
   }});
-  reset();
-  mobile.addEventListener('change', reset);
-  reduced.addEventListener('change', reset);
+  updateCards(); updateStatus();
 }})();
 </script>'''
 
