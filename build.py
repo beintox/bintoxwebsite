@@ -433,7 +433,7 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
   <a class="btn btn--gold nav__cta" href="contact.html">Let's Make a Strategy Call {ARROW}</a>
   <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">{ICON["menu"]}</button>
 </div></header>'''
-    css_version = (f"{VERSION}-testimonial-editorial-v5" if page == "index" else
+    css_version = (f"{VERSION}-home-process-mobile-v1" if page == "index" else
                    f"{VERSION}-services-layout-v8" if page == "services" else VERSION)
     return f'''<!doctype html>
 <html lang="en">
@@ -666,7 +666,12 @@ def home_process_section() -> str:
     <h2 class="h2" id="home-process-title"><span>A simple 4 step process</span><em>for business growth</em></h2>
     <p class="lead">At Beintox, we make social media management stress-free.</p>
   </div>
-  <div class="home-process__stack" aria-label="Our four-step process">{cards}</div>
+  <div class="home-process__stack" aria-label="Our four-step process" role="region" tabindex="0">{cards}</div>
+  <div class="home-process__controls" aria-label="Process card controls">
+    <button type="button" data-process-prev aria-label="Previous process step">{ICON["prev"]}</button>
+    <span data-process-status aria-live="polite">01 <i>/</i> 04</span>
+    <button type="button" data-process-next aria-label="Next process step">{ICON["next"]}</button>
+  </div>
 </div></section>
 <script>
 (() => {{
@@ -675,19 +680,31 @@ def home_process_section() -> str:
   const cards = [...deck.querySelectorAll('.process-card')];
   const mobile = window.matchMedia('(max-width: 600px)');
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const status = document.querySelector('[data-process-status]');
+  const previousButton = document.querySelector('[data-process-prev]');
+  const nextButton = document.querySelector('[data-process-next]');
   let active = 0;
   let timer;
+  let cleanupTimer;
+  const updateStatus = () => {{ if (status) status.innerHTML = String(active + 1).padStart(2, '0') + ' <i>/</i> 04'; }};
+  const restartTimer = () => {{
+    clearInterval(timer);
+    if (mobile.matches && !reduced.matches) timer = setInterval(() => change(1), 4200);
+  }};
   const reset = () => {{
     clearInterval(timer);
+    clearTimeout(cleanupTimer);
     cards.forEach(card => card.classList.remove('is-active', 'is-entering', 'is-exiting', 'is-stack-1', 'is-stack-2', 'is-stack-3'));
-    if (!mobile.matches) return;
+    if (!mobile.matches) {{ updateStatus(); return; }}
     cards.forEach((card, i) => card.classList.add(i === active ? 'is-active' : 'is-stack-' + ((i - active + cards.length) % cards.length)));
-    if (!reduced.matches) timer = setInterval(advance, 3200);
+    updateStatus();
+    restartTimer();
   }};
-  const advance = () => {{
+  const change = direction => {{
     if (!mobile.matches) return;
     const previous = active;
-    const next = (active + 1) % cards.length;
+    const next = (active + direction + cards.length) % cards.length;
+    deck.dataset.direction = direction > 0 ? 'next' : 'prev';
     const outgoing = cards[previous];
     const incoming = cards[next];
     outgoing.classList.remove('is-active');
@@ -704,14 +721,23 @@ def home_process_section() -> str:
       incoming.classList.add('is-active');
     }});
     active = next;
-    setTimeout(() => {{
+    updateStatus();
+    restartTimer();
+    clearTimeout(cleanupTimer);
+    cleanupTimer = setTimeout(() => {{
       outgoing.style.transition = 'none';
       outgoing.classList.remove('is-exiting');
-      outgoing.classList.add('is-stack-3');
+      outgoing.classList.add(direction > 0 ? 'is-stack-3' : 'is-stack-1');
       void outgoing.offsetWidth;
       outgoing.style.transition = '';
     }}, 720);
   }};
+  previousButton?.addEventListener('click', () => change(-1));
+  nextButton?.addEventListener('click', () => change(1));
+  deck.addEventListener('keydown', event => {{
+    if (event.key === 'ArrowLeft') {{ event.preventDefault(); change(-1); restartTimer(); }}
+    if (event.key === 'ArrowRight') {{ event.preventDefault(); change(1); restartTimer(); }}
+  }});
   reset();
   mobile.addEventListener('change', reset);
   reduced.addEventListener('change', reset);
