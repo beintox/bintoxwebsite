@@ -433,7 +433,7 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
   <a class="btn btn--gold nav__cta" href="contact.html">Let's Make a Strategy Call {ARROW}</a>
   <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">{ICON["menu"]}</button>
 </div></header>'''
-    css_version = (f"{VERSION}-home-impact-process-v1" if page == "index" else
+    css_version = (f"{VERSION}-impact-badges-ladder-v1" if page == "index" else
                    f"{VERSION}-services-layout-v8" if page == "services" else VERSION)
     return f'''<!doctype html>
 <html lang="en">
@@ -616,8 +616,14 @@ def stats_band() -> str:
         ("95", "%", "Client Retention Rate", "Built on trust, consistency, and results.", "M12 21s-8-4.5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 6.5-8 11-8 11Z"),
         ("500", "+", "Creative Assets Produced", "Ideas transformed into impactful creative work.", "M4 4h7v7H4zM14 4h7v7h-7zM4 14h7v7H4zM14 14h7v7h-7z"),
     ]
+    badges = [
+        '<span class="kpi-badge kpi-badge--social" aria-label="TikTok, Instagram, YouTube and LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3v11.2a4.1 4.1 0 1 1-3.2-4V7.1c1.1 1.6 2.7 2.6 5.2 2.8V6.5c-1.2-.3-2-1.2-2-2.4V3Z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.7" cy="6.8" r=".8" class="fill"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="4"/><path class="fill" d="m10 9 5 3-5 3z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><path class="fill" d="M7 10h3v8H7zm1.5-4a1.7 1.7 0 1 0 0 3.4 1.7 1.7 0 0 0 0-3.4M12 10h3v1.1c.5-.8 1.3-1.3 2.4-1.3 2.1 0 2.6 1.4 2.6 3.4V18h-3v-4.2c0-1-.1-1.8-1.2-1.8s-1.5.8-1.5 1.8V18H12z"/></svg></span>',
+        '<span class="kpi-badge kpi-badge--people" aria-label="Brand growth"><i>A</i><i>B</i><i>C</i><b>+</b></span>',
+        '<span class="kpi-badge kpi-badge--platforms"><span class="kpi-badge__meta">∞</span><span class="kpi-badge__tiktok">♪</span><b>Meta + TikTok</b></span>',
+        '<span class="kpi-badge kpi-badge--live"><i></i><b>Live reporting</b></span>',
+    ]
     cells = "".join(
-        f'<article class="kpi rv" style="--i:{i}"><div class="kpi__meta"><span>0{i + 1} / IMPACT</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="{icon}" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></div><strong class="kpi__number"><span class="kpi__prefix">+</span><span data-count="{n}">{n}</span><sup>{suf}</sup></strong><h3>{title}</h3><p>{desc}</p></article>'
+        f'<article class="kpi rv" style="--i:{i}"><div class="kpi__meta">{badges[i]}</div><strong class="kpi__number"><span class="kpi__prefix">+</span><span data-count="{n}">{n}</span><sup>{suf}</sup></strong><h3>{title}</h3><p>{desc}</p></article>'
         for i, (n, suf, title, desc, icon) in enumerate(metrics))
     return f'''<section class="kband"><div class="wrap">
   <div class="kband__intro">
