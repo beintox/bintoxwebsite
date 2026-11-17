@@ -433,7 +433,7 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
   <a class="btn btn--gold nav__cta" href="contact.html">Let's Make a Strategy Call {ARROW}</a>
   <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">{ICON["menu"]}</button>
 </div></header>'''
-    css_version = (f"{VERSION}-impact-badges-ladder-v4" if page == "index" else
+    css_version = (f"{VERSION}-testimonial-editorial-v1" if page == "index" else
                    f"{VERSION}-services-layout-v8" if page == "services" else VERSION)
     return f'''<!doctype html>
 <html lang="en">
@@ -760,20 +760,22 @@ def svc_feature(sid: str, i: int) -> str:
 
 
 def testimonials() -> str:
-    stars = '<span class="tm__stars" aria-label="5 out of 5">★★★★★</span>'
+    def card(item: tuple[str, str, str], featured: bool = False, index: int = 0) -> str:
+        name, role, quote = item
+        initials = "".join(word[0] for word in name.split()[:2])
+        kind = " tm--featured" if featured else ""
+        return f'''<figure class="tm{kind} rv" style="--i:{index}">
+  <span class="tm__stars" aria-label="5 out of 5">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+  <blockquote>&ldquo;{E(quote)}&rdquo;</blockquote>
+  <figcaption><span class="tm__av">{E(initials)}</span><span><b>{E(name)}</b><small>{E(role)}</small></span></figcaption>
+</figure>'''
 
-    def cards(hidden: bool) -> str:
-        h = ' aria-hidden="true"' if hidden else ""
-        return "".join(
-            f'''<figure class="tm"{h}>{stars}<blockquote>“{E(q)}”</blockquote>
-  <figcaption><span class="tm__av">{"".join(w[0] for w in name.split()[:2])}</span><span><b>{E(name)}</b><small>{E(role)}</small></span></figcaption></figure>'''
-            for name, role, q in TESTIMONIALS)
-    return f'''<section class="sec tms"><div class="wrap">
-  {head_block("<b>03</b> Testimonials", "In our clients' <em>own words.</em>", "Restaurants, bakeries, retail and D2C brands. Here's what working with one team feels like.")}
-</div>
-<div class="reel reel--tm" aria-label="Client testimonials"><div class="reel__track">{cards(False)}{cards(True)}</div></div>
-</section>'''
-
+    featured = card(TESTIMONIALS[0], True, 0)
+    supporting = "".join(card(item, index=i + 1) for i, item in enumerate(TESTIMONIALS[1:5]))
+    return f'''<section class="sec tms tms--editorial" aria-labelledby="testimonials-title"><div class="wrap">
+  <div class="tms__heading rv" style="--i:0"><span class="eyebrow">03 / Testimonials</span><h2 class="h2" id="testimonials-title">Clients say it <em>better.</em></h2></div>
+  <div class="tms__layout" aria-label="Client testimonials">{featured}<div class="tms__support">{supporting}</div></div>
+</div></section>'''
 
 def brand_reel() -> str:
     """Three client videos in a looping carousel with arrows and a full-screen player."""
