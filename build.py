@@ -433,7 +433,7 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
   <a class="btn btn--gold nav__cta" href="contact.html">Let's Make a Strategy Call {ARROW}</a>
   <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">{ICON["menu"]}</button>
 </div></header>'''
-    css_version = (f"{VERSION}-impact-badges-ladder-v3" if page == "index" else
+    css_version = (f"{VERSION}-impact-badges-ladder-v4" if page == "index" else
                    f"{VERSION}-services-layout-v8" if page == "services" else VERSION)
     return f'''<!doctype html>
 <html lang="en">
@@ -660,7 +660,56 @@ def home_process_section() -> str:
     <p class="lead">At Beintox, we make social media management stress-free.</p>
   </div>
   <div class="home-process__stack" aria-label="Our four-step process">{cards}</div>
-</div></section>'''
+</div></section>
+<script>
+(() => {{
+  const deck = document.querySelector('.home-process__stack');
+  if (!deck) return;
+  const cards = [...deck.querySelectorAll('.process-card')];
+  const mobile = window.matchMedia('(max-width: 600px)');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let active = 0;
+  let timer;
+  const reset = () => {{
+    clearInterval(timer);
+    cards.forEach(card => card.classList.remove('is-active', 'is-entering', 'is-exiting', 'is-stack-1', 'is-stack-2', 'is-stack-3'));
+    if (!mobile.matches) return;
+    cards.forEach((card, i) => card.classList.add(i === active ? 'is-active' : 'is-stack-' + ((i - active + cards.length) % cards.length)));
+    if (!reduced.matches) timer = setInterval(advance, 3200);
+  }};
+  const advance = () => {{
+    if (!mobile.matches) return;
+    const previous = active;
+    const next = (active + 1) % cards.length;
+    const outgoing = cards[previous];
+    const incoming = cards[next];
+    outgoing.classList.remove('is-active');
+    outgoing.classList.add('is-exiting');
+    incoming.classList.remove('is-stack-1', 'is-stack-2', 'is-stack-3');
+    incoming.classList.add('is-entering');
+    cards.forEach((card, i) => {{
+      if (i === previous || i === next) return;
+      card.classList.remove('is-stack-1', 'is-stack-2', 'is-stack-3');
+      card.classList.add('is-stack-' + ((i - next + cards.length) % cards.length));
+    }});
+    requestAnimationFrame(() => {{
+      incoming.classList.remove('is-entering');
+      incoming.classList.add('is-active');
+    }});
+    active = next;
+    setTimeout(() => {{
+      outgoing.style.transition = 'none';
+      outgoing.classList.remove('is-exiting');
+      outgoing.classList.add('is-stack-3');
+      void outgoing.offsetWidth;
+      outgoing.style.transition = '';
+    }}, 720);
+  }};
+  reset();
+  mobile.addEventListener('change', reset);
+  reduced.addEventListener('change', reset);
+}})();
+</script>'''
 
 
 # Service cards on the home page: colour + decorative shape per service.
