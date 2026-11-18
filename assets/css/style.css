@@ -1021,6 +1021,9 @@ a.tag:hover { border-color: var(--text); color: var(--text); }
   .home-process .process-card.is-behind-2,
   .home-process .process-card.is-behind-3,
   .home-process .process-card.is-leaving { z-index: auto; transform: none; animation: none; }
+  .mobile-process-motion .home-process .process-card { opacity: 0; transform: translate3d(-32px, 0, 0); transition: opacity 620ms var(--ease), transform 720ms cubic-bezier(.2,.75,.2,1); }
+  .mobile-process-motion .home-process .process-card:nth-child(even) { transform: translate3d(32px, 0, 0); }
+  .mobile-process-motion .home-process .process-card.is-mobile-entered { opacity: 1; transform: translate3d(0, 0, 0); }
 }
 @media (prefers-reduced-motion: reduce) { .home-process .process-float { animation: none; } }
 .social-orbit { overflow: hidden; background: var(--paper); padding: clamp(24px, 4vw, 54px) 0 0; }

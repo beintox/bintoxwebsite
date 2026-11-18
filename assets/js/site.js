@@ -220,6 +220,21 @@
     counters.forEach((el) => io.observe(el));
   }
 
+  /* On phones only, reveal the home process cards from alternating sides as they enter view. */
+  const mobileProcess = matchMedia("(max-width: 767px)");
+  const processCards = $$(".home-process .process-card");
+  if (mobileProcess.matches && processCards.length && !still && "IntersectionObserver" in window) {
+    document.documentElement.classList.add("mobile-process-motion");
+    const processObserver = new IntersectionObserver((entries) => entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add("is-mobile-entered");
+      processObserver.unobserve(entry.target);
+    }), { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+    processCards.forEach((card) => processObserver.observe(card));
+  } else if (mobileProcess.matches) {
+    processCards.forEach((card) => card.classList.add("is-mobile-entered"));
+  }
+
   /* 3D tilt + moving light on [data-tilt] (founder portrait) */
   if (!still && matchMedia("(hover: hover)").matches) {
     $$("[data-tilt]").forEach((el) => {

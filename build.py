@@ -491,7 +491,7 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
 <a class="wa" href="https://wa.me/{CONTACT["wa"]}" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">{ICON["wa"]}</a>
 <dialog class="lb" id="lb" aria-label="Image viewer"><img alt=""><div class="lb__bar"><span></span>
   <button type="button" data-prev aria-label="Previous">{ICON["prev"]}</button><button type="button" data-next aria-label="Next">{ICON["next"]}</button><button type="button" data-close aria-label="Close">{ICON["close"]}</button></div></dialog>
-<script src="assets/js/site.js?v={VERSION}-work-controls-v1" defer></script>
+<script src="assets/js/site.js?v={VERSION}-mobile-process-reveal-v1" defer></script>
 </body>
 </html>
 '''
