@@ -433,7 +433,7 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
   <a class="btn btn--gold nav__cta" href="contact.html">Let's Make a Strategy Call {ARROW}</a>
   <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">{ICON["menu"]}</button>
 </div></header>'''
-    css_version = (f"{VERSION}-home-process-mailbox-v1" if page == "index" else
+    css_version = (f"{VERSION}-home-process-stack-v1" if page == "index" else
                    f"{VERSION}-services-layout-v8" if page == "services" else VERSION)
     return f'''<!doctype html>
 <html lang="en">
@@ -654,9 +654,10 @@ PROCESS_STEPS = [
 
 def home_process_section() -> str:
     steps = "".join(
-        f'''<li class="process-mail__card{' is-current' if i == 0 else ''}" data-process-step="{i}" aria-hidden="{'false' if i == 0 else 'true'}" style="--step:{i}">
-  <span class="process-mail__card-step">STEP 0{i + 1}</span>
-  <span class="process-mail__card-icon" aria-hidden="true"><svg viewBox="0 0 128 128">{graphic}</svg></span>
+        f'''<li class="process-card{' is-current' if i == 0 else ''}" data-process-step="{i}" aria-hidden="{'false' if i == 0 else 'true'}" style="--step:{i}">
+  <span class="process-card__number" aria-hidden="true">0{i + 1}</span>
+  <span class="process-card__label">Step 0{i + 1}</span>
+  <span class="process-card__icon" aria-hidden="true"><svg viewBox="0 0 128 128">{graphic}</svg></span>
   <h3>{E(title)}</h3><p>{E(description)}</p>
 </li>'''
         for i, (title, description, graphic) in enumerate(PROCESS_STEPS))
@@ -666,44 +667,26 @@ def home_process_section() -> str:
     <h2 class="h2" id="home-process-title"><span>A simple 4 step process</span><em>for business growth</em></h2>
     <p class="lead">At Beintox, we make social media management stress-free.</p>
   </div>
-  <div class="process-mail" aria-label="Swipe upward to reveal each step in our four-step process" tabindex="0">
-    <div class="process-mail__stage">
-      <ol class="process-mail__deck">{steps}</ol>
-      <svg class="process-mail__illustration" viewBox="0 0 440 470" role="img" aria-label="A gold post-mounted mailbox">
-        <defs><linearGradient id="mailGold" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#f3cf62"/><stop offset="1" stop-color="#c8940b"/></linearGradient></defs>
-        <ellipse cx="220" cy="442" rx="105" ry="15" fill="rgba(31,31,31,.12)"/>
-        <path d="M205 276h30l15 158h-60z" fill="url(#mailGold)"/><path d="M187 434h66l18 12H169z" fill="#b78300"/>
-        <path d="M91 141c0-38 30-68 68-68h140c30 0 54 24 54 54v130c0 21-17 38-38 38H129c-21 0-38-17-38-38z" fill="url(#mailGold)" stroke="#b78300" stroke-width="5"/>
-        <path d="M117 146c0-22 18-40 40-40h132c22 0 40 18 40 40v80H117z" fill="#f8f6f2" stroke="#d9b544" stroke-width="3"/>
-        <path d="M117 226h212v26c0 15-12 27-27 27H144c-15 0-27-12-27-27z" fill="#e9c14a"/>
-        <path class="process-mail__slot" d="M150 163h146" stroke="#201f1d" stroke-width="8" stroke-linecap="round"/>
-        <path d="M302 107V39h15v68" fill="#d4a017"/><path class="process-mail__flag" d="M317 43h72v39h-72z" fill="#c8462e"/><circle cx="309" cy="115" r="7" fill="#201f1d"/>
-        <path d="M159 194h128" stroke="#d8d2c6" stroke-width="3" stroke-linecap="round"/>
-      </svg>
-      <span class="process-mail__spark process-mail__spark--one" aria-hidden="true">+</span><span class="process-mail__spark process-mail__spark--two" aria-hidden="true">+</span>
-    </div>
-    <p class="process-mail__hint">Swipe up to open the next step <span aria-hidden="true"></span></p>
-  </div>
-  <div class="home-process__controls" aria-label="Process step controls">
-    <button type="button" data-process-prev aria-label="Previous process step">{ICON["prev"]}</button>
-    <span data-process-status aria-live="polite">01 <i>/</i> 04</span>
-    <button type="button" data-process-next aria-label="Next process step">{ICON["next"]}</button>
+  <div class="process-stack" aria-label="Four-step process cards. Swipe or click to move up through each step." tabindex="0" role="button">
+    <ol class="process-stack__deck">{steps}</ol>
+    <span class="process-stack__progress" data-process-status aria-live="polite">01 <i>/</i> 04</span>
   </div>
 </div></section>
 <script>
 (() => {{
   const section = document.querySelector('.home-process');
-  const stage = section?.querySelector('.process-mail');
-  if (!stage) return;
-  const cards = [...stage.querySelectorAll('.process-mail__card')];
+  const stack = section?.querySelector('.process-stack');
+  if (!stack) return;
+  const cards = [...stack.querySelectorAll('.process-card')];
   const status = section.querySelector('[data-process-status]');
-  const previousButton = section.querySelector('[data-process-prev]');
-  const nextButton = section.querySelector('[data-process-next]');
   let active = 0;
   let startY = 0;
   let lastWheel = 0;
+  let ignoreClickUntil = 0;
   const updateCards = () => cards.forEach((card, i) => {{
-    card.classList.toggle('is-current', i === active);
+    card.classList.remove('is-current', 'is-behind-1', 'is-behind-2', 'is-behind-3');
+    const distance = (i - active + cards.length) % cards.length;
+    card.classList.add(distance === 0 ? 'is-current' : 'is-behind-' + distance);
     card.setAttribute('aria-hidden', i === active ? 'false' : 'true');
   }});
   const updateStatus = () => {{ if (status) status.innerHTML = String(active + 1).padStart(2, '0') + ' <i>/</i> 04'; }};
@@ -714,19 +697,18 @@ def home_process_section() -> str:
     updateCards(); updateStatus();
     outgoing.addEventListener('animationend', () => outgoing.classList.remove('is-leaving'), {{ once: true }});
   }};
-  previousButton?.addEventListener('click', () => change(-1));
-  nextButton?.addEventListener('click', () => change(1));
-  stage.addEventListener('touchstart', event => {{ startY = event.changedTouches[0].clientY; }}, {{ passive: true }});
-  stage.addEventListener('touchend', event => {{
+  stack.addEventListener('click', () => {{ if (Date.now() >= ignoreClickUntil) change(1); }});
+  stack.addEventListener('touchstart', event => {{ startY = event.changedTouches[0].clientY; }}, {{ passive: true }});
+  stack.addEventListener('touchend', event => {{
     const distance = startY - event.changedTouches[0].clientY;
-    if (Math.abs(distance) > 42) change(distance > 0 ? 1 : -1);
+    if (Math.abs(distance) > 42) {{ ignoreClickUntil = Date.now() + 700; change(distance > 0 ? 1 : -1); }}
   }}, {{ passive: true }});
-  stage.addEventListener('wheel', event => {{
+  stack.addEventListener('wheel', event => {{
     if (Math.abs(event.deltaY) < 24 || Date.now() - lastWheel < 520) return;
     lastWheel = Date.now(); change(event.deltaY > 0 ? 1 : -1);
   }}, {{ passive: true }});
-  stage.addEventListener('keydown', event => {{
-    if (event.key === 'ArrowUp' || event.key === 'ArrowRight') {{ event.preventDefault(); change(1); }}
+  stack.addEventListener('keydown', event => {{
+    if (event.key === 'ArrowUp' || event.key === 'ArrowRight' || event.key === 'Enter' || event.key === ' ') {{ event.preventDefault(); change(1); }}
     if (event.key === 'ArrowDown' || event.key === 'ArrowLeft') {{ event.preventDefault(); change(-1); }}
   }});
   updateCards(); updateStatus();
