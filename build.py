@@ -434,7 +434,7 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
   <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">{ICON["menu"]}</button>
 </div></header>'''
     css_version = (f"{VERSION}-brands-heading-spacing-v1-testimonials-ivory-v1-work-reel-edge-v1-footer-social-gold-v1" if page == "index" else
-                   f"{VERSION}-services-marketing-funnel-v1" if page == "services" else VERSION)
+                   f"{VERSION}-funnel-gold-seo-video-testimonial-space-v1" if page == "services" else VERSION)
     return f'''<!doctype html>
 <html lang="en">
 <head>
@@ -888,20 +888,23 @@ def svc_tile(sid: str, i: int = 0) -> str:
 def service_offering(item: tuple, i: int) -> str:
     sid, title, description, included = item
     image = SVC_IMG[sid]
+    is_seo = sid == "seo"
+    visual_media = ('<video class="service-offering__photo service-offering__video" autoplay muted loop playsinline preload="auto" poster="assets/img/shehar/app-mockups.webp" aria-label="Animated SEO marketing dashboard visualization"><source src="assets/video/seo-marketing-dashboard.mp4" type="video/mp4"></video>' if is_seo else img(image, f"{title}: BEINTOX portfolio work", cls="service-offering__photo"))
+    image_label = '' if is_seo else '<span class="service-offering__image-label">BEINTOX · SELECTED WORK</span>'
+    visual_cta = '' if is_seo else f'<a class="btn btn--gold btn--s" href="contact.html">Discuss this service {ARROW}</a>'
     media = f'''<aside class="service-offering__visual" aria-label="Project investment information">
-  <div class="service-offering__image">{img(image, f"{title}: BEINTOX portfolio work", cls="service-offering__photo")}
-    <span class="service-offering__image-label">BEINTOX · SELECTED WORK</span></div>
+  <div class="service-offering__image{' service-offering__image--video' if is_seo else ''}">{visual_media}{image_label}</div>
   <div class="service-offering__investment"><span class="service-offering__investment-label">Project investment</span>
     <p>Every project is scoped around your goals, deliverables, and timeline. We’ll recommend the right approach before work begins.</p>
-    <a class="btn btn--gold btn--s" href="contact.html">Discuss this service {ARROW}</a></div>
+    {visual_cta}</div>
 </aside>'''
+    discover_cta = f'<a class="btn btn--gold btn--s service-offering__discover" href="#services">Discover the Services {ARROW}</a>' if is_seo else ''
     details = f'''<div class="service-offering__copy"><span class="service-offering__number">{i + 1:02d} <i>/</i> OUR SERVICES</span>
   <h2 class="h2">{E(title)}</h2><p class="lead">{E(description)}</p>
   <h3 class="service-offering__included-title">What’s included?</h3>
-  <ul class="service-offering__included">{"".join(f"<li>{E(value)}</li>" for value in included)}</ul></div>'''
+  <ul class="service-offering__included">{"".join(f"<li>{E(value)}</li>" for value in included)}</ul>{discover_cta}</div>'''
     content = f"{details}{media}" if i % 2 == 0 else f"{media}{details}"
     return f'<article class="service-offering rv" id="{E(sid)}" style="--i:{i % 2}">{content}</article>'
-
 
 def industries_strip() -> str:
     colors = ["#3B5BFA", "#FF5A36", "#73C5B3", "#FFD479", "#3D5BD5", "#FFB5B5", "#6D9FDE", "#FF9F7B", "#E5A911"]
@@ -1002,7 +1005,7 @@ def page_services() -> str:
     offerings = "".join(service_offering(item, i) for i, item in enumerate(SERVICE_PAGE_COPY))
     body = f'''
 {industries_strip()}
-<section class="sec services-showcase"><div class="wrap">{offerings}</div></section>
+<section class="sec services-showcase" id="services"><div class="wrap">{offerings}</div></section>
 {service_features_section()}
 {marketing_funnel_section()}
 {service_client_videos()}

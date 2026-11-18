@@ -629,8 +629,11 @@ a.shot:hover { border-color: #D4A017; }
 .service-offering__visual { grid-area: visual; overflow: hidden; border: 1px solid rgba(212, 160, 23, .28); border-radius: 22px; background: linear-gradient(145deg, #292824, #1F1F1F 62%, #171615); color: var(--paper); box-shadow: 0 24px 60px -40px rgba(31, 31, 31, .48); transition: transform 450ms var(--ease), border-color 450ms var(--ease), box-shadow 450ms var(--ease); }
 .service-offering__visual:hover { transform: translateY(-6px); border-color: rgba(212, 160, 23, .72); box-shadow: 0 32px 68px -42px rgba(31, 31, 31, .64); }
 .service-offering__image { position: relative; overflow: hidden; aspect-ratio: 16 / 10; background: #292824; }
+.service-offering__image--video::after { display: none; }
 .service-offering__image::after { content: ""; position: absolute; inset: 35% 0 0; background: linear-gradient(transparent, rgba(15, 14, 13, .62)); pointer-events: none; }
-.service-offering__photo { width: 100%; height: 100%; object-fit: cover; transition: transform 900ms var(--ease); }
+.service-offering__photo { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform 900ms var(--ease); }
+.service-offering__video { background: #292824; }
+.service-offering__discover { margin-top: 22px; }
 .service-offering__visual:hover .service-offering__photo { transform: scale(1.045); }
 .service-offering__image-label { position: absolute; z-index: 1; left: 22px; bottom: 17px; color: #fff; font-size: 9px; font-weight: 700; letter-spacing: .17em; }
 .service-offering__investment { padding: 24px clamp(22px, 2.7vw, 34px) 28px; }
@@ -673,28 +676,28 @@ a.shot:hover { border-color: #D4A017; }
 @media (prefers-reduced-motion: reduce) { .service-feature__icon svg { animation: none; } }
 
 /* Services page: scroll-progress marketing funnel. */
-.marketing-funnel { --funnel-lime: #d7ff38; position: relative; min-height: 290svh; background: var(--paper); color: var(--ink); }
+.marketing-funnel { --funnel-accent: var(--gold); position: relative; min-height: 290svh; background: var(--paper); color: var(--ink); }
 .marketing-funnel__sticky { position: sticky; top: 80px; display: grid; height: calc(100svh - 80px); align-items: center; padding: 28px clamp(24px, 4vw, 64px); }
 .marketing-funnel__layout { display: grid; grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr); align-items: center; gap: clamp(28px, 5vw, 80px); width: min(100%, 1660px); height: 100%; margin: 0 auto; }
 .marketing-funnel__copy { min-width: 0; }
 .marketing-funnel__eyebrow { display: inline-flex; align-items: center; gap: 10px; padding: 8px 14px; border: 1px solid var(--line); border-radius: 999px; background: rgba(31, 31, 31, .06); color: var(--ink); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; letter-spacing: .025em; }
-.marketing-funnel__eyebrow i, .funnel__note i { width: 9px; height: 9px; flex: 0 0 9px; border-radius: 50%; background: var(--funnel-lime); box-shadow: 0 0 0 5px rgba(215, 255, 56, .22); }
+.marketing-funnel__eyebrow i, .funnel__note i { width: 9px; height: 9px; flex: 0 0 9px; border-radius: 50%; background: var(--funnel-accent); box-shadow: 0 0 0 5px rgba(212, 160, 23, .22); }
 .marketing-funnel__copy h2 { max-width: 700px; margin: 34px 0 30px; font-size: clamp(54px, 6vw, 92px); font-weight: 700; line-height: .96; letter-spacing: -.075em; }
-.marketing-funnel__copy h2 em { display: inline-block; padding: .025em .09em .07em; border-radius: .13em; background: var(--funnel-lime); color: var(--ink); font-style: normal; }
+.marketing-funnel__copy h2 em { display: inline-block; padding: .025em .09em .07em; border-radius: .13em; background: var(--funnel-accent); color: var(--ink); font-style: normal; }
 .funnel__stages { display: grid; margin: 0; padding: 0; border-top: 1px solid var(--line); list-style: none; }
 .funnel__stage { display: grid; grid-template-columns: 42px max-content 1fr; align-items: center; gap: 16px; min-height: 73px; border-bottom: 1px solid var(--line); color: rgba(31, 31, 31, .72); transition: color 320ms var(--ease), border-color 320ms var(--ease); }
 .funnel__stage-number { display: grid; width: 42px; height: 42px; place-items: center; border: 1px solid rgba(31, 31, 31, .28); border-radius: 50%; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 15px; transition: background 320ms var(--ease), border-color 320ms var(--ease), color 320ms var(--ease), transform 320ms var(--ease); }
 .funnel__stage strong { font-size: clamp(20px, 2vw, 30px); font-weight: 600; letter-spacing: -.05em; }
 .funnel__stage small { justify-self: start; padding: 5px 12px; border-radius: 999px; background: rgba(31, 31, 31, .08); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; letter-spacing: .12em; white-space: nowrap; }
 .funnel__stage.is-active { color: var(--ink); }
-.funnel__stage.is-active .funnel__stage-number { transform: scale(1.06); border-color: var(--funnel-lime); background: var(--funnel-lime); color: var(--ink); }
+.funnel__stage.is-active .funnel__stage-number { transform: scale(1.06); border-color: var(--funnel-accent); background: var(--funnel-accent); color: var(--ink); }
 .funnel__visual { position: relative; width: min(100%, 780px); aspect-ratio: 600 / 580; justify-self: center; }
 .funnel__svg, .funnel__metrics { position: absolute; inset: 0; width: 100%; height: 100%; }
 .funnel__svg { overflow: visible; }
 .funnel__segment { fill: #e1e0da; transition: fill 280ms ease; }
-.funnel__fill { fill: var(--funnel-lime); }
+.funnel__fill { fill: var(--funnel-accent); }
 .funnel__particle { fill: #34352e; opacity: .34; animation: funnel-drift 4.8s ease-in-out infinite alternate; animation-delay: var(--particle-delay); transform-box: fill-box; transform-origin: center; }
-.marketing-funnel.is-progressing .funnel__particle { fill: #788b1f; opacity: .58; }
+.marketing-funnel.is-progressing .funnel__particle { fill: var(--gold); opacity: .58; }
 .funnel__metrics { pointer-events: none; }
 .funnel__metric { position: absolute; left: 50%; display: grid; justify-items: center; gap: 7px; width: 38%; transform: translateX(-50%); }
 .funnel__metric:nth-child(1) { top: 6%; }
@@ -702,7 +705,7 @@ a.shot:hover { border-color: #D4A017; }
 .funnel__metric:nth-child(3) { top: 55%; }
 .funnel__metric:nth-child(4) { top: 79.5%; }
 .funnel__metric-label { display: inline-flex; align-items: center; gap: 10px; padding: 6px 12px 6px 6px; border-radius: 999px; background: rgba(248, 246, 242, .82); color: var(--ink); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: clamp(11px, .95vw, 15px); letter-spacing: .14em; white-space: nowrap; }
-.funnel__metric-label i { display: grid; width: 30px; height: 30px; place-items: center; border-radius: 50%; background: var(--ink); color: var(--funnel-lime); font-style: normal; font-weight: 700; letter-spacing: 0; }
+.funnel__metric-label i { display: grid; width: 30px; height: 30px; place-items: center; border-radius: 50%; background: var(--ink); color: var(--funnel-accent); font-style: normal; font-weight: 700; letter-spacing: 0; }
 .funnel__metric strong { color: #111; font-size: clamp(34px, 3.6vw, 58px); font-weight: 600; line-height: 1; letter-spacing: -.06em; font-variant-numeric: tabular-nums; }
 .funnel__note { position: absolute; right: 8%; bottom: -28px; display: flex; align-items: center; gap: 12px; margin: 0; color: var(--muted); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
 .funnel__note i { width: 8px; height: 8px; flex-basis: 8px; background: var(--gold); box-shadow: none; }
@@ -747,7 +750,7 @@ a.shot:hover { border-color: #D4A017; }
   .funnel__stage, .funnel__stage-number, .funnel__segment { transition: none; }
 }
 
-.client-videos { padding-top: 26px; background: var(--paper); }
+.client-videos { margin-top: clamp(56px, 8vh, 96px); padding-top: 26px; background: var(--paper); }
 .client-videos__heading { max-width: 850px; margin: 0 auto; text-align: center; }
 .client-videos__kicker { display: inline-flex; align-items: center; padding: 5px 13px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); font-size: 11px; font-weight: 600; }
 .client-videos__heading h2 { margin-top: 22px; font-size: clamp(34px, 4.5vw, 58px); line-height: 1.12; letter-spacing: -.05em; }
@@ -775,7 +778,7 @@ a.shot:hover { border-color: #D4A017; }
 .client-video__body h3 { margin-top: 8px; font-size: 20px; font-weight: 600; }
 .client-video__body p { margin-top: 8px; color: var(--muted); font-size: 13px; }
 @media (max-width: 767px) { .client-videos__viewport { overflow: visible; margin-top: 32px; -webkit-mask-image: none; mask-image: none; } .client-videos__track { display: block; width: auto; padding: 0 2px 18vh; animation: none; } .client-videos__set { display: contents; } .client-videos__set--clone { display: none; } .client-video { position: sticky; width: min(100%, 460px); margin: 0 auto clamp(76px, 18vh, 140px); } .client-videos__set > .client-video:nth-child(1) { top: 96px; z-index: 1; } .client-videos__set > .client-video:nth-child(2) { top: 108px; z-index: 2; } .client-videos__set > .client-video:nth-child(3) { top: 120px; z-index: 3; } }
-@media (max-width: 520px) { .service-offering:last-child { padding-bottom: 18px; } .service-features { padding-top: 16px; padding-bottom: 20px; } .client-videos { padding-top: 20px; } .client-videos__heading h2 { margin-top: 16px; font-size: 32px; } .client-videos__track { padding-top: 0; } .client-video__body { padding: 18px 18px 20px; } }
+@media (max-width: 520px) { .service-offering:last-child { padding-bottom: 18px; } .service-features { padding-top: 16px; padding-bottom: 20px; } .client-videos { margin-top: 44px; padding-top: 20px; } .client-videos__heading h2 { margin-top: 16px; font-size: 32px; } .client-videos__track { padding-top: 0; } .client-video__body { padding: 18px 18px 20px; } }
 @media (prefers-reduced-motion: reduce) { .client-videos__track { animation: none; } .client-video { position: static; margin-bottom: 18px; } .client-videos__set--clone { display: none; } }
 
 .service-comparison { overflow: hidden; background: #0D0C0B; color: var(--paper); }
