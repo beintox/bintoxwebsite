@@ -434,7 +434,7 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
   <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">{ICON["menu"]}</button>
 </div></header>'''
     css_version = (f"{VERSION}-brands-heading-spacing-v1-testimonials-ivory-v1-work-reel-edge-v1-footer-social-gold-v1" if page == "index" else
-                   f"{VERSION}-funnel-gold-seo-video-testimonial-space-v1" if page == "services" else VERSION)
+                   f"{VERSION}-funnel-gold-seo-vertical-video-v2" if page == "services" else VERSION)
     return f'''<!doctype html>
 <html lang="en">
 <head>
@@ -889,14 +889,19 @@ def service_offering(item: tuple, i: int) -> str:
     sid, title, description, included = item
     image = SVC_IMG[sid]
     is_seo = sid == "seo"
-    visual_media = ('<video class="service-offering__photo service-offering__video" autoplay muted loop playsinline preload="auto" poster="assets/img/shehar/app-mockups.webp" aria-label="Animated SEO marketing dashboard visualization"><source src="assets/video/seo-marketing-dashboard.mp4" type="video/mp4"></video>' if is_seo else img(image, f"{title}: BEINTOX portfolio work", cls="service-offering__photo"))
-    image_label = '' if is_seo else '<span class="service-offering__image-label">BEINTOX · SELECTED WORK</span>'
-    visual_cta = '' if is_seo else f'<a class="btn btn--gold btn--s" href="contact.html">Discuss this service {ARROW}</a>'
-    media = f'''<aside class="service-offering__visual" aria-label="Project investment information">
-  <div class="service-offering__image{' service-offering__image--video' if is_seo else ''}">{visual_media}{image_label}</div>
+    if is_seo:
+        media = '''<aside class="service-offering__visual service-offering__visual--seo-video" aria-label="SEO ranking improvement video">
+  <video class="service-offering__video" autoplay muted loop playsinline preload="auto" aria-label="SEO ranking improvement animation">
+    <source src="assets/video/seo-ranking-improvement.mp4" type="video/mp4">
+  </video>
+</aside>'''
+    else:
+        visual_media = img(image, f"{title}: BEINTOX portfolio work", cls="service-offering__photo")
+        media = f'''<aside class="service-offering__visual" aria-label="Project investment information">
+  <div class="service-offering__image">{visual_media}<span class="service-offering__image-label">BEINTOX · SELECTED WORK</span></div>
   <div class="service-offering__investment"><span class="service-offering__investment-label">Project investment</span>
     <p>Every project is scoped around your goals, deliverables, and timeline. We’ll recommend the right approach before work begins.</p>
-    {visual_cta}</div>
+    <a class="btn btn--gold btn--s" href="contact.html">Discuss this service {ARROW}</a></div>
 </aside>'''
     discover_cta = f'<a class="btn btn--gold btn--s service-offering__discover" href="#services">Discover the Services {ARROW}</a>' if is_seo else ''
     details = f'''<div class="service-offering__copy"><span class="service-offering__number">{i + 1:02d} <i>/</i> OUR SERVICES</span>
