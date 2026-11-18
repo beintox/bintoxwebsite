@@ -433,7 +433,7 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
   <a class="btn btn--gold nav__cta" href="contact.html">Let's Make a Strategy Call {ARROW}</a>
   <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">{ICON["menu"]}</button>
 </div></header>'''
-    css_version = (f"{VERSION}-home-process-staircase-v1" if page == "index" else
+    css_version = (f"{VERSION}-home-process-staircase-v2" if page == "index" else
                    f"{VERSION}-services-layout-v8" if page == "services" else VERSION)
     return f'''<!doctype html>
 <html lang="en">
@@ -651,6 +651,8 @@ PROCESS_STEPS = [
      '<rect class="icon-muted" x="19" y="23" width="88" height="78" rx="7"/><path class="icon-muted" d="M19 43h88M39 23v78M58 23v78M77 23v78M19 62h88M19 82h88"/><path class="icon-accent icon-draw" d="m30 79 16-13 14 7 25-24 11 3M85 52l11-3-2 11"/><circle class="icon-accent" cx="35" cy="34" r="3"/>'),
 ]
 
+PROCESS_BADGES = ["Week 1 &middot; Audit", "&#10022; Concept approved", "&#8599; Campaign live", "&#9829; 4.8K reactions"]
+
 
 def home_process_section() -> str:
     steps = "".join(
@@ -658,7 +660,7 @@ def home_process_section() -> str:
   <span class="process-card__number" aria-hidden="true">0{i + 1}</span>
   <span class="process-card__label">Step 0{i + 1}</span>
   <span class="process-card__icon" aria-hidden="true"><svg viewBox="0 0 128 128">{graphic}</svg></span>
-  <h3>{E(title)}</h3><p>{E(description)}</p>
+  <h3>{E(title)}</h3><p>{E(description)}</p><span class="process-card__micro" aria-hidden="true">{PROCESS_BADGES[i]}</span>
 </li>'''
         for i, (title, description, graphic) in enumerate(PROCESS_STEPS))
     return f'''<section class="sec home-process" aria-labelledby="home-process-title"><div class="wrap">
@@ -668,8 +670,13 @@ def home_process_section() -> str:
     <p class="lead">At Beintox, we make social media management stress-free.</p>
   </div>
   <div class="process-stack" aria-label="Four-step process">
+    <div class="process-stack__decor" aria-hidden="true">
+      <span class="process-float process-float--preview"><i>LIVE</i><b>Brand story</b><small>&uarr; 8.4K followers</small></span>
+      <span class="process-float process-float--week">Week 1 <b>First post live &#10022;</b></span>
+      <span class="process-float process-float--views">&#9654; 2.1M views</span>
+      <span class="process-float process-float--rocket">&#128640; <b>Every day</b></span>
+    </div>
     <ol class="process-stack__deck">{steps}</ol>
-    <span class="process-stack__progress" data-process-status aria-live="polite">01 <i>/</i> 04</span>
   </div>
 </div></section>
 <section class="social-orbit" aria-label="Social media orbital animation">
