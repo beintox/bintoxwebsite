@@ -672,6 +672,81 @@ a.shot:hover { border-color: #D4A017; }
 @media (prefers-reduced-motion: reduce) { .industries-strip__track, .industries-strip__item { animation: none; } }
 @media (prefers-reduced-motion: reduce) { .service-feature__icon svg { animation: none; } }
 
+/* Services page: scroll-progress marketing funnel. */
+.marketing-funnel { --funnel-lime: #d7ff38; position: relative; min-height: 290svh; background: var(--paper); color: var(--ink); }
+.marketing-funnel__sticky { position: sticky; top: 80px; display: grid; height: calc(100svh - 80px); align-items: center; padding: 28px clamp(24px, 4vw, 64px); }
+.marketing-funnel__layout { display: grid; grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr); align-items: center; gap: clamp(28px, 5vw, 80px); width: min(100%, 1660px); height: 100%; margin: 0 auto; }
+.marketing-funnel__copy { min-width: 0; }
+.marketing-funnel__eyebrow { display: inline-flex; align-items: center; gap: 10px; padding: 8px 14px; border: 1px solid var(--line); border-radius: 999px; background: rgba(31, 31, 31, .06); color: var(--ink); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; letter-spacing: .025em; }
+.marketing-funnel__eyebrow i, .funnel__note i { width: 9px; height: 9px; flex: 0 0 9px; border-radius: 50%; background: var(--funnel-lime); box-shadow: 0 0 0 5px rgba(215, 255, 56, .22); }
+.marketing-funnel__copy h2 { max-width: 700px; margin: 34px 0 30px; font-size: clamp(54px, 6vw, 92px); font-weight: 700; line-height: .96; letter-spacing: -.075em; }
+.marketing-funnel__copy h2 em { display: inline-block; padding: .025em .09em .07em; border-radius: .13em; background: var(--funnel-lime); color: var(--ink); font-style: normal; }
+.funnel__stages { display: grid; margin: 0; padding: 0; border-top: 1px solid var(--line); list-style: none; }
+.funnel__stage { display: grid; grid-template-columns: 42px max-content 1fr; align-items: center; gap: 16px; min-height: 73px; border-bottom: 1px solid var(--line); color: rgba(31, 31, 31, .72); transition: color 320ms var(--ease), border-color 320ms var(--ease); }
+.funnel__stage-number { display: grid; width: 42px; height: 42px; place-items: center; border: 1px solid rgba(31, 31, 31, .28); border-radius: 50%; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 15px; transition: background 320ms var(--ease), border-color 320ms var(--ease), color 320ms var(--ease), transform 320ms var(--ease); }
+.funnel__stage strong { font-size: clamp(20px, 2vw, 30px); font-weight: 600; letter-spacing: -.05em; }
+.funnel__stage small { justify-self: start; padding: 5px 12px; border-radius: 999px; background: rgba(31, 31, 31, .08); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; letter-spacing: .12em; white-space: nowrap; }
+.funnel__stage.is-active { color: var(--ink); }
+.funnel__stage.is-active .funnel__stage-number { transform: scale(1.06); border-color: var(--funnel-lime); background: var(--funnel-lime); color: var(--ink); }
+.funnel__visual { position: relative; width: min(100%, 780px); aspect-ratio: 600 / 580; justify-self: center; }
+.funnel__svg, .funnel__metrics { position: absolute; inset: 0; width: 100%; height: 100%; }
+.funnel__svg { overflow: visible; }
+.funnel__segment { fill: #e1e0da; transition: fill 280ms ease; }
+.funnel__fill { fill: var(--funnel-lime); }
+.funnel__particle { fill: #34352e; opacity: .34; animation: funnel-drift 4.8s ease-in-out infinite alternate; animation-delay: var(--particle-delay); transform-box: fill-box; transform-origin: center; }
+.marketing-funnel.is-progressing .funnel__particle { fill: #788b1f; opacity: .58; }
+.funnel__metrics { pointer-events: none; }
+.funnel__metric { position: absolute; left: 50%; display: grid; justify-items: center; gap: 7px; width: 38%; transform: translateX(-50%); }
+.funnel__metric:nth-child(1) { top: 6%; }
+.funnel__metric:nth-child(2) { top: 30.5%; }
+.funnel__metric:nth-child(3) { top: 55%; }
+.funnel__metric:nth-child(4) { top: 79.5%; }
+.funnel__metric-label { display: inline-flex; align-items: center; gap: 10px; padding: 6px 12px 6px 6px; border-radius: 999px; background: rgba(248, 246, 242, .82); color: var(--ink); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: clamp(11px, .95vw, 15px); letter-spacing: .14em; white-space: nowrap; }
+.funnel__metric-label i { display: grid; width: 30px; height: 30px; place-items: center; border-radius: 50%; background: var(--ink); color: var(--funnel-lime); font-style: normal; font-weight: 700; letter-spacing: 0; }
+.funnel__metric strong { color: #111; font-size: clamp(34px, 3.6vw, 58px); font-weight: 600; line-height: 1; letter-spacing: -.06em; font-variant-numeric: tabular-nums; }
+.funnel__note { position: absolute; right: 8%; bottom: -28px; display: flex; align-items: center; gap: 12px; margin: 0; color: var(--muted); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
+.funnel__note i { width: 8px; height: 8px; flex-basis: 8px; background: var(--gold); box-shadow: none; }
+@keyframes funnel-drift { to { transform: translate3d(0, 5px, 0) scale(1.35); opacity: .72; } }
+@media (max-width: 900px) {
+  .marketing-funnel { min-height: 300svh; }
+  .marketing-funnel__sticky { padding-inline: 28px; }
+  .marketing-funnel__layout { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 24px; }
+  .marketing-funnel__copy h2 { font-size: clamp(48px, 6.5vw, 68px); }
+  .funnel__stage { grid-template-columns: 38px max-content 1fr; gap: 11px; min-height: 66px; }
+  .funnel__stage-number { width: 38px; height: 38px; }
+  .funnel__stage strong { font-size: clamp(18px, 2.5vw, 24px); }
+  .funnel__stage small { padding: 5px 8px; font-size: 10px; }
+  .funnel__metric-label { gap: 7px; padding: 4px 9px 4px 4px; font-size: clamp(10px, 1.4vw, 13px); }
+  .funnel__metric-label i { width: 26px; height: 26px; }
+}
+@media (max-width: 600px) {
+  .marketing-funnel { min-height: 280svh; }
+  .marketing-funnel__sticky { top: 68px; height: calc(100svh - 68px); padding: 12px 20px; }
+  .marketing-funnel__layout { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto auto minmax(0, 1fr); align-content: center; gap: 10px; }
+  .marketing-funnel__copy { display: contents; }
+  .marketing-funnel__eyebrow { justify-self: start; padding: 6px 10px; font-size: 11px; }
+  .marketing-funnel__copy h2 { grid-row: 2; margin: 7px 0 3px; font-size: clamp(40px, 11.5vw, 58px); }
+  .funnel__stages { grid-row: 3; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 14px; border-top: 0; }
+  .funnel__stage { grid-template-columns: 32px 1fr; grid-template-rows: auto auto; gap: 2px 9px; min-height: 48px; }
+  .funnel__stage-number { grid-row: 1 / span 2; width: 30px; height: 30px; font-size: 12px; }
+  .funnel__stage strong { align-self: end; font-size: 16px; }
+  .funnel__stage small { align-self: start; padding: 0; background: none; font-size: 9px; letter-spacing: .08em; }
+  .funnel__visual { grid-row: 4; width: min(100%, 48svh); height: auto; min-height: 0; justify-self: center; }
+  .funnel__metric { gap: 3px; width: 45%; }
+  .funnel__metric:nth-child(1) { top: 3%; }
+  .funnel__metric:nth-child(2) { top: 27.5%; }
+  .funnel__metric:nth-child(3) { top: 52%; }
+  .funnel__metric:nth-child(4) { top: 76.5%; }
+  .funnel__metric-label { gap: 5px; padding: 3px 7px 3px 3px; font-size: 9px; letter-spacing: .1em; }
+  .funnel__metric-label i { width: 21px; height: 21px; font-size: 10px; }
+  .funnel__metric strong { font-size: clamp(26px, 8vw, 38px); }
+  .funnel__note { right: 0; bottom: -20px; font-size: 8px; letter-spacing: .06em; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .funnel__particle { animation: none; }
+  .funnel__stage, .funnel__stage-number, .funnel__segment { transition: none; }
+}
+
 .client-videos { padding-top: 26px; background: var(--paper); }
 .client-videos__heading { max-width: 850px; margin: 0 auto; text-align: center; }
 .client-videos__kicker { display: inline-flex; align-items: center; padding: 5px 13px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); font-size: 11px; font-weight: 600; }

@@ -434,7 +434,7 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
   <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">{ICON["menu"]}</button>
 </div></header>'''
     css_version = (f"{VERSION}-brands-heading-spacing-v1-testimonials-ivory-v1-work-reel-edge-v1-footer-social-gold-v1" if page == "index" else
-                   f"{VERSION}-services-layout-v10-industries-highlight" if page == "services" else VERSION)
+                   f"{VERSION}-services-marketing-funnel-v1" if page == "services" else VERSION)
     return f'''<!doctype html>
 <html lang="en">
 <head>
@@ -492,6 +492,7 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
 <dialog class="lb" id="lb" aria-label="Image viewer"><img alt=""><div class="lb__bar"><span></span>
   <button type="button" data-prev aria-label="Previous">{ICON["prev"]}</button><button type="button" data-next aria-label="Next">{ICON["next"]}</button><button type="button" data-close aria-label="Close">{ICON["close"]}</button></div></dialog>
 <script src="assets/js/site.js?v={VERSION}-mobile-process-reveal-v1" defer></script>
+{'<script src="assets/js/marketing-funnel.js?v=' + VERSION + '-scroll-funnel-v1" defer></script>' if page == "services" else ''}
 </body>
 </html>
 '''
@@ -923,6 +924,50 @@ def service_features_section() -> str:
 </div></section>'''
 
 
+def marketing_funnel_section() -> str:
+    segments = [
+        ("24,0 576,0 536,132 64,132", 0, 24, 0),
+        ("64,142 536,142 496,274 104,274", 1, 64, 142),
+        ("104,284 496,284 456,416 144,416", 2, 104, 284),
+        ("144,426 456,426 416,558 184,558", 3, 144, 426),
+    ]
+    polygons = []
+    for points, index, _, _ in segments:
+        polygons.append(f'<polygon class="funnel__segment" points="{points}"/>')
+        polygons.append(f'<polygon class="funnel__fill" data-funnel-fill="{index}" points="{points}" clip-path="url(#funnel-clip-{index})"/>')
+    clips = "".join(f'<clipPath id="funnel-clip-{i}" clipPathUnits="userSpaceOnUse"><rect data-funnel-clip="{i}" x="0" y="{y}" width="600" height="0"/></clipPath>' for i, (_, _, _, y) in enumerate(segments))
+    dots = "".join(
+        f'<circle class="funnel__particle" cx="{42 + (i * 83) % 516}" cy="{8 + (i * 47) % 540}" r="{1.6 + (i % 4) * .45}" style="--particle-delay:-{(i % 17) * .23:.2f}s"/>'
+        for i in range(48)
+    )
+    metrics = [("REACH", 0), ("CLICKS", 1), ("LEADS", 2), ("CLIENTS", 3)]
+    metric_html = "".join(f'''<div class="funnel__metric" data-funnel-metric="{i}">
+      <span class="funnel__metric-label"><i>{i + 1:02d}</i>{label}</span><strong data-funnel-counter="{i}">0</strong>
+    </div>''' for label, i in metrics)
+    stages = [("ABOUT", "WEEK 1"), ("LAUNCH", "WEEK 2-3"), ("OPTIMIZE", "MONTH 2"), ("SCALE", "MONTH 3+")]
+    stage_html = "".join(f'''<li class="funnel__stage" data-funnel-stage="{i}" aria-current="{'step' if i == 0 else 'false'}">
+      <span class="funnel__stage-number">{i + 1:02d}</span><strong>{title.title()}</strong><small>{timing}</small>
+    </li>''' for i, (title, timing) in enumerate(stages))
+    return f'''<section class="marketing-funnel" data-marketing-funnel aria-labelledby="marketing-funnel-title">
+  <div class="marketing-funnel__sticky"><div class="marketing-funnel__layout">
+    <div class="marketing-funnel__copy">
+      <span class="marketing-funnel__eyebrow"><i></i>(04) How we work</span>
+      <h2 id="marketing-funnel-title">From attention<br>to <em>clients.</em></h2>
+      <ol class="funnel__stages" aria-label="Four stages of growth">{stage_html}</ol>
+    </div>
+    <div class="funnel__visual" aria-label="Illustrative marketing funnel metrics">
+      <svg class="funnel__svg" viewBox="0 0 600 580" role="img" aria-label="Four-stage funnel, filling as you scroll" preserveAspectRatio="none">
+        <defs>{clips}</defs>
+        <g class="funnel__segments">{"".join(polygons)}</g>
+        <g class="funnel__particles">{dots}</g>
+      </svg>
+      <div class="funnel__metrics">{metric_html}</div>
+      <p class="funnel__note"><i></i>Illustrative funnel - sample metrics</p>
+    </div>
+  </div></div>
+</section>'''
+
+
 def service_comparison_section() -> str:
     other = "".join(f'<li><span aria-hidden="true">×</span>{E(text)}</li>' for text in SERVICE_COMPARISON["other"])
     beintox = "".join(f'<li><span aria-hidden="true">✓</span>{E(text)}</li>' for text in SERVICE_COMPARISON["beintox"])
@@ -959,6 +1004,7 @@ def page_services() -> str:
 {industries_strip()}
 <section class="sec services-showcase"><div class="wrap">{offerings}</div></section>
 {service_features_section()}
+{marketing_funnel_section()}
 {service_client_videos()}
 {service_comparison_section()}
 <section class="sec sec--white bt" id="faq"><div class="wrap">
