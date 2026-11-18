@@ -893,20 +893,15 @@ a.tag:hover { border-color: var(--text); color: var(--text); }
 .home-process__intro h2 > span { display: block; }
 .home-process__intro h2 em { display: inline; margin-left: .12em; color: var(--gold); }
 .home-process__intro .lead { max-width: 56ch; margin: 18px auto 0; font-size: clamp(15px, 1.2vw, 17px); line-height: 1.5; }
-.process-stack { position: relative; width: min(100%, 1040px); height: 520px; margin-inline: auto; outline: none; cursor: pointer; touch-action: pan-y; user-select: none; }
-.process-stack__deck { position: absolute; inset: 0; margin: 0; padding: 0; list-style: none; perspective: 1200px; }
-.process-card { --card-bg: #a94024; position: absolute; top: 0; left: 50%; width: clamp(300px, 28vw, 370px); height: 474px; overflow: hidden; padding: 27px 28px 30px; border: 1px solid rgba(255,255,255,.42); border-radius: 26px; color: #fff; background: var(--card-bg); box-shadow: 0 22px 58px -24px rgba(31,31,31,.38), inset 0 1px rgba(255,255,255,.2); transform: translate3d(-50%, 42px, 0) scale(.94); transform-origin: center top; opacity: 1; visibility: visible; transition: box-shadow 350ms ease; }
+.process-stack { position: relative; width: min(100%, 1280px); margin-inline: auto; }
+.process-stack__deck { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(12px, 1.5vw, 22px); margin: 0; padding: 0; list-style: none; }
+.process-card { --card-bg: #a94024; position: relative; min-width: 0; height: 474px; overflow: hidden; padding: 27px 24px 30px; border: 1px solid rgba(255,255,255,.42); border-radius: 26px; color: #fff; background: var(--card-bg); box-shadow: 0 22px 58px -24px rgba(31,31,31,.38), inset 0 1px rgba(255,255,255,.2); transition: box-shadow 350ms ease; }
 .process-card::before { content: ""; position: absolute; inset: 0; z-index: 0; background: radial-gradient(ellipse at 82% 18%, rgba(255,255,255,.24), transparent 28%), radial-gradient(ellipse at 15% 100%, rgba(20,10,8,.44), transparent 54%), linear-gradient(150deg, transparent 25%, rgba(255,255,255,.08) 26%, transparent 43%); pointer-events: none; }
 .process-card:nth-child(2) { --card-bg: #b78612; }
 .process-card:nth-child(3) { --card-bg: #354b9c; }
 .process-card:nth-child(4) { --card-bg: #9e3c2e; }
-.process-card.is-current { z-index: 5; transform: translate3d(-50%,0,0) scale(1); animation: process-card-arrive 650ms cubic-bezier(.2,.78,.24,1) both; }
-.process-card.is-behind-1 { z-index: 4; transform: translate3d(-50%,12px,0) scale(.97); }
-.process-card.is-behind-2 { z-index: 3; transform: translate3d(-50%,24px,0) scale(.94); }
-.process-card.is-behind-3 { z-index: 2; transform: translate3d(-50%,36px,0) scale(.91); }
-.process-card.is-leaving { z-index: 7; pointer-events: none; animation: process-card-leave 420ms cubic-bezier(.4,0,.8,.2) both; }
-@keyframes process-card-arrive { from { opacity: .7; transform: translate3d(-50%,110%,0) scale(.97); } 78% { opacity: 1; transform: translate3d(-50%,-9px,0) scale(1.012); } to { opacity: 1; transform: translate3d(-50%,0,0) scale(1); } }
-@keyframes process-card-leave { to { opacity: .2; transform: translate3d(-50%,-115%,0) scale(.97); } }
+.process-card.is-current { z-index: 5; }
+.process-card.is-leaving { pointer-events: none; }
 .process-card:nth-child(1) { background-color: #b73d1d; }
 .process-card:nth-child(1)::before { background: radial-gradient(ellipse at 80% 12%, rgba(255,161,72,.72), transparent 39%), radial-gradient(ellipse at 18% 82%, rgba(29,8,7,.64), transparent 51%), linear-gradient(145deg, #ef4f18, #a92311 75%, #260e0d); }
 .process-card:nth-child(2)::before { background: radial-gradient(ellipse at 80% 12%, rgba(255,223,122,.64), transparent 42%), radial-gradient(ellipse at 15% 90%, rgba(43,22,5,.5), transparent 56%), linear-gradient(145deg, #d6a52a, #96700d 76%, #3b2b0d); }
@@ -920,22 +915,42 @@ a.tag:hover { border-color: var(--text); color: var(--text); }
 .process-card__icon .icon-muted { stroke: rgba(255,255,255,.74); }
 .process-card h3 { position: relative; z-index: 1; margin-top: 31px; max-width: 20ch; color: #fff; font-size: clamp(23px, 2.2vw, 29px); line-height: 1.1; letter-spacing: -.035em; }
 .process-card p { position: relative; z-index: 1; max-width: 34ch; margin-top: 13px; color: rgba(255,255,255,.88); font-size: clamp(15px, 1.15vw, 17px); line-height: 1.48; }
-.process-stack__progress { position: absolute; right: max(0px, calc(50% - 185px)); bottom: 0; z-index: 8; display: flex; align-items: center; gap: 4px; color: var(--ink); font-size: 12px; font-weight: 700; letter-spacing: .12em; }
+.process-stack__progress { display: none; }
 .process-stack__progress i { color: var(--gold); font-style: normal; }
+@media (min-width: 768px) and (max-width: 1050px) { .process-stack__deck { grid-template-columns: repeat(2, minmax(0, 1fr)); } .process-card { height: 420px; } }
 @media (max-width: 600px) {
   .home-process > .wrap { gap: 25px; }
   .home-process__eyebrow { padding: 9px 14px; font-size: clamp(15px, 4.2vw, 18px); letter-spacing: .055em; }
   .home-process__intro h2 { max-width: 19ch; font-size: clamp(42px, 11vw, 58px); }
   .home-process__intro h2 em { display: block; margin-left: 0; }
-  .process-stack { width: min(100%, 390px); height: 474px; }
-  .process-card { width: min(calc(100% - 18px), 350px); height: 438px; padding: 23px 22px 26px; border-radius: 24px; }
+  .process-stack { width: min(100%, 390px); height: 474px; cursor: pointer; touch-action: pan-y; user-select: none; }
+  .process-stack__deck { position: absolute; inset: 0; display: block; perspective: 1200px; }
+  .process-card { position: absolute; top: 0; left: 50%; width: min(calc(100% - 18px), 350px); height: 438px; padding: 23px 22px 26px; border-radius: 24px; transform: translate3d(-50%, 42px, 0) scale(.94); transform-origin: center top; opacity: 1; visibility: visible; }
+  .process-card.is-current { z-index: 5; transform: translate3d(-50%,0,0) scale(1); animation: process-card-arrive 650ms cubic-bezier(.2,.78,.24,1) both; }
+  .process-card.is-behind-1 { z-index: 4; transform: translate3d(-50%,12px,0) scale(.97); }
+  .process-card.is-behind-2 { z-index: 3; transform: translate3d(-50%,24px,0) scale(.94); }
+  .process-card.is-behind-3 { z-index: 2; transform: translate3d(-50%,36px,0) scale(.91); }
+  .process-card.is-leaving { z-index: 7; animation: process-card-leave 420ms cubic-bezier(.4,0,.8,.2) both; }
+  .process-stack__progress { position: absolute; right: 22px; bottom: -3px; z-index: 8; display: flex; align-items: center; gap: 4px; color: var(--ink); font-size: 12px; font-weight: 700; letter-spacing: .12em; }
   .process-card__number { top: 27px; right: 22px; font-size: 82px; }
   .process-card__icon { width: 56px; height: 56px; margin-top: 25px; }
   .process-card__icon svg { width: 35px; height: 35px; }
   .process-card h3 { margin-top: 28px; font-size: clamp(22px, 6vw, 27px); }
   .process-card p { margin-top: 11px; font-size: 15px; line-height: 1.48; }
-  .process-stack__progress { right: 22px; bottom: -3px; }
 }
+@media (min-width: 601px) and (max-width: 767px) {
+  .process-stack { height: 474px; cursor: pointer; touch-action: pan-y; user-select: none; }
+  .process-stack__deck { position: absolute; inset: 0; display: block; perspective: 1200px; }
+  .process-card { position: absolute; top: 0; left: 50%; width: min(calc(100% - 18px), 350px); height: 438px; transform: translate3d(-50%,42px,0) scale(.94); transform-origin: center top; }
+  .process-card.is-current { z-index: 5; transform: translate3d(-50%,0,0) scale(1); animation: process-card-arrive 650ms cubic-bezier(.2,.78,.24,1) both; }
+  .process-card.is-behind-1 { z-index: 4; transform: translate3d(-50%,12px,0) scale(.97); }
+  .process-card.is-behind-2 { z-index: 3; transform: translate3d(-50%,24px,0) scale(.94); }
+  .process-card.is-behind-3 { z-index: 2; transform: translate3d(-50%,36px,0) scale(.91); }
+  .process-card.is-leaving { z-index: 7; animation: process-card-leave 420ms cubic-bezier(.4,0,.8,.2) both; }
+  .process-stack__progress { position: absolute; right: 22px; bottom: -3px; z-index: 8; display: flex; align-items: center; gap: 4px; color: var(--ink); font-size: 12px; font-weight: 700; letter-spacing: .12em; }
+}
+@keyframes process-card-arrive { from { opacity: .7; transform: translate3d(-50%,110%,0) scale(.97); } 78% { opacity: 1; transform: translate3d(-50%,-9px,0) scale(1.012); } to { opacity: 1; transform: translate3d(-50%,0,0) scale(1); } }
+@keyframes process-card-leave { to { opacity: .2; transform: translate3d(-50%,-115%,0) scale(.97); } }
 @media (prefers-reduced-motion: reduce) { .process-card.is-current, .process-card.is-leaving { animation-duration: 1ms !important; } .process-card { transition: none !important; } }
 /* ---------- 34. Brands reel (moving row of mixed cards, pauses on hover) ---------- */
 .sec--white:has(.reel) { padding-bottom: calc(var(--sec) - 8px); }

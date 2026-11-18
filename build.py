@@ -433,7 +433,7 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
   <a class="btn btn--gold nav__cta" href="contact.html">Let's Make a Strategy Call {ARROW}</a>
   <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">{ICON["menu"]}</button>
 </div></header>'''
-    css_version = (f"{VERSION}-home-process-stack-v1" if page == "index" else
+    css_version = (f"{VERSION}-home-process-responsive-v2" if page == "index" else
                    f"{VERSION}-services-layout-v8" if page == "services" else VERSION)
     return f'''<!doctype html>
 <html lang="en">
@@ -679,38 +679,53 @@ def home_process_section() -> str:
   if (!stack) return;
   const cards = [...stack.querySelectorAll('.process-card')];
   const status = section.querySelector('[data-process-status]');
+  const mobile = window.matchMedia('(max-width: 767px)');
   let active = 0;
   let startY = 0;
   let lastWheel = 0;
   let ignoreClickUntil = 0;
-  const updateCards = () => cards.forEach((card, i) => {{
-    card.classList.remove('is-current', 'is-behind-1', 'is-behind-2', 'is-behind-3');
-    const distance = (i - active + cards.length) % cards.length;
-    card.classList.add(distance === 0 ? 'is-current' : 'is-behind-' + distance);
-    card.setAttribute('aria-hidden', i === active ? 'false' : 'true');
-  }});
+  const updateCards = () => {{
+    if (mobile.matches) {{
+      stack.setAttribute('role', 'button'); stack.setAttribute('tabindex', '0');
+      cards.forEach((card, i) => {{
+        card.classList.remove('is-current', 'is-behind-1', 'is-behind-2', 'is-behind-3');
+        const distance = (i - active + cards.length) % cards.length;
+        card.classList.add(distance === 0 ? 'is-current' : 'is-behind-' + distance);
+        card.setAttribute('aria-hidden', i === active ? 'false' : 'true');
+      }});
+    }} else {{
+      stack.removeAttribute('role'); stack.removeAttribute('tabindex');
+      cards.forEach(card => {{
+        card.classList.remove('is-current', 'is-behind-1', 'is-behind-2', 'is-behind-3', 'is-leaving');
+        card.setAttribute('aria-hidden', 'false');
+      }});
+    }}
+  }};
   const updateStatus = () => {{ if (status) status.innerHTML = String(active + 1).padStart(2, '0') + ' <i>/</i> 04'; }};
   const change = direction => {{
+    if (!mobile.matches) return;
     const outgoing = cards[active];
     outgoing.classList.add('is-leaving');
     active = (active + direction + cards.length) % cards.length;
     updateCards(); updateStatus();
     outgoing.addEventListener('animationend', () => outgoing.classList.remove('is-leaving'), {{ once: true }});
   }};
-  stack.addEventListener('click', () => {{ if (Date.now() >= ignoreClickUntil) change(1); }});
+  stack.addEventListener('click', () => {{ if (mobile.matches && Date.now() >= ignoreClickUntil) change(1); }});
   stack.addEventListener('touchstart', event => {{ startY = event.changedTouches[0].clientY; }}, {{ passive: true }});
   stack.addEventListener('touchend', event => {{
     const distance = startY - event.changedTouches[0].clientY;
-    if (Math.abs(distance) > 42) {{ ignoreClickUntil = Date.now() + 700; change(distance > 0 ? 1 : -1); }}
+    if (mobile.matches && Math.abs(distance) > 42) {{ ignoreClickUntil = Date.now() + 700; change(distance > 0 ? 1 : -1); }}
   }}, {{ passive: true }});
   stack.addEventListener('wheel', event => {{
-    if (Math.abs(event.deltaY) < 24 || Date.now() - lastWheel < 520) return;
+    if (!mobile.matches || Math.abs(event.deltaY) < 24 || Date.now() - lastWheel < 520) return;
     lastWheel = Date.now(); change(event.deltaY > 0 ? 1 : -1);
   }}, {{ passive: true }});
   stack.addEventListener('keydown', event => {{
+    if (!mobile.matches) return;
     if (event.key === 'ArrowUp' || event.key === 'ArrowRight' || event.key === 'Enter' || event.key === ' ') {{ event.preventDefault(); change(1); }}
     if (event.key === 'ArrowDown' || event.key === 'ArrowLeft') {{ event.preventDefault(); change(-1); }}
   }});
+  mobile.addEventListener('change', updateCards);
   updateCards(); updateStatus();
 }})();
 </script>'''

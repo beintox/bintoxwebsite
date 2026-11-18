@@ -15,7 +15,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="assets/css/style.css?v=34-home-process-stack-v1">
+<link rel="stylesheet" href="assets/css/style.css?v=34-home-process-responsive-v2">
 <script>document.documentElement.classList.add("js")</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "ProfessionalService", "name": "BEINTOX Marketing Solutions", "description": "Logo design, social media management and digital marketing services.", "email": "info@beintox.com", "telephone": "+923084762273", "address": {"@type": "PostalAddress", "addressCountry": "PK"}, "sameAs": ["https://instagram.com/beintox"], "makesOffer": [{"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Logo Design & Branding"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Social Media Management"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Performance Marketing"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "SEO"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Photography & Videography"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Website Design & Development"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Brand Registration (IPO)"}}]}</script>
 </head>
@@ -81,34 +81,49 @@
   if (!stack) return;
   const cards = [...stack.querySelectorAll('.process-card')];
   const status = section.querySelector('[data-process-status]');
+  const mobile = window.matchMedia('(max-width: 767px)');
   let active = 0;
   let startY = 0;
   let lastWheel = 0;
   let ignoreClickUntil = 0;
-  const updateCards = () => cards.forEach((card, i) => {
-    card.classList.remove('is-current', 'is-behind-1', 'is-behind-2', 'is-behind-3');
-    const distance = (i - active + cards.length) % cards.length;
-    card.classList.add(distance === 0 ? 'is-current' : 'is-behind-' + distance);
-    card.setAttribute('aria-hidden', i === active ? 'false' : 'true');
-  });
+  const updateCards = () => {
+    if (mobile.matches) {
+      stack.setAttribute('role', 'button'); stack.setAttribute('tabindex', '0');
+      cards.forEach((card, i) => {
+        card.classList.remove('is-current', 'is-behind-1', 'is-behind-2', 'is-behind-3');
+        const distance = (i - active + cards.length) % cards.length;
+        card.classList.add(distance === 0 ? 'is-current' : 'is-behind-' + distance);
+        card.setAttribute('aria-hidden', i === active ? 'false' : 'true');
+      });
+    } else {
+      stack.removeAttribute('role'); stack.removeAttribute('tabindex');
+      cards.forEach(card => {
+        card.classList.remove('is-current', 'is-behind-1', 'is-behind-2', 'is-behind-3', 'is-leaving');
+        card.setAttribute('aria-hidden', 'false');
+      });
+    }
+  };
   const updateStatus = () => { if (status) status.innerHTML = String(active + 1).padStart(2, '0') + ' <i>/</i> 04'; };
   const change = direction => {
+    if (!mobile.matches) return;
     const outgoing = cards[active]; outgoing.classList.add('is-leaving');
     active = (active + direction + cards.length) % cards.length;
     updateCards(); updateStatus();
     outgoing.addEventListener('animationend', () => outgoing.classList.remove('is-leaving'), { once: true });
   };
-  stack.addEventListener('click', () => { if (Date.now() >= ignoreClickUntil) change(1); });
+  stack.addEventListener('click', () => { if (mobile.matches && Date.now() >= ignoreClickUntil) change(1); });
   stack.addEventListener('touchstart', event => { startY = event.changedTouches[0].clientY; }, { passive: true });
   stack.addEventListener('touchend', event => {
     const distance = startY - event.changedTouches[0].clientY;
-    if (Math.abs(distance) > 42) { ignoreClickUntil = Date.now() + 700; change(distance > 0 ? 1 : -1); }
+    if (mobile.matches && Math.abs(distance) > 42) { ignoreClickUntil = Date.now() + 700; change(distance > 0 ? 1 : -1); }
   }, { passive: true });
-  stack.addEventListener('wheel', event => { if (Math.abs(event.deltaY) < 24 || Date.now() - lastWheel < 520) return; lastWheel = Date.now(); change(event.deltaY > 0 ? 1 : -1); }, { passive: true });
+  stack.addEventListener('wheel', event => { if (!mobile.matches || Math.abs(event.deltaY) < 24 || Date.now() - lastWheel < 520) return; lastWheel = Date.now(); change(event.deltaY > 0 ? 1 : -1); }, { passive: true });
   stack.addEventListener('keydown', event => {
+    if (!mobile.matches) return;
     if (event.key === 'ArrowUp' || event.key === 'ArrowRight' || event.key === 'Enter' || event.key === ' ') { event.preventDefault(); change(1); }
     if (event.key === 'ArrowDown' || event.key === 'ArrowLeft') { event.preventDefault(); change(-1); }
   });
+  mobile.addEventListener('change', updateCards);
   updateCards(); updateStatus();
 })();
 </script>
