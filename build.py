@@ -433,7 +433,7 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
   <a class="btn btn--gold nav__cta" href="contact.html">Let's Make a Strategy Call {ARROW}</a>
   <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">{ICON["menu"]}</button>
 </div></header>'''
-    css_version = (f"{VERSION}-home-process-responsive-v2" if page == "index" else
+    css_version = (f"{VERSION}-home-process-auto-v3" if page == "index" else
                    f"{VERSION}-services-layout-v8" if page == "services" else VERSION)
     return f'''<!doctype html>
 <html lang="en">
@@ -667,7 +667,7 @@ def home_process_section() -> str:
     <h2 class="h2" id="home-process-title"><span>A simple 4 step process</span><em>for business growth</em></h2>
     <p class="lead">At Beintox, we make social media management stress-free.</p>
   </div>
-  <div class="process-stack" aria-label="Four-step process cards. Swipe or click to move up through each step." tabindex="0" role="button">
+  <div class="process-stack" aria-label="Four-step process">
     <ol class="process-stack__deck">{steps}</ol>
     <span class="process-stack__progress" data-process-status aria-live="polite">01 <i>/</i> 04</span>
   </div>
@@ -680,23 +680,25 @@ def home_process_section() -> str:
   const cards = [...stack.querySelectorAll('.process-card')];
   const status = section.querySelector('[data-process-status]');
   const mobile = window.matchMedia('(max-width: 767px)');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   let active = 0;
   let startY = 0;
-  let lastWheel = 0;
-  let ignoreClickUntil = 0;
+  let autoTimer = 0;
+  let isInView = false;
   const updateCards = () => {{
     if (mobile.matches) {{
-      stack.setAttribute('role', 'button'); stack.setAttribute('tabindex', '0');
+      stack.classList.remove('is-desktop');
       cards.forEach((card, i) => {{
-        card.classList.remove('is-current', 'is-behind-1', 'is-behind-2', 'is-behind-3');
+        card.classList.remove('is-current', 'is-behind-1', 'is-behind-2', 'is-behind-3', 'is-desktop-active');
         const distance = (i - active + cards.length) % cards.length;
         card.classList.add(distance === 0 ? 'is-current' : 'is-behind-' + distance);
         card.setAttribute('aria-hidden', i === active ? 'false' : 'true');
       }});
     }} else {{
-      stack.removeAttribute('role'); stack.removeAttribute('tabindex');
-      cards.forEach(card => {{
+      stack.classList.add('is-desktop');
+      cards.forEach((card, i) => {{
         card.classList.remove('is-current', 'is-behind-1', 'is-behind-2', 'is-behind-3', 'is-leaving');
+        card.classList.toggle('is-desktop-active', i === active);
         card.setAttribute('aria-hidden', 'false');
       }});
     }}
@@ -710,22 +712,24 @@ def home_process_section() -> str:
     updateCards(); updateStatus();
     outgoing.addEventListener('animationend', () => outgoing.classList.remove('is-leaving'), {{ once: true }});
   }};
-  stack.addEventListener('click', () => {{ if (mobile.matches && Date.now() >= ignoreClickUntil) change(1); }});
   stack.addEventListener('touchstart', event => {{ startY = event.changedTouches[0].clientY; }}, {{ passive: true }});
   stack.addEventListener('touchend', event => {{
     const distance = startY - event.changedTouches[0].clientY;
-    if (mobile.matches && Math.abs(distance) > 42) {{ ignoreClickUntil = Date.now() + 700; change(distance > 0 ? 1 : -1); }}
+    if (mobile.matches && Math.abs(distance) > 42) change(distance > 0 ? 1 : -1);
   }}, {{ passive: true }});
-  stack.addEventListener('wheel', event => {{
-    if (!mobile.matches || Math.abs(event.deltaY) < 24 || Date.now() - lastWheel < 520) return;
-    lastWheel = Date.now(); change(event.deltaY > 0 ? 1 : -1);
-  }}, {{ passive: true }});
-  stack.addEventListener('keydown', event => {{
-    if (!mobile.matches) return;
-    if (event.key === 'ArrowUp' || event.key === 'ArrowRight' || event.key === 'Enter' || event.key === ' ') {{ event.preventDefault(); change(1); }}
-    if (event.key === 'ArrowDown' || event.key === 'ArrowLeft') {{ event.preventDefault(); change(-1); }}
-  }});
+  const startAuto = () => {{
+    if (autoTimer || reducedMotion.matches || document.hidden || !isInView) return;
+    autoTimer = window.setInterval(() => {{
+      if (mobile.matches) change(1);
+      else {{ active = (active + 1) % cards.length; updateCards(); updateStatus(); }}
+    }}, 3600);
+  }};
+  const stopAuto = () => {{ window.clearInterval(autoTimer); autoTimer = 0; }};
+  const observer = 'IntersectionObserver' in window ? new IntersectionObserver(([entry]) => {{ isInView = entry.isIntersecting; isInView ? startAuto() : stopAuto(); }}, {{ threshold: 0.2 }}) : null;
+  if (observer) observer.observe(section); else {{ isInView = true; startAuto(); }}
+  document.addEventListener('visibilitychange', () => document.hidden || !isInView ? stopAuto() : startAuto());
   mobile.addEventListener('change', updateCards);
+  reducedMotion.addEventListener('change', () => reducedMotion.matches ? stopAuto() : startAuto());
   updateCards(); updateStatus();
 }})();
 </script>'''
