@@ -9,19 +9,27 @@
   const counters = [...section.querySelectorAll("[data-funnel-counter]")];
   const clips = [...section.querySelectorAll("[data-funnel-clip]")];
   const formatter = new Intl.NumberFormat("en-US");
+  const mobileViewport = window.matchMedia("(max-width: 600px)");
   let frame = 0;
   let currentStage = -1;
+  let mobileScrollBound = false;
 
   const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
 
   function update() {
     frame = 0;
     const sticky = section.querySelector(".marketing-funnel__sticky");
+    const sectionRect = section.getBoundingClientRect();
     const travel = Math.max(1, section.offsetHeight - sticky.offsetHeight);
-    const progress = clamp(-section.getBoundingClientRect().top / travel);
+    const stickyTop = mobileViewport.matches ? (parseFloat(getComputedStyle(sticky).top) || 0) : 0;
+    const progress = mobileViewport.matches
+      ? clamp((window.scrollY - (sectionRect.top + window.scrollY) + stickyTop) / travel)
+      : clamp(-sectionRect.top / travel);
 
     section.classList.toggle("is-progressing", progress > 0.005);
-    const activeStage = progress <= 0.005 ? 0 : Math.min(3, Math.ceil(progress * 4));
+    const activeStage = mobileViewport.matches
+      ? Math.min(3, Math.floor(progress * 4))
+      : progress <= 0.005 ? 0 : Math.min(3, Math.ceil(progress * 4));
     if (activeStage !== currentStage) {
       currentStage = activeStage;
       stageEls.forEach((stage, i) => {
@@ -42,7 +50,27 @@
     if (!frame) frame = requestAnimationFrame(update);
   }
 
+  function bindMobileScroll() {
+    if (mobileViewport.matches === mobileScrollBound) return;
+    mobileScrollBound = mobileViewport.matches;
+    if (mobileScrollBound) {
+      document.addEventListener("scroll", requestUpdate, { passive: true, capture: true });
+      window.visualViewport?.addEventListener("scroll", requestUpdate, { passive: true });
+      window.addEventListener("pageshow", requestUpdate, { passive: true });
+    } else {
+      document.removeEventListener("scroll", requestUpdate, true);
+      window.visualViewport?.removeEventListener("scroll", requestUpdate);
+      window.removeEventListener("pageshow", requestUpdate);
+    }
+    requestUpdate();
+  }
+
   window.addEventListener("scroll", requestUpdate, { passive: true });
-  window.addEventListener("resize", requestUpdate, { passive: true });
+  window.addEventListener("resize", () => {
+    bindMobileScroll();
+    requestUpdate();
+  }, { passive: true });
+  mobileViewport.addEventListener?.("change", bindMobileScroll);
+  bindMobileScroll();
   requestUpdate();
 })();

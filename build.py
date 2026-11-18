@@ -492,7 +492,7 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
 <dialog class="lb" id="lb" aria-label="Image viewer"><img alt=""><div class="lb__bar"><span></span>
   <button type="button" data-prev aria-label="Previous">{ICON["prev"]}</button><button type="button" data-next aria-label="Next">{ICON["next"]}</button><button type="button" data-close aria-label="Close">{ICON["close"]}</button></div></dialog>
 <script src="assets/js/site.js?v={VERSION}-mobile-process-reveal-v1" defer></script>
-{'<script src="assets/js/marketing-funnel.js?v=' + VERSION + '-scroll-funnel-v1" defer></script>' if page == "services" else ''}
+{'<script src="assets/js/marketing-funnel.js?v=' + VERSION + '-scroll-funnel-mobile-v2" defer></script>' if page == "services" else ''}
 </body>
 </html>
 '''
