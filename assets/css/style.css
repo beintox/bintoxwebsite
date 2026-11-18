@@ -517,7 +517,7 @@ a.shot:hover { border-color: #D4A017; }
 .footer__social { display: grid; justify-items: center; gap: 10px; margin-top: 12px; padding: 16px 20px 18px; min-height: 104px; border-radius: 30px; background: rgba(248,246,242,.055); }
 .footer__social h4 { margin: 0; }
 .footer__social-links { display: flex; align-items: center; gap: 12px; }
-.footer__social-links a { display: grid; place-items: center; width: 56px; height: 56px; border: 1px solid rgba(212,160,23,.2); border-radius: 18px; color: var(--tomato); transition: color var(--t), border-color var(--t), background var(--t), transform var(--t); }
+.footer__social-links a { display: grid; place-items: center; width: 56px; height: 56px; border: 1px solid rgba(212,160,23,.2); border-radius: 18px; color: var(--gold); transition: color var(--t), border-color var(--t), background var(--t), transform var(--t); }
 .footer__social-links a:hover, .footer__social-links a:focus-visible { color: var(--gold-hi); border-color: var(--gold-hi); background: rgba(212,160,23,.09); transform: translateY(-3px); }
 .footer__social-links svg { width: 27px; height: 27px; }
 .footer__social-links a:hover svg, .footer__social-links a:focus-visible svg { animation: footer-social-pop 500ms var(--ease); }
@@ -1278,4 +1278,5 @@ h1, .h1 { font-family: var(--f-sans); font-size: var(--h1) !important; font-weig
 h2, .h2 { font-family: var(--f-sans); font-size: var(--h2) !important; font-weight: 700; }
 h3, .h3 { font-family: var(--f-sans); font-size: var(--h3) !important; font-weight: 600; }
 .contact__headline { font-family: var(--f-sans); }
-.contact__quick svg, .clist i, .footer__social-links a { color: var(--tomato); }
+.contact__quick svg, .clist i { color: var(--tomato); }
+.footer__social-links a { color: var(--gold); }
