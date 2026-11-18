@@ -960,10 +960,14 @@ a.tag:hover { border-color: var(--text); color: var(--text); }
 .social-orbit__svg, .social-orbit__nodes { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
 .social-orbit__svg { z-index: 0; }
 .social-orbit__message { position: absolute; z-index: 1; top: 64%; left: 50%; display: grid; width: min(78%, 590px); margin: 0; transform: translate(-50%, -50%); color: var(--ink); font-size: clamp(26px, calc(3.5vw - 1px), 42px); font-weight: 700; line-height: 1.08; letter-spacing: -.045em; text-align: center; text-wrap: balance; pointer-events: none; }
+.social-orbit__message.orbit-ready { opacity: 0; transform: translate(-50%, calc(-50% + 22px)) scale(.94); filter: blur(3px); transition: opacity 720ms var(--ease), transform 720ms cubic-bezier(.18,.78,.22,1), filter 720ms var(--ease); }
+.social-orbit__message.orbit-ready.is-visible { opacity: 1; transform: translate(-50%, -50%) scale(1); filter: none; }
 .social-orbit__message em { color: var(--gold); font-style: normal; }
 .social-orbit__rail-shadow { fill: none; stroke: rgba(31,31,31,.08); stroke-width: 8; stroke-linecap: round; transform: translateY(5px); }
 .social-orbit__rail { fill: none; stroke: url(#socialOrbitGold); stroke-width: 2.5; stroke-linecap: round; }
 .social-orbit__node { --depth: 1; --orbit-opacity: 1; position: absolute; top: 0; left: 0; width: clamp(48px, 6vw, 78px); aspect-ratio: 1; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.9); border-radius: 26%; opacity: var(--orbit-opacity); transform: translate(-50%,-50%) scale(var(--depth)); box-shadow: 0 18px 30px rgba(31,31,31,.16), inset 0 1px 0 rgba(255,255,255,.5); will-change: left, top, transform, opacity; }
+.social-orbit__node[href] { cursor: pointer; text-decoration: none; }
+.social-orbit__node[href]:focus-visible { outline: 3px solid var(--gold); outline-offset: 4px; }
 .social-orbit__node svg { width: 54%; height: 54%; fill: #fff; stroke: #fff; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 1px 1px rgba(0,0,0,.16)); }
 .social-orbit__node--instagram { background: radial-gradient(circle at 28% 105%, #ffd66b 0 17%, #ff583f 43%, #d6249f 72%, #6941d8 100%); }
 .social-orbit__node--instagram svg { fill: none; stroke-width: 2.3; }
@@ -980,7 +984,7 @@ a.tag:hover { border-color: var(--text); color: var(--text); }
   .social-orbit__message { top: 66%; width: 92%; font-size: clamp(17px, calc(5vw - 1px), 25px); line-height: 1.12; letter-spacing: -.04em; }
   .social-orbit__node { width: clamp(42px, 12vw, 58px); border-radius: 24%; }
 }
-@media (prefers-reduced-motion: reduce) { .social-orbit__node { will-change: auto; } }
+@media (prefers-reduced-motion: reduce) { .social-orbit__node { will-change: auto; } .social-orbit__message.orbit-ready { opacity: 1; transform: translate(-50%, -50%); filter: none; transition: none; } }
 /* ---------- 34. Brands reel (moving row of mixed cards, pauses on hover) ---------- */
 .sec--white:has(.reel) { padding-bottom: calc(var(--sec) - 8px); }
 .reel { overflow: hidden; padding: 6px 0 14px; -webkit-mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent); mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent); }

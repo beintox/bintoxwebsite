@@ -433,7 +433,7 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
   <a class="btn btn--gold nav__cta" href="contact.html">Let's Make a Strategy Call {ARROW}</a>
   <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">{ICON["menu"]}</button>
 </div></header>'''
-    css_version = (f"{VERSION}-home-social-orbit-v4" if page == "index" else
+    css_version = (f"{VERSION}-home-social-orbit-v5" if page == "index" else
                    f"{VERSION}-services-layout-v8" if page == "services" else VERSION)
     return f'''<!doctype html>
 <html lang="en">
@@ -678,17 +678,17 @@ def home_process_section() -> str:
     <div class="social-orbit__scene" data-social-orbit>
       <svg class="social-orbit__svg" viewBox="0 0 1000 520" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="socialOrbitGold" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#e8bd4d" stop-opacity=".16"/><stop offset=".5" stop-color="#d4a017"/><stop offset="1" stop-color="#f2d77c" stop-opacity=".5"/></linearGradient><filter id="socialOrbitGlow" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><path class="social-orbit__rail-shadow" d="M90 470 A410 410 0 0 1 910 470"/><path class="social-orbit__rail" d="M90 470 A410 410 0 0 1 910 470"/></svg>
       <p class="social-orbit__message"><span>Connecting brands</span><span>with people across</span><em>the digital world.</em></p>
-      <div class="social-orbit__nodes" aria-hidden="true">
-        <span class="social-orbit__node social-orbit__node--instagram"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle class="orbit-dot" cx="18" cy="6" r="1"/></svg></span>
+      <div class="social-orbit__nodes">
+        <a class="social-orbit__node social-orbit__node--instagram" href="https://www.instagram.com/beintox/" target="_blank" rel="noopener noreferrer" aria-label="Visit BEINTOX on Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle class="orbit-dot" cx="18" cy="6" r="1"/></svg></a>
         <span class="social-orbit__node social-orbit__node--youtube"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="5"/><path class="orbit-cutout" d="m10 9 6 3-6 3z"/></svg></span>
-        <span class="social-orbit__node social-orbit__node--facebook"><svg viewBox="0 0 24 24"><path d="M14 21v-8h3l.5-4H14V7c0-1.2.4-2 2-2h1.7V1.4C17 1.2 15.8 1 14.4 1 11.5 1 9.5 2.8 9.5 6v3H6v4h3.5v8z"/></svg></span>
+        <a class="social-orbit__node social-orbit__node--facebook" href="https://www.facebook.com/profile.php?id=61593967393059" target="_blank" rel="noopener noreferrer" aria-label="Visit BEINTOX on Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 21v-8h3l.5-4H14V7c0-1.2.4-2 2-2h1.7V1.4C17 1.2 15.8 1 14.4 1 11.5 1 9.5 2.8 9.5 6v3H6v4h3.5v8z"/></svg></a>
         <span class="social-orbit__node social-orbit__node--tiktok"><svg viewBox="0 0 24 24"><path d="M19.6 7.2a6.1 6.1 0 0 1-4-1.5v8.1a6.2 6.2 0 1 1-5.4-6.1v3.3a2.9 2.9 0 1 0 2.2 2.8V1h3.3c.2 2.2 1.8 4.1 4 4.5z"/></svg></span>
         <span class="social-orbit__node social-orbit__node--linkedin"><svg viewBox="0 0 24 24"><path d="M5 8.5H2V22h3zM3.5 2a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6ZM22 14.2c0-4.1-2.2-6-5.1-6a4.4 4.4 0 0 0-4 2.2V8.5H10V22h3v-7.1c0-1.9.4-3.7 2.7-3.7s2.3 2.1 2.3 3.8V22h3z"/></svg></span>
       </div>
     </div>
   </div>
 </section>
-<script src="assets/js/social-orbit.js?v={VERSION}-social-orbit-v3" defer></script>
+<script src="assets/js/social-orbit.js?v={VERSION}-social-orbit-v4" defer></script>
 <script>
 (() => {{
   const section = document.querySelector('.home-process');

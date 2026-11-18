@@ -9,12 +9,23 @@
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const mobile = window.matchMedia('(max-width: 600px)');
+  const message = scene.querySelector('.social-orbit__message');
   const desktopPath = 'M90 470 A410 410 0 0 1 910 470';
   const mobilePath = 'M18 232 A162 162 0 0 1 342 232';
   let length = 0;
   let raf = 0;
   let visible = true;
   let lastTime = 0;
+
+  if (message && !reducedMotion.matches) {
+    message.classList.add('orbit-ready');
+    const messageObserver = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      message.classList.add('is-visible');
+      messageObserver.disconnect();
+    }, { threshold: 0.35 });
+    messageObserver.observe(message);
+  }
 
   const setGeometry = () => {
     const isMobile = mobile.matches;
