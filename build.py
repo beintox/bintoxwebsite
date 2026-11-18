@@ -433,7 +433,7 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
   <a class="btn btn--gold nav__cta" href="contact.html">Let's Make a Strategy Call {ARROW}</a>
   <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">{ICON["menu"]}</button>
 </div></header>'''
-    css_version = (f"{VERSION}-home-social-orbit-v3" if page == "index" else
+    css_version = (f"{VERSION}-home-social-orbit-v4" if page == "index" else
                    f"{VERSION}-services-layout-v8" if page == "services" else VERSION)
     return f'''<!doctype html>
 <html lang="en">
@@ -677,6 +677,7 @@ def home_process_section() -> str:
   <div class="wrap">
     <div class="social-orbit__scene" data-social-orbit>
       <svg class="social-orbit__svg" viewBox="0 0 1000 520" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="socialOrbitGold" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#e8bd4d" stop-opacity=".16"/><stop offset=".5" stop-color="#d4a017"/><stop offset="1" stop-color="#f2d77c" stop-opacity=".5"/></linearGradient><filter id="socialOrbitGlow" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><path class="social-orbit__rail-shadow" d="M90 470 A410 410 0 0 1 910 470"/><path class="social-orbit__rail" d="M90 470 A410 410 0 0 1 910 470"/></svg>
+      <p class="social-orbit__message"><span>Connecting brands</span><span>with people across</span><em>the digital world.</em></p>
       <div class="social-orbit__nodes" aria-hidden="true">
         <span class="social-orbit__node social-orbit__node--instagram"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle class="orbit-dot" cx="18" cy="6" r="1"/></svg></span>
         <span class="social-orbit__node social-orbit__node--youtube"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="5"/><path class="orbit-cutout" d="m10 9 6 3-6 3z"/></svg></span>
