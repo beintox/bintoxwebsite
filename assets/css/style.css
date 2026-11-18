@@ -1080,6 +1080,7 @@ a.tag:hover { border-color: var(--text); color: var(--text); }
 @media (prefers-reduced-motion: reduce) { .reel { overflow-x: auto; } .reel__track { animation: none; } }
 
 /* Home page work reel: three portrait videos with manual and full-screen controls. */
+.sec--white:has(.work-reel) > .wrap { max-width: calc(var(--wrap) + 2 * var(--gutter)); padding-inline: clamp(32px, 5vw, 72px); }
 .work-reel__controls { display: flex; justify-content: flex-end; gap: 8px; width: 100%; max-width: calc(var(--wrap) + 2 * var(--gutter)); margin: 0 auto 12px; padding-inline: var(--gutter); }
 .work-reel__controls button { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 1px solid var(--line); border-radius: 50%; background: transparent; color: var(--text); cursor: pointer; transition: background 180ms var(--ease), color 180ms var(--ease), border-color 180ms var(--ease), transform 180ms var(--ease); }
 .work-reel__controls button:hover, .work-reel__controls button:focus-visible { border-color: var(--gold); background: var(--ink); color: var(--paper); transform: translateY(-2px); }
@@ -1087,7 +1088,8 @@ a.tag:hover { border-color: var(--text); color: var(--text); }
 .work-play-icon { display: none; }
 .work-reel__controls button.is-paused .work-pause-icon { display: none; }
 .work-reel__controls button.is-paused .work-play-icon { display: inline-flex; }
-.reel--work { width: 100%; max-width: calc(3 * clamp(260px, 24vw, 360px) + 32px); margin-inline: auto; cursor: default; -webkit-mask-image: none; mask-image: none; }
+.work-reel { width: 100%; overflow: hidden; }
+.reel--work { width: 100%; max-width: none; margin-inline: 0; cursor: default; -webkit-mask-image: none; mask-image: none; }
 .reel--work .reel__track { animation-duration: 46s; }
 .reel--work .reel__track.is-paused { animation-play-state: paused; }
 .rc--work { display: block; width: clamp(260px, 24vw, 360px); height: auto; aspect-ratio: 9 / 16; padding: 0; border: 0; background: #111; color: var(--paper); text-align: left; cursor: pointer; }
@@ -1105,7 +1107,7 @@ a.tag:hover { border-color: var(--text); color: var(--text); }
 .work-lightbox video { display: block; width: auto; height: auto; max-width: min(100%, 1200px); max-height: calc(100dvh - 48px); aspect-ratio: 9 / 16; object-fit: contain; background: #000; }
 .work-lightbox__close { position: absolute; z-index: 2; top: 18px; right: 18px; display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid rgba(248, 246, 242, .3); border-radius: 50%; background: rgba(31, 31, 31, .75); color: var(--paper); cursor: pointer; }
 .work-lightbox__close svg { width: 19px; height: 19px; }
-@media (max-width: 760px) { .work-reel__controls { padding-inline: var(--gutter); } .reel--work { max-width: none; } .rc--work { width: min(76vw, 320px); height: auto; } }
+@media (max-width: 760px) { .sec--white:has(.work-reel) > .wrap { padding-inline: var(--gutter); } .work-reel__controls { padding-inline: var(--gutter); } .rc--work { width: min(76vw, 320px); height: auto; } }
 @media (max-width: 480px) { .rc--work { width: min(78vw, 292px); } .work-lightbox { padding: 0; } .work-lightbox video { max-width: 100vw; max-height: 100dvh; } .work-lightbox__close { top: 12px; right: 12px; } }
 
 /* ---------- 35. Belief cards (About: Be seen / understood / remembered) ---------- */
