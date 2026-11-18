@@ -959,7 +959,7 @@ a.tag:hover { border-color: var(--text); color: var(--text); }
 .social-orbit__scene { position: relative; width: min(100%, 760px); height: clamp(300px, 34vw, 400px); margin-inline: auto; overflow: hidden; isolation: isolate; }
 .social-orbit__svg, .social-orbit__nodes { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
 .social-orbit__svg { z-index: 0; }
-.social-orbit__message { position: absolute; z-index: 1; top: 57%; left: 50%; display: grid; width: min(78%, 590px); margin: 0; transform: translate(-50%, -50%); color: var(--ink); font-size: clamp(29px, calc(3.8vw - 1px), 45px); font-weight: 700; line-height: 1.08; letter-spacing: -.045em; text-align: center; text-wrap: balance; pointer-events: none; }
+.social-orbit__message { position: absolute; z-index: 1; top: 64%; left: 50%; display: grid; width: min(78%, 590px); margin: 0; transform: translate(-50%, -50%); color: var(--ink); font-size: clamp(26px, calc(3.5vw - 1px), 42px); font-weight: 700; line-height: 1.08; letter-spacing: -.045em; text-align: center; text-wrap: balance; pointer-events: none; }
 .social-orbit__message em { color: var(--gold); font-style: normal; }
 .social-orbit__rail-shadow { fill: none; stroke: rgba(31,31,31,.08); stroke-width: 8; stroke-linecap: round; transform: translateY(5px); }
 .social-orbit__rail { fill: none; stroke: url(#socialOrbitGold); stroke-width: 2.5; stroke-linecap: round; }
@@ -977,7 +977,7 @@ a.tag:hover { border-color: var(--text); color: var(--text); }
 @media (max-width: 600px) {
   .social-orbit { padding-top: 16px; }
   .social-orbit__scene { width: 100%; height: clamp(220px, 68vw, 310px); }
-  .social-orbit__message { top: 60%; width: 92%; font-size: clamp(19px, calc(5.7vw - 1px), 28px); line-height: 1.12; letter-spacing: -.04em; }
+  .social-orbit__message { top: 66%; width: 92%; font-size: clamp(17px, calc(5vw - 1px), 25px); line-height: 1.12; letter-spacing: -.04em; }
   .social-orbit__node { width: clamp(42px, 12vw, 58px); border-radius: 24%; }
 }
 @media (prefers-reduced-motion: reduce) { .social-orbit__node { will-change: auto; } }
