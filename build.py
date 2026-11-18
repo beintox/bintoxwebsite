@@ -433,7 +433,7 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
   <a class="btn btn--gold nav__cta" href="contact.html">Let's Make a Strategy Call {ARROW}</a>
   <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">{ICON["menu"]}</button>
 </div></header>'''
-    css_version = (f"{VERSION}-home-process-auto-v3" if page == "index" else
+    css_version = (f"{VERSION}-home-social-orbit-v1" if page == "index" else
                    f"{VERSION}-services-layout-v8" if page == "services" else VERSION)
     return f'''<!doctype html>
 <html lang="en">
@@ -672,6 +672,17 @@ def home_process_section() -> str:
     <span class="process-stack__progress" data-process-status aria-live="polite">01 <i>/</i> 04</span>
   </div>
 </div></section>
+<section class="social-orbit" aria-label="Social media channels">
+  <span class="sr-only">Facebook, Instagram, LinkedIn, and TikTok</span>
+  <div class="social-orbit__stage" aria-hidden="true">
+    <div class="social-orbit__track">
+      <span class="social-orbit__icon social-orbit__icon--instagram"><svg class="social-orbit__glyph" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle class="social-orbit__dot" cx="18" cy="6" r="1"/></svg></span>
+      <span class="social-orbit__icon social-orbit__icon--facebook"><svg class="social-orbit__glyph" viewBox="0 0 24 24"><path d="M14 21v-8h3l.5-4H14V7c0-1.2.4-2 2-2h1.7V1.4C17 1.2 15.8 1 14.4 1 11.5 1 9.5 2.8 9.5 6v3H6v4h3.5v8z"/></svg></span>
+      <span class="social-orbit__icon social-orbit__icon--linkedin"><svg class="social-orbit__glyph" viewBox="0 0 24 24"><path d="M5 8.5H2V22h3zM3.5 2a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6ZM22 14.2c0-4.1-2.2-6-5.1-6a4.4 4.4 0 0 0-4 2.2V8.5H10V22h3v-7.1c0-1.9.4-3.7 2.7-3.7s2.3 2.1 2.3 3.8V22h3z"/></svg></span>
+      <span class="social-orbit__icon social-orbit__icon--tiktok"><svg class="social-orbit__glyph" viewBox="0 0 24 24"><path d="M19.6 7.2a6.1 6.1 0 0 1-4-1.5v8.1a6.2 6.2 0 1 1-5.4-6.1v3.3a2.9 2.9 0 1 0 2.2 2.8V1h3.3c.2 2.2 1.8 4.1 4 4.5z"/></svg></span>
+    </div>
+  </div>
+</section>
 <script>
 (() => {{
   const section = document.querySelector('.home-process');

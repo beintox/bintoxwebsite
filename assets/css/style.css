@@ -954,6 +954,27 @@ a.tag:hover { border-color: var(--text); color: var(--text); }
 @keyframes process-card-arrive { from { opacity: .7; transform: translate3d(-50%,110%,0) scale(.97); } 78% { opacity: 1; transform: translate3d(-50%,-9px,0) scale(1.012); } to { opacity: 1; transform: translate3d(-50%,0,0) scale(1); } }
 @keyframes process-card-leave { to { opacity: .2; transform: translate3d(-50%,-115%,0) scale(.97); } }
 @media (prefers-reduced-motion: reduce) { .process-card.is-current, .process-card.is-leaving, .process-card.is-desktop-active { animation-duration: 1ms !important; } .process-card { transition: none !important; } }
+.social-orbit { overflow: hidden; background: var(--paper); }
+.social-orbit__stage { position: relative; height: 315px; overflow: hidden; }
+.social-orbit__track { position: absolute; top: calc(100% - 35px); left: 50%; width: min(72vw, 560px); aspect-ratio: 1; border: 1px solid rgba(212,160,23,.42); border-radius: 50%; transform: translate(-50%,-50%); animation: social-orbit-spin 24s linear infinite; }
+.social-orbit__icon { position: absolute; display: grid; place-items: center; width: 70px; height: 70px; border: 1px solid rgba(255,255,255,.8); border-radius: 50%; box-shadow: 0 14px 30px rgba(31,31,31,.17); }
+.social-orbit__icon--instagram { top: 0; left: 50%; background: radial-gradient(circle at 30% 110%, #ffd66b 0 17%, #ff583f 42%, #d6249f 72%, #6941d8 100%); }
+.social-orbit__icon--facebook { top: 50%; left: 0; background: #1877f2; }
+.social-orbit__icon--linkedin { top: 50%; right: 0; background: #0a66c2; }
+.social-orbit__icon--tiktok { bottom: 0; left: 50%; background: #111; box-shadow: -4px 4px 0 rgba(37,244,238,.48), 4px -3px 0 rgba(254,44,85,.45), 0 14px 30px rgba(31,31,31,.17); }
+.social-orbit__glyph { width: 34px; height: 34px; fill: #fff; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; animation: social-orbit-counter 24s linear infinite; }
+.social-orbit__icon--instagram .social-orbit__glyph { fill: none; stroke-width: 2.3; }
+.social-orbit__icon--instagram .social-orbit__dot { fill: #fff; stroke: none; }
+.social-orbit__icon--linkedin .social-orbit__glyph, .social-orbit__icon--tiktok .social-orbit__glyph, .social-orbit__icon--facebook .social-orbit__glyph { stroke: none; }
+@keyframes social-orbit-spin { to { rotate: 1turn; } }
+@keyframes social-orbit-counter { to { rotate: -1turn; } }
+@media (max-width: 600px) {
+  .social-orbit__stage { height: 250px; }
+  .social-orbit__track { top: calc(100% - 25px); width: min(104vw, 460px); }
+  .social-orbit__icon { width: 58px; height: 58px; }
+  .social-orbit__glyph { width: 28px; height: 28px; }
+}
+@media (prefers-reduced-motion: reduce) { .social-orbit__track, .social-orbit__glyph { animation: none !important; } }
 /* ---------- 34. Brands reel (moving row of mixed cards, pauses on hover) ---------- */
 .sec--white:has(.reel) { padding-bottom: calc(var(--sec) - 8px); }
 .reel { overflow: hidden; padding: 6px 0 14px; -webkit-mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent); mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent); }
