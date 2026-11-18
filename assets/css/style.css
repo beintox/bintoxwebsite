@@ -593,10 +593,10 @@ a.shot:hover { border-color: #D4A017; }
 /* ---------- 27. Services page showcase ---------- */
 .industries-strip { padding: 0; background: var(--paper); }
 .industries-strip > .wrap { max-width: none; padding: 0; }
-.industries-strip__frame { display: grid; grid-template-columns: minmax(330px, max-content) minmax(0, 1fr); align-items: center; gap: 28px; min-height: 116px; padding: 12px 32px; border: 1px solid var(--line); border-radius: 0; background: var(--card); box-shadow: inset 0 1px rgba(255, 255, 255, .7); }
-.industries-strip__label { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 0; color: var(--ink); font-size: clamp(22px, 2vw, 30px); font-weight: 750; letter-spacing: -.045em; line-height: 1; text-align: left; white-space: nowrap; }
-.industries-strip__label strong { display: inline-block; padding: 8px 10px 9px; border-radius: 5px; background: var(--gold); color: var(--ink); font: inherit; letter-spacing: -.035em; }
-.industries-strip__viewport { display: flex; min-width: 0; min-height: 64px; align-items: center; overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent); }
+.industries-strip__frame { display: grid; grid-template-columns: max-content minmax(0, 1fr); align-items: center; gap: 30px; min-height: 116px; padding: 12px 32px; border: 1px solid var(--line); border-radius: 0; background: var(--card); box-shadow: inset 0 1px rgba(255, 255, 255, .7); }
+.industries-strip__label { display: flex; align-items: center; flex-wrap: nowrap; gap: 10px; margin: 0; color: var(--ink); font-size: clamp(21px, 2.15vw, 30px); font-weight: 750; letter-spacing: -.045em; line-height: 1; text-align: left; white-space: nowrap; }
+.industries-strip__label strong { display: inline-block; padding: 8px 12px 9px; border-radius: 5px; background: var(--gold); color: var(--ink); font: inherit; letter-spacing: -.035em; }
+.industries-strip__viewport { display: flex; min-width: 0; min-height: 64px; align-items: center; overflow: hidden; }
 .industries-strip__track { display: flex; height: 100%; align-items: center; gap: 12px; width: max-content; animation: industries-travel 42s linear infinite; }
 .industries-strip__viewport:hover .industries-strip__track { animation-play-state: paused; }
 .industries-strip__item { display: inline-flex; flex: 0 0 auto; align-items: center; justify-content: center; padding: 11px 22px; border: 1px solid rgba(31, 31, 31, .06); border-radius: 999px; background: var(--industry-color); color: #211f1b; font-size: clamp(17px, 1.5vw, 22px); font-weight: 600; letter-spacing: -.035em; white-space: nowrap; box-shadow: 0 8px 18px -14px rgba(31, 31, 31, .48); animation: industry-float 3.2s ease-in-out infinite alternate; transition: box-shadow 260ms var(--ease), scale 260ms var(--ease); }
@@ -721,7 +721,7 @@ a.shot:hover { border-color: #D4A017; }
 @media (max-width: 760px) { .industries-strip__frame { grid-template-columns: 150px minmax(0, 1fr); gap: 14px; padding-inline: 18px; } .industries-strip__label { font-size: 11px; } .industries-strip__item { padding: 13px 21px; font-size: 18px; } .service-comparison__grid { gap: 16px; margin-top: 38px; } .service-comparison__side { padding: 23px 20px 25px; } .service-comparison__side ul { gap: 17px; } }
 @media (max-width: 560px) { .industries-strip__frame { grid-template-columns: 1fr; gap: 7px; padding: 12px 16px; } .industries-strip__label { font-size: 10px; } .industries-strip__item { padding: 11px 18px; font-size: 16px; } .service-comparison__title { font-size: clamp(34px, 9vw, 46px); } .service-comparison__grid { grid-template-columns: 1fr; } }
 @media (max-width: 760px) {
-  .industries-strip__frame { grid-template-columns: minmax(0, 1fr); gap: 12px; padding: 12px 18px; }
+  .industries-strip__frame { grid-template-columns: minmax(0, 1fr); justify-items: start; gap: 12px; padding: 12px 18px; }
   .industries-strip__label { font-size: clamp(20px, 3vw, 25px); }
   .industries-strip__label strong { padding: 6px 9px 7px; }
   .industries-strip__item { padding: 10px 18px; font-size: clamp(16px, 2.4vw, 18px); }
