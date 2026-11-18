@@ -13,18 +13,21 @@
   let frame = 0;
   let currentStage = -1;
   let mobileScrollBound = false;
+  const scrollRoot = document.scrollingElement || document.documentElement;
 
   const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
 
   function update() {
     frame = 0;
     const sticky = section.querySelector(".marketing-funnel__sticky");
-    const sectionRect = section.getBoundingClientRect();
     const travel = Math.max(1, section.offsetHeight - sticky.offsetHeight);
     const stickyTop = mobileViewport.matches ? (parseFloat(getComputedStyle(sticky).top) || 0) : 0;
+    const sectionTop = mobileViewport.matches
+      ? section.getBoundingClientRect().top + scrollRoot.scrollTop
+      : 0;
     const progress = mobileViewport.matches
-      ? clamp((window.scrollY - (sectionRect.top + window.scrollY) + stickyTop) / travel)
-      : clamp(-sectionRect.top / travel);
+      ? clamp((scrollRoot.scrollTop - sectionTop + stickyTop) / travel)
+      : clamp(-section.getBoundingClientRect().top / travel);
 
     section.classList.toggle("is-progressing", progress > 0.005);
     const activeStage = mobileViewport.matches
@@ -55,12 +58,20 @@
     mobileScrollBound = mobileViewport.matches;
     if (mobileScrollBound) {
       document.addEventListener("scroll", requestUpdate, { passive: true, capture: true });
+      scrollRoot.addEventListener("scroll", requestUpdate, { passive: true });
+      document.addEventListener("touchmove", requestUpdate, { passive: true, capture: true });
       window.visualViewport?.addEventListener("scroll", requestUpdate, { passive: true });
+      window.visualViewport?.addEventListener("resize", requestUpdate, { passive: true });
       window.addEventListener("pageshow", requestUpdate, { passive: true });
+      window.addEventListener("orientationchange", requestUpdate, { passive: true });
     } else {
       document.removeEventListener("scroll", requestUpdate, true);
+      scrollRoot.removeEventListener("scroll", requestUpdate);
+      document.removeEventListener("touchmove", requestUpdate, true);
       window.visualViewport?.removeEventListener("scroll", requestUpdate);
+      window.visualViewport?.removeEventListener("resize", requestUpdate);
       window.removeEventListener("pageshow", requestUpdate);
+      window.removeEventListener("orientationchange", requestUpdate);
     }
     requestUpdate();
   }
@@ -71,6 +82,11 @@
     requestUpdate();
   }, { passive: true });
   mobileViewport.addEventListener?.("change", bindMobileScroll);
+  if ("ResizeObserver" in window) {
+    const resizeObserver = new ResizeObserver(requestUpdate);
+    resizeObserver.observe(section);
+    resizeObserver.observe(section.querySelector(".marketing-funnel__sticky"));
+  }
   bindMobileScroll();
   requestUpdate();
 })();
