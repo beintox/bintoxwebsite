@@ -954,27 +954,34 @@ a.tag:hover { border-color: var(--text); color: var(--text); }
 @keyframes process-card-arrive { from { opacity: .7; transform: translate3d(-50%,110%,0) scale(.97); } 78% { opacity: 1; transform: translate3d(-50%,-9px,0) scale(1.012); } to { opacity: 1; transform: translate3d(-50%,0,0) scale(1); } }
 @keyframes process-card-leave { to { opacity: .2; transform: translate3d(-50%,-115%,0) scale(.97); } }
 @media (prefers-reduced-motion: reduce) { .process-card.is-current, .process-card.is-leaving, .process-card.is-desktop-active { animation-duration: 1ms !important; } .process-card { transition: none !important; } }
-.social-orbit { overflow: hidden; background: var(--paper); }
-.social-orbit__stage { position: relative; height: 315px; overflow: hidden; }
-.social-orbit__track { position: absolute; top: calc(100% - 35px); left: 50%; width: min(72vw, 560px); aspect-ratio: 1; border: 1px solid rgba(212,160,23,.42); border-radius: 50%; transform: translate(-50%,-50%); animation: social-orbit-spin 24s linear infinite; }
-.social-orbit__icon { position: absolute; display: grid; place-items: center; width: 70px; height: 70px; border: 1px solid rgba(255,255,255,.8); border-radius: 50%; box-shadow: 0 14px 30px rgba(31,31,31,.17); }
-.social-orbit__icon--instagram { top: 0; left: 50%; background: radial-gradient(circle at 30% 110%, #ffd66b 0 17%, #ff583f 42%, #d6249f 72%, #6941d8 100%); }
-.social-orbit__icon--facebook { top: 50%; left: 0; background: #1877f2; }
-.social-orbit__icon--linkedin { top: 50%; right: 0; background: #0a66c2; }
-.social-orbit__icon--tiktok { bottom: 0; left: 50%; background: #111; box-shadow: -4px 4px 0 rgba(37,244,238,.48), 4px -3px 0 rgba(254,44,85,.45), 0 14px 30px rgba(31,31,31,.17); }
-.social-orbit__glyph { width: 34px; height: 34px; fill: #fff; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; animation: social-orbit-counter 24s linear infinite; }
-.social-orbit__icon--instagram .social-orbit__glyph { fill: none; stroke-width: 2.3; }
-.social-orbit__icon--instagram .social-orbit__dot { fill: #fff; stroke: none; }
-.social-orbit__icon--linkedin .social-orbit__glyph, .social-orbit__icon--tiktok .social-orbit__glyph, .social-orbit__icon--facebook .social-orbit__glyph { stroke: none; }
-@keyframes social-orbit-spin { to { rotate: 1turn; } }
-@keyframes social-orbit-counter { to { rotate: -1turn; } }
+.social-orbit { overflow: hidden; background: var(--paper); padding: clamp(24px, 4vw, 54px) 0 0; }
+.social-orbit__scene { position: relative; width: 100%; height: clamp(270px, 39vw, 500px); overflow: hidden; isolation: isolate; }
+.social-orbit__svg, .social-orbit__nodes { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.social-orbit__svg { z-index: 0; }
+.social-orbit__rail-shadow { fill: none; stroke: rgba(31,31,31,.08); stroke-width: 8; stroke-linecap: round; transform: translateY(5px); }
+.social-orbit__rail { fill: none; stroke: url(#socialOrbitGold); stroke-width: 2.5; stroke-linecap: round; }
+.social-orbit__node { --depth: 1; --orbit-opacity: 1; position: absolute; top: 0; left: 0; width: clamp(48px, 6vw, 78px); aspect-ratio: 1; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.9); border-radius: 26%; opacity: var(--orbit-opacity); transform: translate(-50%,-50%) scale(var(--depth)); box-shadow: 0 18px 30px rgba(31,31,31,.16), inset 0 1px 0 rgba(255,255,255,.5); will-change: left, top, transform, opacity; }
+.social-orbit__node svg { width: 54%; height: 54%; fill: #fff; stroke: #fff; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 1px 1px rgba(0,0,0,.16)); }
+.social-orbit__node--instagram { background: radial-gradient(circle at 28% 105%, #ffd66b 0 17%, #ff583f 43%, #d6249f 72%, #6941d8 100%); }
+.social-orbit__node--instagram svg { fill: none; stroke-width: 2.3; }
+.social-orbit__node--instagram .orbit-dot { fill: #fff; stroke: none; }
+.social-orbit__node--youtube { background: #f20d18; }
+.social-orbit__node--youtube .orbit-cutout { fill: #f20d18; stroke: #f20d18; }
+.social-orbit__node--facebook { background: #1877f2; }
+.social-orbit__node--facebook svg, .social-orbit__node--linkedin svg, .social-orbit__node--tiktok svg { stroke: none; }
+.social-orbit__node--tiktok { background: #111; box-shadow: -3px 3px 0 rgba(37,244,238,.45), 3px -2px 0 rgba(254,44,85,.4), 0 18px 30px rgba(31,31,31,.16); }
+.social-orbit__node--linkedin { background: #0a66c2; }
+.social-orbit__node--chatgpt { background: #fff; }
+.social-orbit__node--chatgpt svg { fill: none; stroke: #252525; stroke-width: 1.5; }
+.social-orbit__node--google { background: #fff; }
+.social-orbit__node--google svg { stroke: none; }
+.social-orbit__node--pinterest { background: #bd081c; }
 @media (max-width: 600px) {
-  .social-orbit__stage { height: 250px; }
-  .social-orbit__track { top: calc(100% - 25px); width: min(104vw, 460px); }
-  .social-orbit__icon { width: 58px; height: 58px; }
-  .social-orbit__glyph { width: 28px; height: 28px; }
+  .social-orbit { padding-top: 16px; }
+  .social-orbit__scene { height: clamp(220px, 68vw, 310px); }
+  .social-orbit__node { width: clamp(42px, 12vw, 58px); border-radius: 24%; }
 }
-@media (prefers-reduced-motion: reduce) { .social-orbit__track, .social-orbit__glyph { animation: none !important; } }
+@media (prefers-reduced-motion: reduce) { .social-orbit__node { will-change: auto; } }
 /* ---------- 34. Brands reel (moving row of mixed cards, pauses on hover) ---------- */
 .sec--white:has(.reel) { padding-bottom: calc(var(--sec) - 8px); }
 .reel { overflow: hidden; padding: 6px 0 14px; -webkit-mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent); mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent); }
