@@ -434,7 +434,7 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
   <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">{ICON["menu"]}</button>
 </div></header>'''
     css_version = (f"{VERSION}-brands-heading-spacing-v1-testimonials-ivory-v1-work-reel-edge-v1-footer-social-gold-v1" if page == "index" else
-                   f"{VERSION}-services-layout-v8" if page == "services" else VERSION)
+                   f"{VERSION}-services-layout-v9-industries-strip" if page == "services" else VERSION)
     return f'''<!doctype html>
 <html lang="en">
 <head>
@@ -906,7 +906,7 @@ def industries_strip() -> str:
     colors = ["#3B5BFA", "#FF5A36", "#73C5B3", "#FFD479", "#3D5BD5", "#FFB5B5", "#6D9FDE", "#FF9F7B", "#E5A911"]
     items = "".join(f'<span class="industries-strip__item" style="--industry-color:{colors[i]}">{E(name)}<i aria-hidden="true">✳</i></span>' for i, name in enumerate(SERVICE_INDUSTRIES))
     return f'''<section class="industries-strip" aria-label="Industries we serve"><div class="wrap">
-  <div class="industries-strip__frame"><p class="industries-strip__label">Industries<br>we serve</p><span class="sr-only">{E(', '.join(SERVICE_INDUSTRIES))}</span>
+  <div class="industries-strip__frame"><p class="industries-strip__label"><span>Industries</span><strong>We Serve</strong></p><span class="sr-only">{E(', '.join(SERVICE_INDUSTRIES))}</span>
     <div class="industries-strip__viewport"><div class="industries-strip__track" aria-hidden="true">{items}{items}</div></div>
   </div>
 </div></section>'''
