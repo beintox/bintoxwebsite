@@ -610,7 +610,7 @@ def logo_marquee() -> str:
     half = one * 2
     dup = half.replace("<a ", '<a tabindex="-1" aria-hidden="true" ').replace('role="img" ', 'aria-hidden="true" ')
     return f'''<section class="clients" aria-label="Clients"><div class="wrap">
-  <span class="clients__label">Brands we've built</span>
+  <h2 class="clients__label"><span>Brands</span><strong>We've Built</strong></h2>
   <div class="marquee"><div class="marquee__track">{half}{dup}</div></div>
 </div></section>'''
 
