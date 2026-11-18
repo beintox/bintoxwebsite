@@ -955,6 +955,46 @@ a.tag:hover { border-color: var(--text); color: var(--text); }
 @keyframes process-card-arrive { from { opacity: .7; transform: translate3d(-50%,110%,0) scale(.97); } 78% { opacity: 1; transform: translate3d(-50%,-9px,0) scale(1.012); } to { opacity: 1; transform: translate3d(-50%,0,0) scale(1); } }
 @keyframes process-card-leave { to { opacity: .2; transform: translate3d(-50%,-115%,0) scale(.97); } }
 @media (prefers-reduced-motion: reduce) { .process-card.is-current, .process-card.is-leaving, .process-card.is-desktop-active { animation-duration: 1ms !important; } .process-card { transition: none !important; } }
+
+/* Home process: ascending Beintox-branded staircase, with all steps readable. */
+.home-process .process-stack { width: 100%; max-width: 1280px; height: auto; margin-inline: auto; user-select: auto; touch-action: auto; }
+.home-process .process-stack__deck { position: static; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); align-items: end; gap: clamp(12px, 1.5vw, 22px); perspective: none; }
+.home-process .process-card { position: relative; inset: auto; left: auto; width: auto; height: auto; min-height: 510px; padding: 24px 22px 28px; opacity: 1; visibility: visible; transform: none; transform-origin: center bottom; animation: none; }
+.home-process .process-card:nth-child(2) { min-height: 550px; }
+.home-process .process-card:nth-child(3) { min-height: 590px; }
+.home-process .process-card:nth-child(4) { min-height: 630px; }
+.home-process .process-card__number { top: 25px; right: 20px; font-size: clamp(76px, 8vw, 112px); }
+.home-process .process-card__label { position: relative; }
+.home-process .process-card__icon { width: 54px; height: 54px; margin-top: 22px; border-radius: 16px; }
+.home-process .process-card__icon svg { width: 35px; height: 35px; }
+.home-process .process-card h3 { margin-top: 27px; font-size: clamp(20px, 1.7vw, 25px); }
+.home-process .process-card p { font-size: clamp(14px, 1.05vw, 16px); line-height: 1.48; }
+.home-process .process-stack__progress { display: none; }
+.home-process .process-card.is-desktop-active { animation: none; }
+@media (min-width: 768px) and (max-width: 1050px) {
+  .home-process .process-stack__deck { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .home-process .process-card { min-height: 390px; }
+  .home-process .process-card:nth-child(2) { min-height: 420px; }
+  .home-process .process-card:nth-child(3) { min-height: 450px; }
+  .home-process .process-card:nth-child(4) { min-height: 480px; }
+  .home-process .process-card h3 { font-size: clamp(21px, 2.5vw, 25px); }
+  .home-process .process-card p { font-size: 15px; }
+}
+@media (max-width: 767px) {
+  .home-process .process-stack { width: 100%; max-width: 520px; height: auto; }
+  .home-process .process-stack__deck { position: static; display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; perspective: none; }
+  .home-process .process-card,
+  .home-process .process-card:nth-child(n) { position: relative; inset: auto; left: auto; width: 100%; min-height: 0; height: auto; padding: 22px 20px 24px; border-radius: 22px; transform: none; opacity: 1; visibility: visible; animation: none; }
+  .home-process .process-card__number { top: 20px; right: 18px; font-size: clamp(68px, 18vw, 88px); }
+  .home-process .process-card__icon { margin-top: 20px; }
+  .home-process .process-card h3 { margin-top: 23px; font-size: clamp(21px, 6vw, 26px); }
+  .home-process .process-card p { max-width: 48ch; margin-top: 10px; font-size: 15px; line-height: 1.55; }
+  .home-process .process-card.is-current,
+  .home-process .process-card.is-behind-1,
+  .home-process .process-card.is-behind-2,
+  .home-process .process-card.is-behind-3,
+  .home-process .process-card.is-leaving { z-index: auto; transform: none; animation: none; }
+}
 .social-orbit { overflow: hidden; background: var(--paper); padding: clamp(24px, 4vw, 54px) 0 0; }
 .social-orbit__scene { position: relative; width: min(100%, 760px); height: clamp(300px, 34vw, 400px); margin-inline: auto; overflow: hidden; isolation: isolate; }
 .social-orbit__svg, .social-orbit__nodes { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }

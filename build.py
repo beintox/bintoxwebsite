@@ -433,7 +433,7 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
   <a class="btn btn--gold nav__cta" href="contact.html">Let's Make a Strategy Call {ARROW}</a>
   <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">{ICON["menu"]}</button>
 </div></header>'''
-    css_version = (f"{VERSION}-home-social-orbit-v5" if page == "index" else
+    css_version = (f"{VERSION}-home-process-staircase-v1" if page == "index" else
                    f"{VERSION}-services-layout-v8" if page == "services" else VERSION)
     return f'''<!doctype html>
 <html lang="en">
@@ -654,7 +654,7 @@ PROCESS_STEPS = [
 
 def home_process_section() -> str:
     steps = "".join(
-        f'''<li class="process-card{' is-current' if i == 0 else ''}" data-process-step="{i}" aria-hidden="{'false' if i == 0 else 'true'}" style="--step:{i}">
+        f'''<li class="process-card{' is-current' if i == 0 else ''}" data-process-step="{i}" aria-hidden="false" style="--step:{i}">
   <span class="process-card__number" aria-hidden="true">0{i + 1}</span>
   <span class="process-card__label">Step 0{i + 1}</span>
   <span class="process-card__icon" aria-hidden="true"><svg viewBox="0 0 128 128">{graphic}</svg></span>
@@ -689,67 +689,7 @@ def home_process_section() -> str:
   </div>
 </section>
 <script src="assets/js/social-orbit.js?v={VERSION}-social-orbit-v4" defer></script>
-<script>
-(() => {{
-  const section = document.querySelector('.home-process');
-  const stack = section?.querySelector('.process-stack');
-  if (!stack) return;
-  const cards = [...stack.querySelectorAll('.process-card')];
-  const status = section.querySelector('[data-process-status]');
-  const mobile = window.matchMedia('(max-width: 767px)');
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  let active = 0;
-  let startY = 0;
-  let autoTimer = 0;
-  let isInView = false;
-  const updateCards = () => {{
-    if (mobile.matches) {{
-      stack.classList.remove('is-desktop');
-      cards.forEach((card, i) => {{
-        card.classList.remove('is-current', 'is-behind-1', 'is-behind-2', 'is-behind-3', 'is-desktop-active');
-        const distance = (i - active + cards.length) % cards.length;
-        card.classList.add(distance === 0 ? 'is-current' : 'is-behind-' + distance);
-        card.setAttribute('aria-hidden', i === active ? 'false' : 'true');
-      }});
-    }} else {{
-      stack.classList.add('is-desktop');
-      cards.forEach((card, i) => {{
-        card.classList.remove('is-current', 'is-behind-1', 'is-behind-2', 'is-behind-3', 'is-leaving');
-        card.classList.toggle('is-desktop-active', i === active);
-        card.setAttribute('aria-hidden', 'false');
-      }});
-    }}
-  }};
-  const updateStatus = () => {{ if (status) status.innerHTML = String(active + 1).padStart(2, '0') + ' <i>/</i> 04'; }};
-  const change = direction => {{
-    if (!mobile.matches) return;
-    const outgoing = cards[active];
-    outgoing.classList.add('is-leaving');
-    active = (active + direction + cards.length) % cards.length;
-    updateCards(); updateStatus();
-    outgoing.addEventListener('animationend', () => outgoing.classList.remove('is-leaving'), {{ once: true }});
-  }};
-  stack.addEventListener('touchstart', event => {{ startY = event.changedTouches[0].clientY; }}, {{ passive: true }});
-  stack.addEventListener('touchend', event => {{
-    const distance = startY - event.changedTouches[0].clientY;
-    if (mobile.matches && Math.abs(distance) > 42) change(distance > 0 ? 1 : -1);
-  }}, {{ passive: true }});
-  const startAuto = () => {{
-    if (autoTimer || reducedMotion.matches || document.hidden || !isInView) return;
-    autoTimer = window.setInterval(() => {{
-      if (mobile.matches) change(1);
-      else {{ active = (active + 1) % cards.length; updateCards(); updateStatus(); }}
-    }}, 3600);
-  }};
-  const stopAuto = () => {{ window.clearInterval(autoTimer); autoTimer = 0; }};
-  const observer = 'IntersectionObserver' in window ? new IntersectionObserver(([entry]) => {{ isInView = entry.isIntersecting; isInView ? startAuto() : stopAuto(); }}, {{ threshold: 0.2 }}) : null;
-  if (observer) observer.observe(section); else {{ isInView = true; startAuto(); }}
-  document.addEventListener('visibilitychange', () => document.hidden || !isInView ? stopAuto() : startAuto());
-  mobile.addEventListener('change', updateCards);
-  reducedMotion.addEventListener('change', () => reducedMotion.matches ? stopAuto() : startAuto());
-  updateCards(); updateStatus();
-}})();
-</script>'''
+'''
 
 
 # Service cards on the home page: colour + decorative shape per service.
