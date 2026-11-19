@@ -694,6 +694,16 @@ a.shot:hover { border-color: #D4A017; }
   #seo { grid-template-areas: "copy" "visual"; }
   #seo .service-offering__visual--seo-video { width: 100%; }
 }
+@media (max-width: 767px) {
+  body.page-services .client-videos__viewport { overflow: hidden; margin-top: 28px; -webkit-mask-image: none; mask-image: none; }
+  body.page-services .client-videos__track { display: flex; width: max-content; padding: 0; animation: client-videos-travel-left 48s linear infinite; }
+  body.page-services .client-videos__set { display: flex; gap: 14px; padding-right: 14px; }
+  body.page-services .client-videos__set--clone { display: flex; }
+  body.page-services .client-video { position: relative; flex: 0 0 min(78vw, 340px); width: min(78vw, 340px); margin: 0; }
+  body.page-services .client-videos__track:hover { animation-play-state: paused; }
+  body.page-services .marketing-funnel__copy h2 { max-width: none; margin: 10px 0 12px; font-size: clamp(25px, 7.1vw, 34px); font-weight: 750; line-height: 1.05; letter-spacing: -.055em; white-space: nowrap; }
+}
+@keyframes client-videos-travel-left { from { transform: translateX(-50%); } to { transform: translateX(0); } }
 @media (prefers-reduced-motion: reduce) { .industries-strip__track, .industries-strip__item { animation: none; } }
 @media (prefers-reduced-motion: reduce) { .service-feature__icon svg { animation: none; } }
 
