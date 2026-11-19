@@ -674,6 +674,26 @@ a.shot:hover { border-color: #D4A017; }
 .service-features__action { display: flex; justify-content: center; margin-top: 32px; }
 @media (max-width: 760px) { .industries-strip__frame { grid-template-columns: 130px minmax(0, 1fr); gap: 12px; padding: 14px 18px; } .industries-strip__label { font-size: 10px; } .industries-strip__item { padding: 13px 21px; font-size: 18px; } .service-features__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 32px; margin-top: 34px; } }
 @media (max-width: 520px) { .industries-strip__frame { grid-template-columns: 1fr; gap: 8px; padding: 12px 16px; } .industries-strip__label br { display: none; } .industries-strip__label { font-size: 10px; } .industries-strip__item { padding: 11px 18px; font-size: 16px; } .service-features__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 12px; row-gap: 24px; } .service-feature { padding-inline: 4px; } }
+@media (max-width: 600px) {
+  .industries-strip { overflow: hidden; }
+  .industries-strip__frame { display: block; min-height: 0; padding: 14px 16px 12px; }
+  .industries-strip__label { margin-bottom: 10px; font-size: 14px; }
+  .industries-strip__viewport { width: 100%; min-height: 50px; }
+  .industries-strip__track { gap: 8px; animation-duration: 54s; }
+  .industries-strip__item { padding: 9px 14px; font-size: 14px; }
+  .services-showcase > .wrap { width: min(100% - 36px, 560px); }
+  .service-offering, .service-offering:nth-child(even) { grid-template-columns: minmax(0, 1fr); grid-template-areas: "copy" "visual"; gap: 20px; padding: 30px 0; }
+  .service-offering:first-child { padding-top: 22px; }
+  .service-offering__copy h2 { max-width: none; font-size: clamp(27px, 7.5vw, 34px); }
+  .service-offering__copy > .lead { font-size: 15px; line-height: 1.6; }
+  .service-offering__included { gap: 8px; }
+  .service-offering__visual { width: 100%; border-radius: 18px; }
+  .service-offering__image { aspect-ratio: 4 / 3; }
+  .service-offering__investment { padding: 18px 18px 20px; }
+  .service-offering__investment p { font-size: 14px; }
+  #seo { grid-template-areas: "copy" "visual"; }
+  #seo .service-offering__visual--seo-video { width: 100%; }
+}
 @media (prefers-reduced-motion: reduce) { .industries-strip__track, .industries-strip__item { animation: none; } }
 @media (prefers-reduced-motion: reduce) { .service-feature__icon svg { animation: none; } }
 
