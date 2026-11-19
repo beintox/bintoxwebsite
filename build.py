@@ -993,7 +993,9 @@ def service_client_videos() -> str:
             card_class = "client-video client-video--clone" if clone else "client-video rv"
             attrs = ' aria-hidden="true"' if clone else f' style="--i:{i}"'
             alt = "" if clone else f"{brand} project preview"
+            preview_link = "" if clone else f'<a class="client-video__open" href="assets/img/{src(poster)}" data-lb="{E(brand)} project preview" aria-label="Open {E(brand)} project preview"></a>'
             rendered.append(f'''<article class="{card_class}"{attrs}>
+  {preview_link}
   <div class="client-video__poster">{img(poster, alt, cls="client-video__image")}
     <span class="client-video__badge">VIDEO PREVIEW</span><span class="client-video__play" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M6 3.5 16 10 6 16.5z" fill="currentColor"/></svg></span>
     <div class="client-video__controls" aria-hidden="true"><span>▶</span><span>00:00</span><i></i><span>Replace with video</span></div></div>
