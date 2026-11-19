@@ -809,20 +809,22 @@ a.shot:hover { border-color: #D4A017; }
 @media (max-width: 520px) { .service-offering:last-child { padding-bottom: 18px; } .service-features { padding-top: 16px; padding-bottom: 20px; } .client-videos { margin-top: 44px; padding-top: 20px; } .client-videos__heading h2 { margin-top: 16px; font-size: 32px; } .client-videos__track { padding-top: 0; } .client-video__body { padding: 18px 18px 20px; } }
 @media (prefers-reduced-motion: reduce) { .client-videos__track { animation: none; } .client-video { position: static; margin-bottom: 18px; } .client-videos__set--clone { display: none; } }
 
-/* Services client previews: keep the mobile marquee compact and every card identical. */
+/* Services client previews: a single, fully visible mobile card advances at a time. */
 @media (max-width: 767px) {
-  body.page-services .client-videos { margin-top: 0; padding: 24px 0 30px; }
+  body.page-services .client-videos { margin-top: 0; padding: 10px 0 24px; }
   body.page-services .client-videos__heading h2 { margin-top: 12px; }
   body.page-services .client-videos__heading .lead { margin-top: 10px; }
-  body.page-services .client-videos__viewport { overflow: hidden; margin-top: 20px; -webkit-mask-image: none; mask-image: none; }
-  body.page-services .client-videos__track { display: flex; align-items: stretch; width: max-content; padding: 0; animation: client-videos-travel-left 48s linear infinite; }
+  body.page-services .client-videos__viewport { position: relative; overflow: hidden; width: 100vw; margin: 12px 0 0 calc(50% - 50vw); padding: 0 20px 12px; -webkit-mask-image: none; mask-image: none; touch-action: pan-y; }
+  body.page-services .client-videos__track { display: flex; align-items: stretch; width: max-content; padding: 0; animation: none; transition: transform 680ms cubic-bezier(.22,.72,.2,1); will-change: transform; }
+  body.page-services .client-videos__track.is-resetting { transition: none; }
   body.page-services .client-videos__set { display: flex; flex: 0 0 auto; align-items: stretch; gap: 14px; padding-right: 14px; }
   body.page-services .client-videos__set--clone { display: flex; }
-  body.page-services .client-video { position: relative; display: flex; flex: 0 0 min(82vw, 340px); flex-direction: column; width: min(82vw, 340px); height: 390px; margin: 0; }
-  body.page-services .client-video__poster { display: block; flex: 0 0 auto; aspect-ratio: 16 / 10; }
+  body.page-services .client-video { position: relative; display: flex; flex: 0 0 min(calc(100vw - 40px), 400px); flex-direction: column; width: min(calc(100vw - 40px), 400px); height: 410px; margin: 0; transform: none; }
+  body.page-services .client-video__poster { display: block; flex: 0 0 auto; aspect-ratio: 16 / 9; }
   body.page-services .client-video__image { display: block; }
   body.page-services .client-video__body { flex: 1 1 auto; }
-  body.page-services .client-videos__track:hover { animation-play-state: paused; }
+  body.page-services .client-video:hover { transform: none; }
+  body.page-services .client-video:hover .client-video__image { transform: none; }
 }
 
 .service-comparison { overflow: hidden; background: #0D0C0B; color: var(--paper); }

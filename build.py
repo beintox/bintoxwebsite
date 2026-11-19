@@ -434,7 +434,7 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
   <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">{ICON["menu"]}</button>
 </div></header>'''
     css_version = (f"{VERSION}-brands-heading-spacing-v1-testimonials-ivory-v1-work-reel-edge-v1-footer-social-gold-v1" if page == "index" else
-                   f"{VERSION}-funnel-gold-seo-vertical-video-v2-client-mobile-fit-v1" if page == "services" else VERSION)
+                   f"{VERSION}-funnel-gold-seo-vertical-video-v2-client-mobile-slider-v2" if page == "services" else VERSION)
     return f'''<!doctype html>
 <html lang="en">
 <head>
@@ -491,7 +491,7 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
 <a class="wa" href="https://wa.me/{CONTACT["wa"]}" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">{ICON["wa"]}</a>
 <dialog class="lb" id="lb" aria-label="Image viewer"><img alt=""><div class="lb__bar"><span></span>
   <button type="button" data-prev aria-label="Previous">{ICON["prev"]}</button><button type="button" data-next aria-label="Next">{ICON["next"]}</button><button type="button" data-close aria-label="Close">{ICON["close"]}</button></div></dialog>
-<script src="assets/js/site.js?v={VERSION}-mobile-process-reveal-v1" defer></script>
+<script src="assets/js/site.js?v={VERSION}-mobile-process-reveal-v1-services-client-slider-v1" defer></script>
 {'<script src="assets/js/marketing-funnel.js?v=' + VERSION + '-scroll-funnel-mobile-v2" defer></script>' if page == "services" else ''}
 </body>
 </html>

@@ -235,6 +235,65 @@
     processCards.forEach((card) => card.classList.add("is-mobile-entered"));
   }
 
+  /* Services-only mobile testimonial carousel: one equal-size card stays centered. */
+  const servicesClientCarousel = $("body.page-services .client-videos");
+  const servicesClientMobile = matchMedia("(max-width: 767px)");
+  if (servicesClientCarousel && servicesClientMobile.matches) {
+    const viewport = $(".client-videos__viewport", servicesClientCarousel);
+    const track = $(".client-videos__track", servicesClientCarousel);
+    const cards = $$(".client-videos__set:not(.client-videos__set--clone) .client-video", servicesClientCarousel);
+    let activeIndex = 0;
+    let timer = 0;
+    let resetTimer = 0;
+
+    const getStep = () => {
+      const card = cards[0];
+      const set = $(".client-videos__set", track);
+      if (!card || !set) return 0;
+      return card.getBoundingClientRect().width + parseFloat(getComputedStyle(set).columnGap || "0");
+    };
+    const placeCard = (index, instant = false) => {
+      track.classList.toggle("is-resetting", instant);
+      track.style.transform = `translate3d(${-getStep() * index}px, 0, 0)`;
+      if (instant) requestAnimationFrame(() => requestAnimationFrame(() => track.classList.remove("is-resetting")));
+    };
+    const stop = () => {
+      window.clearInterval(timer);
+      window.clearTimeout(resetTimer);
+      timer = 0;
+    };
+    const start = () => {
+      stop();
+      if (document.hidden || still || !servicesClientMobile.matches) return;
+      timer = window.setInterval(() => {
+        activeIndex += 1;
+        placeCard(activeIndex);
+        if (activeIndex === cards.length) {
+          activeIndex = 0;
+          resetTimer = window.setTimeout(() => placeCard(0, true), 720);
+        }
+      }, 4200);
+    };
+
+    placeCard(0, true);
+    start();
+    addEventListener("resize", () => placeCard(activeIndex, true), { passive: true });
+    document.addEventListener("visibilitychange", () => document.hidden ? stop() : start());
+    servicesClientMobile.addEventListener?.("change", (event) => {
+      if (event.matches) { placeCard(activeIndex, true); start(); }
+      else stop();
+    });
+    let touchStartX = 0;
+    viewport.addEventListener("touchstart", (event) => { touchStartX = event.changedTouches[0].clientX; }, { passive: true });
+    viewport.addEventListener("touchend", (event) => {
+      const delta = event.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(delta) < 45) return;
+      activeIndex = (activeIndex + (delta < 0 ? 1 : cards.length - 1)) % cards.length;
+      placeCard(activeIndex, activeIndex === 0);
+      start();
+    }, { passive: true });
+  }
+
   /* 3D tilt + moving light on [data-tilt] (founder portrait) */
   if (!still && matchMedia("(hover: hover)").matches) {
     $$("[data-tilt]").forEach((el) => {
