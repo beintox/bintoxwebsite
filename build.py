@@ -434,7 +434,7 @@ def layout(page: str, title: str, desc: str, body: str, schema: dict | None = No
   <button class="nav__toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">{ICON["menu"]}</button>
 </div></header>'''
     css_version = (f"{VERSION}-brands-heading-spacing-v1-testimonials-ivory-v1-work-reel-edge-v1-footer-social-gold-v1" if page == "index" else
-                   f"{VERSION}-funnel-gold-seo-vertical-video-v2" if page == "services" else VERSION)
+                   f"{VERSION}-funnel-gold-seo-vertical-video-v2-client-mobile-fit-v1" if page == "services" else VERSION)
     return f'''<!doctype html>
 <html lang="en">
 <head>
