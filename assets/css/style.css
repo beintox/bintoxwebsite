@@ -233,10 +233,11 @@ button, input, select, textarea { font: inherit; color: inherit; }
 
 /* ---------- 9. Client strip (slow marquee, pauses on hover) ---------- */
 .clients { background: var(--paper); border-bottom: 1px solid var(--line); }
-.clients .wrap { display: grid; grid-template-columns: minmax(230px, .8fr) minmax(0, 1.5fr); align-items: center; gap: clamp(24px, 3vw, 40px); }
-.clients__label { display: grid; justify-items: start; gap: 5px; min-width: 0; margin: 0; white-space: nowrap; font-size: clamp(24px, 2.5vw, 34px); font-weight: 750; letter-spacing: -.045em; line-height: 1; color: var(--ink); }
+.clients .wrap { position: relative; display: grid; grid-template-columns: 1fr; align-items: center; min-height: 112px; overflow: hidden; }
+.clients__label { position: relative; z-index: 1; display: grid; justify-items: start; gap: 5px; width: fit-content; min-width: 0; margin: 0; padding: 5px 20px 5px 0; white-space: nowrap; background: var(--paper); font-size: clamp(24px, 2.5vw, 34px); font-weight: 750; letter-spacing: -.045em; line-height: 1; color: var(--ink); }
+.clients__label::after { position: absolute; top: 0; right: -52px; bottom: 0; width: 52px; background: linear-gradient(90deg, var(--paper), transparent); content: ""; pointer-events: none; }
 .clients__label strong { display: inline-block; padding: 7px 11px 8px; border-radius: 5px; background: var(--gold); color: var(--ink); font: inherit; letter-spacing: -.035em; }
-.marquee { min-width: 0; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); }
+.marquee { position: absolute; z-index: 0; inset: 0; min-width: 0; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); }
 .marquee__track { display: flex; width: max-content; animation: marquee 60s linear infinite; }
 .marquee__group { display: flex; flex: none; }
 .marquee:hover .marquee__track, .marquee:focus-within .marquee__track { animation-play-state: paused; }
@@ -246,7 +247,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 @keyframes marquee { to { transform: translateX(-50%); } }
 @media (prefers-reduced-motion: reduce) { .marquee__track { animation: none; } }
 @media (max-width: 760px) {
-  .clients .wrap { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  .clients .wrap { min-height: 88px; }
   .clients__label { font-size: clamp(22px, 6vw, 28px); }
   .marquee { width: 100%; min-width: 0; }
   .marquee__group > * { width: 150px; height: 88px; padding: 14px 20px; }
